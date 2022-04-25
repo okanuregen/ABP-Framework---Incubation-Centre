@@ -1,0 +1,12 @@
+﻿@using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Themes.Basic.Components.Toolbar
+<nav class="navbar navbar-expand navbar-light navbar-bg">
+    <a class="sidebar-toggle js-sidebar-toggle">
+        <i class="hamburger align-self-center"></i>
+    </a>
+
+    <div class="navbar-collapse collapse">
+        <ul class="navbar-nav navbar-align pr-5">
+            @(await Component.InvokeAsync<MainNavbarToolbarViewComponent>())
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,63 @@
+﻿@using Volo.Abp.UI.Navigation
+@model ApplicationMenu
+
+
+<nav id="sidebar" class="sidebar js-sidebar">
+    <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" href="index.html">
+            <span class="align-middle">IncubationCenter</span>
+        </a>
+
+        <ul class="sidebar-nav">
+
+
+            @foreach (var menuItem in Model.Items)
+            {
+                var elementId = string.IsNullOrEmpty(menuItem.ElementId) ? string.Empty : $"id=\"{menuItem.ElementId}\"";
+                var cssClass = string.IsNullOrEmpty(menuItem.CssClass) ? string.Empty : menuItem.CssClass;
+                var disabled = menuItem.IsDisabled ? "disabled" : string.Empty;
+                var url = string.IsNullOrEmpty(menuItem.Url) ? "#" : Url.IsLocalUrl(menuItem.Url) ? Url.Content(menuItem.Url.EnsureStartsWith('~')) : menuItem.Url;
+                if (!menuItem.IsLeaf) //parent title
+                {
+                    <li class="sidebar-header @cssClass @disabled" @elementId>
+                        @if (menuItem.Icon != null)
+                        {
+                            if (menuItem.Icon.StartsWith("fa"))
+                            {
+                                <i class="@menuItem.Icon"></i>
+                            }
+                        }
+                        @menuItem.DisplayName
+                    </li>
+                    @foreach (var childMenuItem in menuItem.Items)
+                    {
+                        @await Html.PartialAsync("~/Themes/Basic/Components/MainMenu/_MenuItem.cshtml", childMenuItem)
+                    }
+                }
+                else
+                {
+
+                    <li class="sidebar-item  @cssClass @disabled" @elementId>
+                        <a class="sidebar-link" href="@url" id="Menu_@(menuItem.Name)">
+                            @if (menuItem.Icon != null)
+                            {
+                                if (menuItem.Icon.StartsWith("fa"))
+                                {
+                                    <i class="@menuItem.Icon"></i>
+                                }
+                            }
+                            <span class="align-middle">
+                                @menuItem.DisplayName
+                            </span>
+                        </a>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</nav>
+
+
+
+
+
