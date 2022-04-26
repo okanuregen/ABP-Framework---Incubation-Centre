@@ -6,6 +6,6 @@ public class BasicThemeGlobalScriptContributor : BundleContributor
 {
     public override void ConfigureBundle(BundleConfigurationContext context)
     {
-        context.Files.Add("/themes/basic/layout.js");
+        context.Files.Add("/themes/basic/app.js");
     }
 }

@@ -105,7 +105,7 @@ public class IncubationCentreWebModule : AbpModule
                 {
                     bundle.AddFiles("/libs/bootstrap/css/bootstrap.css");
                     bundle.AddFiles("/global-styles.css");
-                    bundle.AddFiles("/styles/admin-kit.css");
+                    bundle.AddFiles("/styles/app.css");
                 }
             );
         });

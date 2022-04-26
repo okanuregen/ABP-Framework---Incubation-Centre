@@ -1,5 +1,4 @@
 ﻿/*! For license information please see app.js.LICENSE.txt */ ! function () {
-
     var e = {
         5657: function () {
             window.theme = {
@@ -25833,7 +25832,7 @@
                 Collapse: function () {
                     return Jt
                 },
-                Dropdown: function () {
+                adminDropdown: function () {
                     return fn
                 },
                 Modal: function () {
@@ -27683,17 +27682,17 @@
                     }).toggle()
                 }))
             })), Ge(Jt);
-            const Gt = "dropdown",
+            const Gt = "adminDropdown",
                 qt = "Escape",
                 $t = "Space",
                 Xt = "ArrowUp",
                 Kt = "ArrowDown",
                 Qt = new RegExp("ArrowUp|ArrowDown|Escape"),
-                en = "click.bs.dropdown.data-api",
-                tn = "keydown.bs.dropdown.data-api",
+                en = "click.bs.adminDropdown.data-api",
+                tn = "keydown.bs.adminDropdown.data-api",
                 nn = "show",
-                an = '[data-bs-toggle="dropdown"]',
-                rn = ".dropdown-menu",
+                an = '[data-bs-toggle="adminDropdown"]',
+                rn = ".adminDropdown-menu",
                 ln = Je() ? "top-end" : "top-start",
                 on = Je() ? "top-start" : "top-end",
                 sn = Je() ? "bottom-end" : "bottom-start",
@@ -27737,9 +27736,9 @@
                     const e = {
                         relatedTarget: this._element
                     };
-                    if (mt.trigger(this._element, "show.bs.dropdown", e).defaultPrevented) return;
+                    if (mt.trigger(this._element, "show.bs.adminDropdown", e).defaultPrevented) return;
                     const t = fn.getParentFromElement(this._element);
-                    this._inNavbar ? Lt.setDataAttribute(this._menu, "popper", "none") : this._createPopper(t), "ontouchstart" in document.documentElement && !t.closest(".navbar-nav") && [].concat(...document.body.children).forEach((e => mt.on(e, "mouseover", Be))), this._element.focus(), this._element.setAttribute("aria-expanded", !0), this._menu.classList.add(nn), this._element.classList.add(nn), mt.trigger(this._element, "shown.bs.dropdown", e)
+                    this._inNavbar ? Lt.setDataAttribute(this._menu, "popper", "none") : this._createPopper(t), "ontouchstart" in document.documentElement && !t.closest(".navbar-nav") && [].concat(...document.body.children).forEach((e => mt.on(e, "mouseover", Be))), this._element.focus(), this._element.setAttribute("aria-expanded", !0), this._menu.classList.add(nn), this._element.classList.add(nn), mt.trigger(this._element, "shown.bs.adminDropdown", e)
                 }
                 hide() {
                     if (Ne(this._element) || !this._isShown(this._menu)) return;
@@ -27755,7 +27754,7 @@
                     this._inNavbar = this._detectNavbar(), this._popper && this._popper.update()
                 }
                 _completeHide(e) {
-                    mt.trigger(this._element, "hide.bs.dropdown", e).defaultPrevented || ("ontouchstart" in document.documentElement && [].concat(...document.body.children).forEach((e => mt.off(e, "mouseover", Be))), this._popper && this._popper.destroy(), this._menu.classList.remove(nn), this._element.classList.remove(nn), this._element.setAttribute("aria-expanded", "false"), Lt.removeDataAttribute(this._menu, "popper"), mt.trigger(this._element, "hidden.bs.dropdown", e))
+                    mt.trigger(this._element, "hide.bs.adminDropdown", e).defaultPrevented || ("ontouchstart" in document.documentElement && [].concat(...document.body.children).forEach((e => mt.off(e, "mouseover", Be))), this._popper && this._popper.destroy(), this._menu.classList.remove(nn), this._element.classList.remove(nn), this._element.setAttribute("aria-expanded", "false"), Lt.removeDataAttribute(this._menu, "popper"), mt.trigger(this._element, "hidden.bs.adminDropdown", e))
                 }
                 _getConfig(e) {
                     if (e = {
@@ -27766,7 +27765,7 @@
                     return e
                 }
                 _createPopper(t) {
-                    if (void 0 === e) throw new TypeError("Bootstrap's dropdowns require Popper (https://popper.js.org)");
+                    if (void 0 === e) throw new TypeError("Bootstrap's adminDropdowns require Popper (https://popper.js.org)");
                     let n = this._element;
                     "parent" === this._config.reference ? n = t : Fe(this._config.reference) ? n = Ie(this._config.reference) : "object" == typeof this._config.reference && (n = this._config.reference);
                     const i = this._getPopperConfig(),
@@ -27822,7 +27821,7 @@
                     key: e,
                     target: t
                 }) {
-                    const n = wt.find(".dropdown-menu .dropdown-item:not(.disabled):not(:disabled)", this._menu).filter(ze);
+                    const n = wt.find(".adminDropdown-menu .adminDropdown-item:not(.disabled):not(:disabled)", this._menu).filter(ze);
                     n.length && Xe(n, t, e === Kt, !n.includes(t)).focus()
                 }
                 static jQueryInterface(e) {
@@ -27868,7 +27867,7 @@
                     i.hide()
                 }
             }
-            mt.on(document, tn, an, fn.dataApiKeydownHandler), mt.on(document, tn, rn, fn.dataApiKeydownHandler), mt.on(document, en, fn.clearMenus), mt.on(document, "keyup.bs.dropdown.data-api", fn.clearMenus), mt.on(document, en, an, (function (e) {
+            mt.on(document, tn, an, fn.dataApiKeydownHandler), mt.on(document, tn, rn, fn.dataApiKeydownHandler), mt.on(document, en, fn.clearMenus), mt.on(document, "keyup.bs.adminDropdown.data-api", fn.clearMenus), mt.on(document, en, an, (function (e) {
                 e.preventDefault(), fn.getOrCreateInstance(this).toggle()
             })), Ge(fn);
             const _n = ".fixed-top, .fixed-bottom, .is-fixed, .sticky-top",
@@ -28718,10 +28717,10 @@
                     method: "string",
                     target: "(string|element)"
                 },
-                Di = "dropdown-item",
+                Di = "adminDropdown-item",
                 Ti = "active",
                 Si = ".nav-link",
-                ji = ".nav-link, .list-group-item, .dropdown-item",
+                ji = ".nav-link, .list-group-item, .adminDropdown-item",
                 Oi = "position";
             class Ei extends pt {
                 constructor(e, t) {
@@ -28787,7 +28786,7 @@
                     this._activeTarget = e, this._clear();
                     const t = ji.split(",").map((t => `${t}[data-bs-target="${e}"],${t}[href="${e}"]`)),
                         n = wt.findOne(t.join(","), this._config.target);
-                    n.classList.add(Ti), n.classList.contains(Di) ? wt.findOne(".dropdown-toggle", n.closest(".dropdown")).classList.add(Ti) : wt.parents(n, ".nav, .list-group").forEach((e => {
+                    n.classList.add(Ti), n.classList.contains(Di) ? wt.findOne(".adminDropdown-toggle", n.closest(".adminDropdown")).classList.add(Ti) : wt.parents(n, ".nav, .list-group").forEach((e => {
                         wt.prev(e, ".nav-link, .list-group-item").forEach((e => e.classList.add(Ti))), wt.prev(e, ".nav-item").forEach((e => {
                             wt.children(e, Si).forEach((e => e.classList.add(Ti)))
                         }))
@@ -28854,14 +28853,14 @@
                 _transitionComplete(e, t, n) {
                     if (t) {
                         t.classList.remove(Hi);
-                        const e = wt.findOne(":scope > .dropdown-menu .active", t.parentNode);
+                        const e = wt.findOne(":scope > .adminDropdown-menu .active", t.parentNode);
                         e && e.classList.remove(Hi), "tab" === t.getAttribute("role") && t.setAttribute("aria-selected", !1)
                     }
                     e.classList.add(Hi), "tab" === e.getAttribute("role") && e.setAttribute("aria-selected", !0), Ve(e), e.classList.contains(Ai) && e.classList.add(Ci);
                     let i = e.parentNode;
-                    if (i && "LI" === i.nodeName && (i = i.parentNode), i && i.classList.contains("dropdown-menu")) {
-                        const t = e.closest(".dropdown");
-                        t && wt.find(".dropdown-toggle", t).forEach((e => e.classList.add(Hi))), e.setAttribute("aria-expanded", !0)
+                    if (i && "LI" === i.nodeName && (i = i.parentNode), i && i.classList.contains("adminDropdown-menu")) {
+                        const t = e.closest(".adminDropdown");
+                        t && wt.find(".adminDropdown-toggle", t).forEach((e => e.classList.add(Hi))), e.setAttribute("aria-expanded", !0)
                     }
                     n && n()
                 }
@@ -29703,7 +29702,7 @@
                     locale: "default",
                     minuteIncrement: 5,
                     mode: "single",
-                    monthSelectorType: "dropdown",
+                    monthSelectorType: "adminDropdown",
                     nextArrow: "<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 17 17'><g></g><path d='M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z' /></svg>",
                     noCalendar: !1,
                     now: new Date,
@@ -30213,15 +30212,15 @@
                 }
 
                 function b() {
-                    if (n.config.showMonths > 1 || "dropdown" !== n.config.monthSelectorType) return;
+                    if (n.config.showMonths > 1 || "adminDropdown" !== n.config.monthSelectorType) return;
                     const e = function (e) {
                         return !(void 0 !== n.config.minDate && n.currentYear === n.config.minDate.getFullYear() && e < n.config.minDate.getMonth()) && !(void 0 !== n.config.maxDate && n.currentYear === n.config.maxDate.getFullYear() && e > n.config.maxDate.getMonth())
                     };
-                    n.monthsDropdownContainer.tabIndex = -1, n.monthsDropdownContainer.innerHTML = "";
+                    n.monthsadminDropdownContainer.tabIndex = -1, n.monthsadminDropdownContainer.innerHTML = "";
                     for (let t = 0; t < 12; t++) {
                         if (!e(t)) continue;
-                        const i = dr("option", "flatpickr-monthDropdown-month");
-                        i.value = new Date(n.currentYear, t).getMonth().toString(), i.textContent = _r(t, n.config.shorthandCurrentMonth, n.l10n), i.tabIndex = -1, n.currentMonth === t && (i.selected = !0), n.monthsDropdownContainer.appendChild(i)
+                        const i = dr("option", "flatpickr-monthadminDropdown-month");
+                        i.value = new Date(n.currentYear, t).getMonth().toString(), i.textContent = _r(t, n.config.shorthandCurrentMonth, n.l10n), i.tabIndex = -1, n.currentMonth === t && (i.selected = !0), n.monthsadminDropdownContainer.appendChild(i)
                     }
                 }
 
@@ -30229,11 +30228,11 @@
                     const e = dr("div", "flatpickr-month"),
                         t = window.document.createDocumentFragment();
                     let i;
-                    n.config.showMonths > 1 || "static" === n.config.monthSelectorType ? i = dr("span", "cur-month") : (n.monthsDropdownContainer = dr("select", "flatpickr-monthDropdown-months"), n.monthsDropdownContainer.setAttribute("aria-label", n.l10n.monthAriaLabel), c(n.monthsDropdownContainer, "change", (e => {
+                    n.config.showMonths > 1 || "static" === n.config.monthSelectorType ? i = dr("span", "cur-month") : (n.monthsadminDropdownContainer = dr("select", "flatpickr-monthadminDropdown-months"), n.monthsadminDropdownContainer.setAttribute("aria-label", n.l10n.monthAriaLabel), c(n.monthsadminDropdownContainer, "change", (e => {
                         const t = mr(e),
                             i = parseInt(t.value, 10);
                         n.changeMonth(i - n.currentMonth), U("onMonthChange")
-                    })), b(), i = n.monthsDropdownContainer);
+                    })), b(), i = n.monthsadminDropdownContainer);
                     const a = hr("cur-year", {
                         tabindex: "-1"
                     }),
@@ -30554,7 +30553,7 @@
                         } else n.calendarContainer.parentNode.removeChild(n.calendarContainer);
                     n.altInput && (n.input.type = "text", n.altInput.parentNode && n.altInput.parentNode.removeChild(n.altInput), delete n.altInput);
                     n.input && (n.input.type = n.input._type, n.input.classList.remove("flatpickr-input"), n.input.removeAttribute("readonly"));
-                    ["_showTimeInput", "latestSelectedDateObj", "_hideNextMonthArrow", "_hidePrevMonthArrow", "__hideNextMonthArrow", "__hidePrevMonthArrow", "isMobile", "isOpen", "selectedDateElem", "minDateHasTime", "maxDateHasTime", "days", "daysContainer", "_input", "_positionElement", "innerContainer", "rContainer", "monthNav", "todayDateElem", "calendarContainer", "weekdayContainer", "prevMonthNav", "nextMonthNav", "monthsDropdownContainer", "currentMonthElement", "currentYearElement", "navigationCurrentMonth", "selectedDateElem", "config"].forEach((e => {
+                    ["_showTimeInput", "latestSelectedDateObj", "_hideNextMonthArrow", "_hidePrevMonthArrow", "__hideNextMonthArrow", "__hidePrevMonthArrow", "isMobile", "isOpen", "selectedDateElem", "minDateHasTime", "maxDateHasTime", "days", "daysContainer", "_input", "_positionElement", "innerContainer", "rContainer", "monthNav", "todayDateElem", "calendarContainer", "weekdayContainer", "prevMonthNav", "nextMonthNav", "monthsadminDropdownContainer", "currentMonthElement", "currentYearElement", "navigationCurrentMonth", "selectedDateElem", "config"].forEach((e => {
                         try {
                             delete n[e]
                         } catch (e) { }
@@ -30643,7 +30642,7 @@
                 function q() {
                     n.config.noCalendar || n.isMobile || !n.monthNav || (n.yearElements.forEach(((e, t) => {
                         const i = new Date(n.currentYear, n.currentMonth, 1);
-                        i.setMonth(n.currentMonth + t), n.config.showMonths > 1 || "static" === n.config.monthSelectorType ? n.monthElements[t].textContent = _r(i.getMonth(), n.config.shorthandCurrentMonth, n.l10n) + " " : n.monthsDropdownContainer.value = i.getMonth().toString(), e.value = i.getFullYear().toString()
+                        i.setMonth(n.currentMonth + t), n.config.showMonths > 1 || "static" === n.config.monthSelectorType ? n.monthElements[t].textContent = _r(i.getMonth(), n.config.shorthandCurrentMonth, n.l10n) + " " : n.monthsadminDropdownContainer.value = i.getMonth().toString(), e.value = i.getFullYear().toString()
                     })), n._hidePrevMonthArrow = void 0 !== n.config.minDate && (n.currentYear === n.config.minDate.getFullYear() ? n.currentMonth <= n.config.minDate.getMonth() : n.currentYear < n.config.minDate.getFullYear()), n._hideNextMonthArrow = void 0 !== n.config.maxDate && (n.currentYear === n.config.maxDate.getFullYear() ? n.currentMonth + 1 > n.config.maxDate.getMonth() : n.currentYear > n.config.maxDate.getFullYear()))
                 }
 
