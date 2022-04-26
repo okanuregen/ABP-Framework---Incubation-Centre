@@ -7,4 +7,6 @@ namespace IsikUn.IncubationCentre.Web;
 public class IncubationCentreBrandingProvider : DefaultBrandingProvider
 {
     public override string AppName => "IncubationCentre";
+    public override string LogoUrl => "img/logo.png";
+
 }

@@ -25850,7 +25850,7 @@
                 Tab: function () {
                     return Ii
                 },
-                Toast: function () {
+                adminToast: function () {
                     return Zi
                 },
                 Tooltip: function () {
@@ -28878,7 +28878,7 @@
                 if (["A", "AREA"].includes(this.tagName) && e.preventDefault(), Ne(this)) return;
                 Ii.getOrCreateInstance(this).show()
             })), Ge(Ii);
-            const Wi = "toast",
+            const Wi = "adminToast",
                 zi = "hide",
                 Ni = "show",
                 Ri = "showing",
@@ -28906,17 +28906,17 @@
                     return Wi
                 }
                 show() {
-                    if (mt.trigger(this._element, "show.bs.toast").defaultPrevented) return;
+                    if (mt.trigger(this._element, "show.bs.adminToast").defaultPrevented) return;
                     this._clearTimeout(), this._config.animation && this._element.classList.add("fade");
                     this._element.classList.remove(zi), Ve(this._element), this._element.classList.add(Ni), this._element.classList.add(Ri), this._queueCallback((() => {
-                        this._element.classList.remove(Ri), mt.trigger(this._element, "shown.bs.toast"), this._maybeScheduleHide()
+                        this._element.classList.remove(Ri), mt.trigger(this._element, "shown.bs.adminToast"), this._maybeScheduleHide()
                     }), this._element, this._config.animation)
                 }
                 hide() {
                     if (!this._element.classList.contains(Ni)) return;
-                    if (mt.trigger(this._element, "hide.bs.toast").defaultPrevented) return;
+                    if (mt.trigger(this._element, "hide.bs.adminToast").defaultPrevented) return;
                     this._element.classList.add(Ri), this._queueCallback((() => {
-                        this._element.classList.add(zi), this._element.classList.remove(Ri), this._element.classList.remove(Ni), mt.trigger(this._element, "hidden.bs.toast")
+                        this._element.classList.add(zi), this._element.classList.remove(Ri), this._element.classList.remove(Ni), mt.trigger(this._element, "hidden.bs.adminToast")
                     }), this._element, this._config.animation)
                 }
                 dispose() {
@@ -28949,7 +28949,7 @@
                     this._element === n || this._element.contains(n) || this._maybeScheduleHide()
                 }
                 _setListeners() {
-                    mt.on(this._element, "mouseover.bs.toast", (e => this._onInteraction(e, !0))), mt.on(this._element, "mouseout.bs.toast", (e => this._onInteraction(e, !1))), mt.on(this._element, "focusin.bs.toast", (e => this._onInteraction(e, !0))), mt.on(this._element, "focusout.bs.toast", (e => this._onInteraction(e, !1)))
+                    mt.on(this._element, "mouseover.bs.adminToast", (e => this._onInteraction(e, !0))), mt.on(this._element, "mouseout.bs.adminToast", (e => this._onInteraction(e, !1))), mt.on(this._element, "focusin.bs.adminToast", (e => this._onInteraction(e, !0))), mt.on(this._element, "focusout.bs.adminToast", (e => this._onInteraction(e, !1)))
                 }
                 _clearTimeout() {
                     clearTimeout(this._timeout), this._timeout = null

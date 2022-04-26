@@ -40,6 +40,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/logo.png">
 
     <title>@pageTitle</title>
 
@@ -58,20 +60,20 @@
 
     <div class="wrapper">
         @(await Component.InvokeAsync<MainMenuViewComponent>())
-            <div class="main">
-                @(await Component.InvokeAsync<MainNavbarViewComponent>())
-                @(await Component.InvokeAsync<PageAlertsViewComponent>())
-                <div id="AbpContentToolbar">
-                    <div class="text-end mb-2">
-                        @RenderSection("content_toolbar", false)
-                    </div>
+        <div class="main">
+            @(await Component.InvokeAsync<MainNavbarViewComponent>())
+            @(await Component.InvokeAsync<PageAlertsViewComponent>())
+            <div id="AbpContentToolbar">
+                <div class="text-end mb-2">
+                    @RenderSection("content_toolbar", false)
                 </div>
-
-                @await Component.InvokeLayoutHookAsync(LayoutHooks.PageContent.First, StandardLayouts.Application)
-                @RenderBody()
-                @(await Component.InvokeAsync<FooterViewComponent>())
-                @await Component.InvokeLayoutHookAsync(LayoutHooks.PageContent.Last, StandardLayouts.Application)
             </div>
+
+            @await Component.InvokeLayoutHookAsync(LayoutHooks.PageContent.First, StandardLayouts.Application)
+            @RenderBody()
+            @(await Component.InvokeAsync<FooterViewComponent>())
+            @await Component.InvokeLayoutHookAsync(LayoutHooks.PageContent.Last, StandardLayouts.Application)
+        </div>
     </div>
 
     <abp-script-bundle name="@BasicThemeBundles.Scripts.Global" />
