@@ -7,6 +7,21 @@
     "Menu:Administration": "Administration",
     "Menu:Settings": "Settings",
     "Menu:Users": "Users",
-    "Menu:Roles": "Roles"
+    "Menu:Roles": "Roles",
+    "Menu:SkillManagement": "Skill Managment",
+    "Menu:SystemManagement": "System Managment",
+    "Menu:SystemDescriptions": "System Descriptions",
+    "Permission:IncubationCentre": "Incubation Centre",
+    "Permission:Skills": "Skill Management",
+    "Menu:SkillDescriptions": "Skill Descriptions",
+    "Permission:Skills.Create": "Creating New Skills",
+    "Permission:Skills.Edit": "Editing the Skills",
+    "Permission:Skills.Delete": "Deleting Skills",
+    "SkillNameOnSameCategoryExist": "Same Skill Name Has Already Defined On This Category",
+    "Skills": "Skills",
+    "NewSkill": "New Skill",
+    "Name": "Name",
+    "Category": "Category",
+    "EntityDeletionConfirmationMessage": "Are you sure to delete the record? : '{0}'?"
   }
 }

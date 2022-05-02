@@ -1,9 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using IsikUn.IncubationCentre.Collaborators;
+using IsikUn.IncubationCentre.Entrepreneurs;
+using IsikUn.IncubationCentre.Investors;
+using IsikUn.IncubationCentre.Mentors;
+using IsikUn.IncubationCentre.Skills;
+using IsikUn.IncubationCentre.SystemManagers;
+using Microsoft.EntityFrameworkCore;
+using System;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -52,6 +60,13 @@ public class IncubationCentreDbContext :
 
     #endregion
 
+    public DbSet<Mentor> Mentors { get; set; }
+    public DbSet<Investor> Investors { get; set; }
+    public DbSet<Entrepreneur> Entrepreneurs { get; set; }
+    public DbSet<Collaborator> Collaborators { get; set; }
+    public DbSet<SystemManager> SystemManagers { get; set; }
+    public DbSet<Skill> Skills { get; set; }
+
     public IncubationCentreDbContext(DbContextOptions<IncubationCentreDbContext> options)
         : base(options)
     {
@@ -75,11 +90,40 @@ public class IncubationCentreDbContext :
 
         /* Configure your own tables/entities inside here */
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(IncubationCentreConsts.DbTablePrefix + "YourEntities", IncubationCentreConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+        builder.Entity<Mentor>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Mentors",
+                IncubationCentreConsts.DbSchema);
+        });
+        builder.Entity<Investor>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Investors",
+                IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+        builder.Entity<Entrepreneur>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Entrepreneurs",
+                IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+        builder.Entity<Collaborator>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Collaborators",
+                IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+        builder.Entity<SystemManager>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "SystemManagers",
+                IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+        builder.Entity<Skill>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Skills",
+                IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
     }
 }

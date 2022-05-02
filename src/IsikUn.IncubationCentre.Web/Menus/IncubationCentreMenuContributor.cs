@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using IsikUn.IncubationCentre.Localization;
 using IsikUn.IncubationCentre.MultiTenancy;
+using IsikUn.IncubationCentre.Permissions;
 using Volo.Abp.Identity.Web.Navigation;
 using Volo.Abp.SettingManagement.Web.Navigation;
 using Volo.Abp.TenantManagement.Web.Navigation;
@@ -31,8 +32,22 @@ public class IncubationCentreMenuContributor : IMenuContributor
                 order: 1
             )
         );
+
+        if (await context.IsGrantedAsync(IncubationCentrePermissions.Skills.Default))
+        {
+            var systemDescriptions = new ApplicationMenuItem(IncubationCentreMenus.SystemDescriptions, l["Menu:SystemManagement"], icon: "fa fa-cubes", order: 2);
+            systemDescriptions.AddItem(new ApplicationMenuItem(
+                IncubationCentreMenus.SkillManagement,
+                l["Menu:SkillDescriptions"],
+                url: "/Skills",
+                icon: "fa fa-pencil-square-o"
+            ));
+            context.Menu.AddItem(systemDescriptions);
+        }
+
+
         context.Menu.TryRemoveMenuItem("Abp.Application.Main.Administration");
-        var administration = new ApplicationMenuItem(IncubationCentreMenus.Administration, l["Menu:Administration"], icon: "fa fa-wrench", order: 1);
+        var administration = new ApplicationMenuItem(IncubationCentreMenus.Administration, l["Menu:Administration"], icon: "fa fa-wrench", order: 3);
 
         //if (MultiTenancyConsts.IsEnabled)
         //{

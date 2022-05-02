@@ -8,9 +8,12 @@ public class IncubationCentrePermissionDefinitionProvider : PermissionDefinition
 {
     public override void Define(IPermissionDefinitionContext context)
     {
-        var myGroup = context.AddGroup(IncubationCentrePermissions.GroupName);
-        //Define your own permissions here. Example:
-        //myGroup.AddPermission(IncubationCentrePermissions.MyPermission1, L("Permission:MyPermission1"));
+        var IncubationCentreGroup = context.AddGroup(IncubationCentrePermissions.GroupName, L("Permission:IncubationCentre"));
+
+        var skillsPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Skills.Default, L("Permission:Skills"));
+        skillsPermission.AddChild(IncubationCentrePermissions.Skills.Create, L("Permission:Skills.Create"));
+        skillsPermission.AddChild(IncubationCentrePermissions.Skills.Edit, L("Permission:Skills.Edit"));
+        skillsPermission.AddChild(IncubationCentrePermissions.Skills.Delete, L("Permission:Skills.Delete"));
     }
 
     private static LocalizableString L(string name)

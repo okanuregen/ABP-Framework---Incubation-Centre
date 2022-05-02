@@ -7,6 +7,21 @@
     "Menu:Administration": "Yönetim",
     "Menu:Settings": "Ayarlar",
     "Menu:Users": "Kullanıcılar",
-    "Menu:Roles": "Roller"
+    "Menu:Roles": "Roller",
+    "Menu:SkillManagement": "Yetenek Yönetimi",
+    "Menu:SystemManagement": "Sistem Yönetimi",
+    "Menu:SystemDescriptions": "Sistem Tanımlamaları",
+    "Permission:IncubationCentre": "Kuluçka Merkezi",
+    "Permission:Skills": "Yetenek Yönetimi",
+    "Menu:SkillDescriptions": "Yetenek Tanımlamaları",
+    "Permission:Skills.Create": "Yeni Yetenek Ekleme",
+    "Permission:Skills.Edit": "Yetenek Düzenleme",
+    "Permission:Skills.Delete": "Yetenek Silme",
+    "SkillNameOnSameCategoryExist": "Aynı Kategoride, Aynı İsme Sahip Yetenek Zaten Kayıtlı",
+    "Skills": "Yetenekler",
+    "NewSkill": "Yeni Yetenek",
+    "Name": "İsim",
+    "Category": "Kategori",
+    "EntityDeletionConfirmationMessage": "Seçili kaydı silmek istediğinize emin misiniz? : '{0}'?"
   }
 }
