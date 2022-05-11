@@ -11,7 +11,7 @@ using IsikUn.IncubationCentre.EntityFrameworkCore;
 
 namespace IsikUn.IncubationCentre.Skills
 {
-    internal class EFCoreSkillRepository :
+    public class EFCoreSkillRepository :
         EfCoreRepository<IncubationCentreDbContext, Skill, Guid>,
         ISkillRepository
     {
@@ -31,23 +31,20 @@ namespace IsikUn.IncubationCentre.Skills
             )
         {
             var query = ApplyFilter(
-                (await WithDetailsAsync(a => a.Collaborators, a => a.Mentors, a => a.Entrepreneurs, a => a.Investors))
+                (await WithDetailsAsync(a => a.People))
                 , filter, name, category);
-            query = query.OrderBy(!string.IsNullOrWhiteSpace(sorting) ? "Name asc" : sorting);
+            query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? "Name asc" : sorting);
             return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancelationToken);
         }
         public async Task<long> GetCountAsync(
              string filter = null,
              string name = null,
              string category = null,
-             int skipCount = 0,
-             int maxResultCount = int.MaxValue,
-             string sorting = null,
              CancellationToken cancelationToken = default
             )
         {
             var query = ApplyFilter(
-                (await WithDetailsAsync(a => a.Collaborators, a => a.Mentors, a => a.Entrepreneurs, a => a.Investors))
+                (await WithDetailsAsync(a => a.People))
                 , filter, name, category);
             return await query.LongCountAsync(GetCancellationToken(cancelationToken));
 

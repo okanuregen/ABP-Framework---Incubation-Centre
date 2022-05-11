@@ -2,17 +2,13 @@
 using IsikUn.IncubationCentre.Skills;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.Identity;
 
-namespace IsikUn.IncubationCentre.Entrepreneurs
+namespace IsikUn.IncubationCentre.Mentors
 {
-    public class Entrepreneur : Person
+    public class GetMentorsInput : GetPeopleInput
     {
         public virtual bool isActivated { get; set; }
-
     }
 }

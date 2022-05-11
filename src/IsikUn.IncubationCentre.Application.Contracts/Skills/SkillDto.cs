@@ -2,6 +2,7 @@
 using IsikUn.IncubationCentre.Entrepreneurs;
 using IsikUn.IncubationCentre.Investors;
 using IsikUn.IncubationCentre.Mentors;
+using IsikUn.IncubationCentre.People;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,9 +14,6 @@ namespace IsikUn.IncubationCentre.Skills
     {
         public string Name { get; set; }
         public string Category { get; set; }
-        public List<EntrepreneurDto> Entrepreneurs { get; set; }
-        public List<InvestorDto> Investors { get; set; }
-        public List<MentorDto> Mentors { get; set; }
-        public List<CollaboratorDto> Collaborators { get; set; }
+        public List<PersonDto> People { get; set; }
     }
 }

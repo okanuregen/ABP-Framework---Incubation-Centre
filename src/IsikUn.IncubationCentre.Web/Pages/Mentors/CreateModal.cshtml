@@ -1,0 +1,22 @@
+﻿@page
+@using IsikUn.IncubationCentre.Localization
+@using IsikUn.IncubationCentre.Permissions
+@using IsikUn.IncubationCentre.Web.Pages.Skills
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model CreateModalModel
+@inject IStringLocalizer<IncubationCentreResource> L
+@{
+    Layout = null;
+}
+<form asp-page="/Skills/CreateModal">
+    <abp-modal>
+        <abp-modal-header title="@L["NewSkill"].Value"></abp-modal-header>
+        <abp-modal-body>
+            <abp-input asp-for="Skill.Name" />
+            <abp-input asp-for="Skill.Category" />
+        </abp-modal-body>
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+</form>

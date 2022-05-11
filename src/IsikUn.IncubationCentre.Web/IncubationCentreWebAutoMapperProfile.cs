@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IsikUn.IncubationCentre.Mentors;
 using IsikUn.IncubationCentre.Skills;
 
 namespace IsikUn.IncubationCentre.Web;
@@ -13,5 +14,9 @@ public class IncubationCentreWebAutoMapperProfile : Profile
         CreateMap<CreateSkillDto, SkillDto>().ReverseMap();
         CreateMap<UpdateSkillDto, Skill>().ReverseMap();
         CreateMap<UpdateSkillDto, SkillDto>().ReverseMap();
+
+        CreateMap<Mentor, MentorDto>().ReverseMap();
+        CreateMap<CreateUpdateMentorDto, MentorDto>().ReverseMap();
+        CreateMap<CreateUpdateMentorDto, Mentor>().ReverseMap();
     }
 }

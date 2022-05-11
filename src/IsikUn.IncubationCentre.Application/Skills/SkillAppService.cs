@@ -45,6 +45,13 @@ namespace IsikUn.IncubationCentre.Skills
         }
 
         [Authorize(IncubationCentrePermissions.Skills.Default)]
+        public async Task<List<SkillDto>> GetAllItemsAsync()
+        {
+            var items =  (await _skillRepository.GetQueryableAsync()).ToList();
+            return ObjectMapper.Map<List<Skill>, List<SkillDto>>(items);
+        }
+
+        [Authorize(IncubationCentrePermissions.Skills.Default)]
         public async Task<SkillDto> GetAsync(Guid id)
         {
             var skill = await _skillRepository.GetAsync(id);

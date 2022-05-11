@@ -11,6 +11,8 @@ namespace IsikUn.IncubationCentre.Skills
     {
         Task<PagedResultDto<SkillDto>> GetListAsync(GetSkillsInput input);
 
+        Task<List<SkillDto>> GetAllItemsAsync();
+
         Task<SkillDto> GetAsync(Guid id);
 
         Task DeleteAsync(Guid id);

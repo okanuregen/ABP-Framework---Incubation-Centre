@@ -33,21 +33,32 @@ public class IncubationCentreMenuContributor : IMenuContributor
             )
         );
 
-        if (await context.IsGrantedAsync(IncubationCentrePermissions.Skills.Default))
-        {
-            var systemDescriptions = new ApplicationMenuItem(IncubationCentreMenus.SystemDescriptions, l["Menu:SystemManagement"], icon: "fa fa-cubes", order: 2);
-            systemDescriptions.AddItem(new ApplicationMenuItem(
-                IncubationCentreMenus.SkillManagement,
-                l["Menu:SkillDescriptions"],
-                url: "/Skills",
-                icon: "fa fa-pencil-square-o"
-            ));
-            context.Menu.AddItem(systemDescriptions);
-        }
+        var members = new ApplicationMenuItem(IncubationCentreMenus.SystemDescriptions, l["Menu:Members"], icon: "fa fa-user-circle-o", order: 2);
+        members.AddItem(new ApplicationMenuItem(
+            IncubationCentreMenus.SkillManagement,
+            l["Mentors"],
+            url: "/Mentors",
+            icon: "fa fa-question",
+            requiredPermissionName: IncubationCentrePermissions.Mentors.Default
+        ));
+        context.Menu.AddItem(members);
+
+
+
+        var systemDescriptions = new ApplicationMenuItem(IncubationCentreMenus.SystemDescriptions, l["Menu:SystemManagement"], icon: "fa fa-cubes", order: 3);
+        systemDescriptions.AddItem(new ApplicationMenuItem(
+            IncubationCentreMenus.SkillManagement,
+            l["Menu:SkillDescriptions"],
+            url: "/Skills",
+            icon: "fa fa-pencil-square-o",
+            requiredPermissionName: IncubationCentrePermissions.Skills.Default
+        ));
+        context.Menu.AddItem(systemDescriptions);
+
 
 
         context.Menu.TryRemoveMenuItem("Abp.Application.Main.Administration");
-        var administration = new ApplicationMenuItem(IncubationCentreMenus.Administration, l["Menu:Administration"], icon: "fa fa-wrench", order: 3);
+        var administration = new ApplicationMenuItem(IncubationCentreMenus.Administration, l["Menu:Administration"], icon: "fa fa-wrench", order: 4);
 
         //if (MultiTenancyConsts.IsEnabled)
         //{

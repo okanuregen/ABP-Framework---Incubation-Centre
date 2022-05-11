@@ -2,6 +2,7 @@
 using IsikUn.IncubationCentre.Entrepreneurs;
 using IsikUn.IncubationCentre.Investors;
 using IsikUn.IncubationCentre.Mentors;
+using IsikUn.IncubationCentre.People;
 using IsikUn.IncubationCentre.Skills;
 using IsikUn.IncubationCentre.SystemManagers;
 using Microsoft.EntityFrameworkCore;
@@ -65,6 +66,8 @@ public class IncubationCentreDbContext :
     public DbSet<Entrepreneur> Entrepreneurs { get; set; }
     public DbSet<Collaborator> Collaborators { get; set; }
     public DbSet<SystemManager> SystemManagers { get; set; }
+    public DbSet<Person> People { get; set; }
+
     public DbSet<Skill> Skills { get; set; }
 
     public IncubationCentreDbContext(DbContextOptions<IncubationCentreDbContext> options)

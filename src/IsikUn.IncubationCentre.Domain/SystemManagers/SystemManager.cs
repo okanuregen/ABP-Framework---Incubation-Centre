@@ -1,4 +1,5 @@
-﻿using IsikUn.IncubationCentre.Skills;
+﻿using IsikUn.IncubationCentre.People;
+using IsikUn.IncubationCentre.Skills;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,8 @@ using Volo.Abp.Identity;
 
 namespace IsikUn.IncubationCentre.SystemManagers
 {
-    public class SystemManager : FullAuditedEntity<Guid>
+    public class SystemManager : Person
     {
-        public Guid? IdentityUserId { get; set; }
-
-        public IdentityUser IdentityUser { get; set; }
+    
     }
 }

@@ -1,4 +1,5 @@
-﻿using IsikUn.IncubationCentre.Skills;
+﻿using IsikUn.IncubationCentre.People;
+using IsikUn.IncubationCentre.Skills;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,8 @@ using Volo.Abp.Identity;
 
 namespace IsikUn.IncubationCentre.Collaborators
 {
-    public class Collaborator : FullAuditedEntity<Guid>
+    public class Collaborator : Person
     {
-        public string About { get; set; }
-        public List<Skill> Skills { get; set; }
-        public string Experience { get; set; }
-        public Guid? IdentityUserId { get; set; }
-
-        public IdentityUser IdentityUser { get; set; }
+        
     }
 }

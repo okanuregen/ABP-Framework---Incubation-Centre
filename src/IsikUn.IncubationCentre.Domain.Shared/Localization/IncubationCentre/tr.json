@@ -12,8 +12,8 @@
     "Menu:SystemManagement": "Sistem Yönetimi",
     "Menu:SystemDescriptions": "Sistem Tanımlamaları",
     "Permission:IncubationCentre": "Kuluçka Merkezi",
-    "Permission:Skills": "Yetenek Yönetimi",
     "Menu:SkillDescriptions": "Yetenek Tanımlamaları",
+    "Permission:Skills": "Yetenek Yönetimi",
     "Permission:Skills.Create": "Yeni Yetenek Ekleme",
     "Permission:Skills.Edit": "Yetenek Düzenleme",
     "Permission:Skills.Delete": "Yetenek Silme",
@@ -22,6 +22,15 @@
     "NewSkill": "Yeni Yetenek",
     "Name": "İsim",
     "Category": "Kategori",
-    "EntityDeletionConfirmationMessage": "Seçili kaydı silmek istediğinize emin misiniz? : '{0}'?"
+    "EntityDeletionConfirmationMessage": "Seçili kaydı silmek istediğinize emin misiniz? : '{0}'?",
+    "Permission:Mentors": "Mentor Yönetimi",
+    "Permission:Mentors.Create": "Yeni Mentor Ekleme",
+    "Permission:Mentors.Edit": "Mentor Düzenleme",
+    "Permission:Mentors.Delete": "Mentor Silme",
+    "UserMatchAnotherUserType": "Seçili Kullanıcı Zaten Başka Bir Hesap İle İlişkilendirilmiş",
+    "Menu:Members": "Üyeler",
+    "Mentors": "Mentorlar",
+    "NewMentor": "Yeni Mentor"
+
   }
 }
