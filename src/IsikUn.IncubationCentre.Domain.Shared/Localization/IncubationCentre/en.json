@@ -30,6 +30,11 @@
     "UserMatchAnotherUserType": "User Has Been Already Have Relationship With Another Account",
     "Menu:Members": "Members",
     "Mentors": "Mentors",
-    "NewMentor": "New Mentor"
+    "NewMentor": "New Mentor",
+    "About": "About",
+    "Experience": "Experience",
+    "User": "User",
+    "isActive": "Is Active ?"
+
   }
 }

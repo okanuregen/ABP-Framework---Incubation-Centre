@@ -6,6 +6,7 @@ using IsikUn.IncubationCentre.People;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 using Volo.Abp.Application.Dtos;
 
 namespace IsikUn.IncubationCentre.Skills
@@ -14,6 +15,9 @@ namespace IsikUn.IncubationCentre.Skills
     {
         public string Name { get; set; }
         public string Category { get; set; }
-        public List<PersonDto> People { get; set; }
+
+        [JsonIgnore]
+        public ICollection<PersonDto> People { get; set; }
+
     }
 }

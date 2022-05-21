@@ -12,15 +12,15 @@ using IsikUn.IncubationCentre.Skills;
 
 namespace IsikUn.IncubationCentre.People
 {
-    public class EFCoreMentorRepository :
+    public class EFCorePersonRepository :
         EfCoreRepository<IncubationCentreDbContext, Person, Guid>,
         IPersonRepository
     {
-        public EFCoreMentorRepository(IDbContextProvider<IncubationCentreDbContext> dbContextProvider) : base(dbContextProvider)
+        public EFCorePersonRepository(IDbContextProvider<IncubationCentreDbContext> dbContextProvider) : base(dbContextProvider)
         {
         }
 
-        public async Task<long> GetCountAsync(string filter = null, string userName = null, string name = null, string surname = null, string email = null, string phoneNumber = null, string experience = null, Guid[] skillIds = null, string about = null, int skipCount = 0, int maxResultCount = int.MaxValue, string sorting = null, CancellationToken cancelationToken = default)
+        public async Task<long> GetCountAsync(string filter = null, string userName = null, string name = null, string surname = null, string email = null, string phoneNumber = null, string experience = null, Guid[] skillIds = null, string about = null, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
                         (await WithDetailsAsync(a => a.IdentityUser, b => b.Skills))

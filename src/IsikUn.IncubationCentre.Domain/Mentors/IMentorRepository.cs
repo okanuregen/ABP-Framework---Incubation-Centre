@@ -50,5 +50,6 @@ namespace IsikUn.IncubationCentre.Mentors
              bool isActivated = true,
              CancellationToken cancelationToken = default
             );
+        Task<Mentor> GetWithDetailAsync(Guid id, CancellationToken cancelationToken = default);
     }
 }

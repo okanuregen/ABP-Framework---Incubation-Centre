@@ -3,6 +3,7 @@ using IsikUn.IncubationCentre.Entrepreneurs;
 using IsikUn.IncubationCentre.Investors;
 using IsikUn.IncubationCentre.Mentors;
 using IsikUn.IncubationCentre.People;
+using IsikUn.IncubationCentre.PeopleSkills;
 using IsikUn.IncubationCentre.Skills;
 using IsikUn.IncubationCentre.SystemManagers;
 using Microsoft.EntityFrameworkCore;
@@ -93,6 +94,16 @@ public class IncubationCentreDbContext :
 
         /* Configure your own tables/entities inside here */
 
+        builder.Entity<Person>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "People",
+                IncubationCentreConsts.DbSchema);
+        });
+        builder.Entity<PersonSkill>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "PersonSkill",
+                IncubationCentreConsts.DbSchema);
+        });
         builder.Entity<Mentor>(b =>
         {
             b.ToTable(IncubationCentreConsts.DbTablePrefix + "Mentors",
@@ -127,6 +138,12 @@ public class IncubationCentreDbContext :
             b.ToTable(IncubationCentreConsts.DbTablePrefix + "Skills",
                 IncubationCentreConsts.DbSchema);
             b.ConfigureByConvention();
+
+            b.HasMany(c => c.People).WithMany(c => c.Skills).UsingEntity<PersonSkill>(
+            j => j.HasOne(pt => pt.Person).WithMany(c => c.PeopleSkills).HasForeignKey(g => g.PersonId),
+            j => j.HasOne(pt => pt.Skill).WithMany(c => c.PeopleSkills).HasForeignKey(g => g.SkillId),
+            j => j.HasKey(t => new { t.SkillId, t.PersonId }));
+
         });
     }
 }

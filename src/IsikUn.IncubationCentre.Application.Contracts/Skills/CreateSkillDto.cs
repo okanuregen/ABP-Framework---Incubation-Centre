@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace IsikUn.IncubationCentre.Skills
 {
@@ -10,5 +12,6 @@ namespace IsikUn.IncubationCentre.Skills
 
         [StringLength(50)]
         public string Category { get; set; }
+        public List<Guid> PeopleIds { get; set; }
     }
 }

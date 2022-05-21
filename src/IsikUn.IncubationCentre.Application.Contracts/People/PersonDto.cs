@@ -6,10 +6,10 @@ using Volo.Abp.Identity;
 
 namespace IsikUn.IncubationCentre.People
 {
-    public abstract class PersonDto : FullAuditedEntityDto<Guid>
+    public class PersonDto : FullAuditedEntityDto<Guid>
     {
         public string About { get; set; }
-        public List<SkillDto> Skills { get; set; }
+        public ICollection<SkillDto> Skills { get; set; }  
         public string Experience { get; set; }
         public Guid? IdentityUserId { get; set; }
         public IdentityUserDto IdentityUser { get; set; }

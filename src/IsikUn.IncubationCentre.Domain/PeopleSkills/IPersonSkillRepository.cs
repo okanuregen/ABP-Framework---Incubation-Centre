@@ -14,20 +14,13 @@ using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 
-namespace IsikUn.IncubationCentre.People
+namespace IsikUn.IncubationCentre.PeopleSkills
 {
-    public interface IPersonRepository : IRepository<Person, Guid>
+    public interface IPersonSkillRepository : IRepository<PersonSkill, Guid>
     {
-        Task<List<Person>> GetListAsync(
-             string filter = null,
-             string userName = null,
-             string name = null,
-             string surname = null,
-             string email = null,
-             string phoneNumber = null,
-             string experience = null,
+        Task<List<PersonSkill>> GetListAsync(
+             Guid[] UserIds = null,
              Guid[] SkillIds = null,
-             string about = null,
              int skipCount = 0,
              int maxResultCount = int.MaxValue,
              string sorting = null,
@@ -35,15 +28,8 @@ namespace IsikUn.IncubationCentre.People
          );
 
         Task<long> GetCountAsync(
-             string filter = null,
-             string userName = null,
-             string name = null,
-             string surname = null,
-             string email = null,
-             string phoneNumber = null,
-             string experience = null,
+             Guid[] UserIds = null,
              Guid[] SkillIds = null,
-             string about = null,
              CancellationToken cancelationToken = default
             );
     }

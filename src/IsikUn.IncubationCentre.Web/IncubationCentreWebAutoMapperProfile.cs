@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using IsikUn.IncubationCentre.Mentors;
 using IsikUn.IncubationCentre.Skills;
+using static IsikUn.IncubationCentre.Web.Pages.Mentors.CreateModalModel;
 
 namespace IsikUn.IncubationCentre.Web;
 
@@ -18,5 +19,6 @@ public class IncubationCentreWebAutoMapperProfile : Profile
         CreateMap<Mentor, MentorDto>().ReverseMap();
         CreateMap<CreateUpdateMentorDto, MentorDto>().ReverseMap();
         CreateMap<CreateUpdateMentorDto, Mentor>().ReverseMap();
+        CreateMap<CreateMentorViewModel, CreateUpdateMentorDto>().ReverseMap();
     }
 }

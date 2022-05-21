@@ -4725,7 +4725,7 @@ textarea.form-control-lg {
                 }
 }
 
-.badge {
+/*.badge {
     border-radius: .2rem;
     color: #fff;
     display: inline-block;
@@ -4746,7 +4746,7 @@ textarea.form-control-lg {
     position: relative;
     top: -1px
 }
-
+*/
 .list-group {
     border-radius: .2rem;
     display: flex;
@@ -14274,3 +14274,30 @@ span.flatpickr-weekday {
     width: 260px
 }
 /*# sourceMappingURL=app.css.map*/
+.badge-info {
+    background-color: #33b5e5 !important;
+}
+
+.badge-danger {
+    background-color: #ff4444 !important;
+}
+
+.badge-warning {
+    background-color: #ffbb33 !important;
+}
+
+.badge-success {
+    background-color: #00C851 !important;
+}
+
+.badge-success {
+    background-color: #00C851 !important;
+}
+
+.badge-primary {
+    background-color: #3b7ddd !important;
+}
+
+.badge-secondary {
+    background-color: #6c757d !important;
+}

@@ -9,6 +9,7 @@ using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using IsikUn.IncubationCentre.EntityFrameworkCore;
 using IsikUn.IncubationCentre.Skills;
+using Volo.Abp.Identity;
 
 namespace IsikUn.IncubationCentre.Mentors
 {
@@ -24,7 +25,7 @@ namespace IsikUn.IncubationCentre.Mentors
         public async Task<long> GetCountAsync(string filter = null, string userName = null, string name = null, string surname = null, string email = null, string phoneNumber = null, string experience = null, Guid[] SkillIds = null, string about = null, bool filterByActiveted = false, bool isActivated = true, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
-                                     (await WithDetailsAsync(a => a.IdentityUser, b => b.Skills))
+                                     (await GetQueryableAsync())
                                      ,
                                       filter,
                                       userName,
@@ -45,7 +46,7 @@ namespace IsikUn.IncubationCentre.Mentors
         public async Task<List<Mentor>> GetListAsync(string filter = null, string userName = null, string name = null, string surname = null, string email = null, string phoneNumber = null, string experience = null, Guid[] SkillIds = null, string about = null, bool filterByActiveted = false, bool isActivated = true, int skipCount = 0, int maxResultCount = int.MaxValue, string sorting = null, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
-                          (await WithDetailsAsync(a => a.IdentityUser, b => b.Skills))
+                          ((await GetQueryableAsync()).Include(a => a.Skills).Include(a => a.IdentityUser))
                           ,
                            filter,
                            userName,
@@ -96,6 +97,15 @@ namespace IsikUn.IncubationCentre.Mentors
                     .WhereIf(!string.IsNullOrWhiteSpace(about), e => e.About.Contains(about))
                     .WhereIf(SkillIds != null && SkillIds.Any(), e => SkillIds.All(a => e.Skills.Select(x => x.Id).Contains(a)))
                     .WhereIf(filterByActiveted, e => e.isActivated == isActivated);
+        }
+
+        public async Task<Mentor> GetWithDetailAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            var dbSet = (await GetDbSetAsync())
+                .Include(c => c.Skills)
+                .Include(a => a.IdentityUser);
+            var rs = await dbSet.Where(a => a.Id == id).FirstOrDefaultAsync(cancellationToken);
+            return rs;
         }
     }
 }

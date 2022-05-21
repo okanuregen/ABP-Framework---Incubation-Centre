@@ -1,7 +1,7 @@
 ﻿@page
 @using IsikUn.IncubationCentre.Localization
 @using IsikUn.IncubationCentre.Permissions
-@using IsikUn.IncubationCentre.Web.Pages.Skills
+@using IsikUn.IncubationCentre.Web.Pages.Mentors
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
@@ -10,12 +10,16 @@
 @{
     Layout = null;
 }
-<form asp-page="/Skills/CreateModal">
+
+<form asp-page="/Mentors/CreateModal">
     <abp-modal>
-        <abp-modal-header title="@L["NewSkill"].Value"></abp-modal-header>
+        <abp-modal-header title="@L["NewMentor"].Value"></abp-modal-header>
         <abp-modal-body>
-            <abp-input asp-for="Skill.Name" />
-            <abp-input asp-for="Skill.Category" />
+            <abp-select asp-for="Mentor.IdentityUserId" asp-items="Model.Users"/>
+            <abp-input asp-for="Mentor.About" />
+            <abp-select asp-for="Mentor.SkillIds" asp-items="Model.Skills"/>
+            <abp-input asp-for="Mentor.Experience" />
+            <abp-input asp-for="Mentor.isActivated" />
         </abp-modal-body>
         <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
     </abp-modal>

@@ -7,7 +7,7 @@ using Volo.Abp.Identity;
 
 namespace IsikUn.IncubationCentre.Mentors
 {
-    public class CreateUpdateMentorDto : CreateUpdatePersonDto<Guid>
+    public class CreateUpdateMentorDto : CreateUpdatePersonDto
     {
         public virtual bool isActivated { get; set; }
     }

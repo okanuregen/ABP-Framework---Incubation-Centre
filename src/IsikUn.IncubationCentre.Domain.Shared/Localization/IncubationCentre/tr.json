@@ -30,7 +30,11 @@
     "UserMatchAnotherUserType": "Seçili Kullanıcı Zaten Başka Bir Hesap İle İlişkilendirilmiş",
     "Menu:Members": "Üyeler",
     "Mentors": "Mentorlar",
-    "NewMentor": "Yeni Mentor"
+    "NewMentor": "Yeni Mentor",
+    "About": "Hakkında",
+    "Experience": "Deneyim",
+    "User": "Kullanıcı",
+    "isActive": "Aktif Mi?"
 
   }
 }

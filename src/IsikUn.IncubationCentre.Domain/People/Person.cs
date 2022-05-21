@@ -1,4 +1,5 @@
-﻿using IsikUn.IncubationCentre.Skills;
+﻿using IsikUn.IncubationCentre.PeopleSkills;
+using IsikUn.IncubationCentre.Skills;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace IsikUn.IncubationCentre.People
     public abstract class Person : FullAuditedEntity<Guid>
     {
         public string About { get; set; }
-        public List<Skill> Skills { get; set; }
+        public ICollection<Skill> Skills { get; set; }
+        public List<PersonSkill> PeopleSkills { get; set; }
         public string Experience { get; set; }
         public Guid? IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }

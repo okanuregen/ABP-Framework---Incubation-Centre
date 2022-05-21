@@ -8,7 +8,7 @@ $(function () {
             serverSide: true,
             paging: true,
             order: [[1, "asc"]],
-            searching: false,
+            searching: true,
             scrollX: true,
             ajax: abp.libs.datatables.createAjax(isikUn.incubationCentre.mentors.mentor.getList),
             columnDefs: [
@@ -51,8 +51,42 @@ $(function () {
                 },
                 {
                     title: l('Name'),
-                    data: "identitiyUser.Name"
-                }
+                    data: "identityUser.name"
+                },
+                {
+                    title: l('Surname'),
+                    data: "identityUser.surname"
+                },
+                {
+                    title: l('Email'),
+                    data: "identityUser.email"
+                },
+                {
+                    title: l('Skills'),
+                    data: "skills",
+                    render: function (data) {
+                        var text = "";
+                        data.map(x => x.name).forEach(function (skill) {
+                            text += `<span class="badge badge-info">${skill}</span>`
+                        });
+                        return text == "" ? "-" : text;
+                    }
+                },
+                {
+                    title: l('isActive'),
+                    data: "isActivated",
+                    render: function (data) {
+                        return data ? `<span class="badge badge-success p-2">${l('Yes')}</span>` : `<span class="badge badge-danger p-4">${l('No')}</span>`
+                    }
+                },
+                {
+                    title: l('About'),
+                    data: "about"
+                },
+                {
+                    title: l('Experience'),
+                    data: "experience"
+                },
             ]
         })
     );
