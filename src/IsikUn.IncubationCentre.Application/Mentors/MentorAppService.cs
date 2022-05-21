@@ -1,5 +1,6 @@
 ﻿using IsikUn.IncubationCentre.Localization;
 using IsikUn.IncubationCentre.People;
+using IsikUn.IncubationCentre.PeopleSkills;
 using IsikUn.IncubationCentre.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using System;
@@ -19,12 +20,18 @@ namespace IsikUn.IncubationCentre.Mentors
     public class MentorAppService : ApplicationService, IMentorAppService
     {
         private readonly IMentorRepository _mentorRepository;
+        private readonly IPersonSkillRepository _personSkillRepository;
         private readonly IIdentityUserRepository _identityUserRepository;
 
-        public MentorAppService(IMentorRepository mentorRepository, IIdentityUserRepository identityUserRepository)
+        public MentorAppService(
+            IMentorRepository mentorRepository, 
+            IIdentityUserRepository identityUserRepository,
+            IPersonSkillRepository personSkillRepository
+            )
         {
             this._mentorRepository = mentorRepository;
             this._identityUserRepository = identityUserRepository;
+            this._personSkillRepository = personSkillRepository;
             LocalizationResource = typeof(IncubationCentreResource);
         }
 
@@ -39,6 +46,7 @@ namespace IsikUn.IncubationCentre.Mentors
         [Authorize(IncubationCentrePermissions.Mentors.Delete)]
         public async Task DeleteAsync(Guid id)
         {
+            await _personSkillRepository.DeleteManyAsync(await _personSkillRepository.GetListAsync(a => a.PersonId == id, true));
             await _mentorRepository.DeleteAsync(id, autoSave: true);
         }
 
@@ -85,7 +93,9 @@ namespace IsikUn.IncubationCentre.Mentors
             var mentor = await _mentorRepository.GetAsync(id);
             ObjectMapper.Map(input, mentor);
             mentor = await _mentorRepository.UpdateAsync(mentor, autoSave: true);
+            mentor = await _mentorRepository.GetWithDetailAsync(id);
             return ObjectMapper.Map<Mentor, MentorDto>(mentor);
+
         }
     }
 }

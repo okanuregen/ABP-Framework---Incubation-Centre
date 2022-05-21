@@ -80,11 +80,11 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
         public async Task<IActionResult> OnPostAsync()
         {
             var newMentor = await _mentorAppService.CreateAsync(ObjectMapper.Map<CreateMentorViewModel, CreateUpdateMentorDto>(Mentor));
-            var skills = Mentor.SkillIds.Select(a => new PersonSkill
+            var skills = Mentor.SkillIds != null ? Mentor.SkillIds.Select(a => new PersonSkill
             {
                 SkillId = a,
                 PersonId = newMentor.Id
-            });
+            }) : new List<PersonSkill>();
             if (skills.Any())
             {
                 await _personSkillRepository.InsertManyAsync(skills,true);

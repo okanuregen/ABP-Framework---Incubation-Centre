@@ -2,7 +2,6 @@ using IsikUn.IncubationCentre.Mentors;
 using IsikUn.IncubationCentre.PeopleSkills;
 using IsikUn.IncubationCentre.Skills;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ using Volo.Abp.Identity;
 
 namespace IsikUn.IncubationCentre.Web.Pages.Mentors
 {
-   
+
     public class EditModalModel : IncubationCentrePageModel
     {
         [HiddenInput]
@@ -95,13 +94,36 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
 
         public async Task<IActionResult> OnPostAsync()
         {
+            Mentor.Id = Id;
             var mentor = await _mentorAppService.UpdateAsync(Id, ObjectMapper.Map<UpdateMentorViewModel, CreateUpdateMentorDto>(Mentor));
-            var skills = Mentor.SkillIds.Select(a => new PersonSkill
+
+            List<Guid> deletedSkillIds = new List<Guid>();
+            List<Guid> newSkillIds = new List<Guid>();
+
+            if (mentor.Skills == null || mentor.Skills.Count() == 0) //current skills is empty
+            {
+                newSkillIds = Mentor.SkillIds != null ? Mentor.SkillIds : newSkillIds;
+            }
+            else
+            {
+                deletedSkillIds = Mentor.SkillIds != null ? mentor.Skills.Select(a => a.Id).Where(a => !Mentor.SkillIds.Contains(a)).ToList() : mentor.Skills.Select(a => a.Id).ToList();
+                newSkillIds = Mentor.SkillIds != null ? Mentor.SkillIds.Where(a => !mentor.Skills.Select(b => b.Id).Contains(a)).ToList() : newSkillIds;
+            }
+
+            if (deletedSkillIds.Any())
+            {
+                await _personSkillRepository.DeleteManyAsync(
+                    await _personSkillRepository.GetListAsync(a => deletedSkillIds.Contains(a.SkillId))
+                    , true);
+            }
+
+            //new added skills
+            var skills = newSkillIds.Select(a => new PersonSkill
             {
                 SkillId = a,
-                PersonId = Id
+                PersonId = Id,
             });
-            await _personSkillRepository.DeleteManyAsync(mentor.Skills.Select(a => a.Id),true);
+
             if (skills.Any())
             {
                 await _personSkillRepository.InsertManyAsync(skills, true);

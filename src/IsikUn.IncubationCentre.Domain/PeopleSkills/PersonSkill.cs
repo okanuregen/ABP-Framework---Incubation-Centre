@@ -9,7 +9,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace IsikUn.IncubationCentre.PeopleSkills
 {
-    public class PersonSkill : FullAuditedEntity<Guid>
+    public class PersonSkill : AuditedEntity<Guid>
     {
         public Guid PersonId { get; set; }
         public Guid SkillId { get; set; }

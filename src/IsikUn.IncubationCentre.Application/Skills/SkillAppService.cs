@@ -1,4 +1,5 @@
 ﻿using IsikUn.IncubationCentre.Localization;
+using IsikUn.IncubationCentre.PeopleSkills;
 using IsikUn.IncubationCentre.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using System;
@@ -17,10 +18,12 @@ namespace IsikUn.IncubationCentre.Skills
     public class SkillAppService : ApplicationService, ISkillAppService
     {
         private readonly ISkillRepository _skillRepository;
+        private readonly IPersonSkillRepository _personSkillRepository;
 
-        public SkillAppService(ISkillRepository skillRepository)
+        public SkillAppService(ISkillRepository skillRepository, IPersonSkillRepository personSkillRepository)
         {
             this._skillRepository = skillRepository;
+            this._personSkillRepository = personSkillRepository;
             LocalizationResource = typeof(IncubationCentreResource);
         }
 
@@ -41,6 +44,7 @@ namespace IsikUn.IncubationCentre.Skills
         [Authorize(IncubationCentrePermissions.Skills.Delete)]
         public async Task DeleteAsync(Guid id)
         {
+            await _personSkillRepository.DeleteManyAsync(await _personSkillRepository.GetListAsync(a => a.SkillId == id, true));
             await _skillRepository.DeleteAsync(id, autoSave:true);
         }
 

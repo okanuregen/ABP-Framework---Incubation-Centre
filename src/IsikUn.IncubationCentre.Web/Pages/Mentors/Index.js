@@ -67,7 +67,7 @@ $(function () {
                     render: function (data) {
                         var text = "";
                         data.map(x => x.name).forEach(function (skill) {
-                            text += `<span class="badge badge-info">${skill}</span>`
+                            text += `<span class="badge badge-info me-2">${skill}</span>`
                         });
                         return text == "" ? "-" : text;
                     }
@@ -76,7 +76,7 @@ $(function () {
                     title: l('isActive'),
                     data: "isActivated",
                     render: function (data) {
-                        return data ? `<span class="badge badge-success p-2">${l('Yes')}</span>` : `<span class="badge badge-danger p-4">${l('No')}</span>`
+                        return data ? `<span class="badge badge-success p-2">${l('Yes')}</span>` : `<span class="badge badge-danger p-2">${l('No')}</span>`
                     }
                 },
                 {
