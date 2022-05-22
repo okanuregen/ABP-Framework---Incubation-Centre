@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IsikUn.IncubationCentre.Entrepreneurs;
 using IsikUn.IncubationCentre.Mentors;
 using IsikUn.IncubationCentre.People;
 using IsikUn.IncubationCentre.Skills;
@@ -17,16 +18,18 @@ public class IncubationCentreApplicationAutoMapperProfile : Profile
         CreateMap<CreateSkillDto, Skill>().ReverseMap();
         CreateMap<CreateSkillDto, SkillDto>().ReverseMap();
         CreateMap<UpdateSkillDto, Skill>().ReverseMap();
-        CreateMap<UpdateSkillDto, SkillDto>().ReverseMap();
-
-        CreateMap<Mentor, MentorDto>().ReverseMap();
-        CreateMap<CreateUpdateMentorDto, MentorDto>().ReverseMap();
-        CreateMap<CreateUpdateMentorDto, Mentor>().ReverseMap();        
+        CreateMap<UpdateSkillDto, SkillDto>().ReverseMap();      
         
         CreateMap<Person, PersonDto>().ReverseMap();
         CreateMap<CreateUpdatePersonDto, PersonDto>().ReverseMap();
         CreateMap<CreateUpdatePersonDto, Person>().ReverseMap();
 
+        CreateMap<Mentor, MentorDto>().ReverseMap();
+        CreateMap<CreateUpdateMentorDto, MentorDto>().ReverseMap();
+        CreateMap<CreateUpdateMentorDto, Mentor>().ReverseMap();
 
+        CreateMap<Entrepreneur, EntrepreneurDto>().ReverseMap();
+        CreateMap<CreateUpdateEntrepreneurDto, EntrepreneurDto>().ReverseMap();
+        CreateMap<CreateUpdateEntrepreneurDto, Entrepreneur>().ReverseMap();
     }
 }

@@ -1,16 +1,16 @@
 $(function () {
     var l = abp.localization.getResource('IncubationCentre');
-    var createModal = new abp.ModalManager(abp.appPath + 'Mentors/CreateModal');
-    var editModal = new abp.ModalManager(abp.appPath + 'Mentors/EditModal');
+    var createModal = new abp.ModalManager(abp.appPath + 'Entrepreneurs/CreateModal');
+    var editModal = new abp.ModalManager(abp.appPath + 'Entrepreneurs/EditModal');
 
-    var dataTable = $('#MentorsTable').DataTable(
+    var dataTable = $('#EntrepreneursTable').DataTable(
         abp.libs.datatables.normalizeConfiguration({
             serverSide: true,
             paging: true,
             order: [[1, "asc"]],
             searching: true,
             scrollX: true,
-            ajax: abp.libs.datatables.createAjax(isikUn.incubationCentre.mentors.mentor.getList),
+            ajax: abp.libs.datatables.createAjax(isikUn.incubationCentre.entrepreneurs.entrepreneur.getList),
             columnDefs: [
                 {
                     title: l('Actions'),
@@ -20,7 +20,7 @@ $(function () {
                                 {
                                     text: l('Edit'),
                                     visible:
-                                        abp.auth.isGranted('IncubationCentre.Mentors.Edit'),
+                                        abp.auth.isGranted('IncubationCentre.Entrepreneurs.Edit'),
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
                                     }
@@ -28,7 +28,7 @@ $(function () {
                                 {
                                     text: l('Delete'),
                                     visible:
-                                        abp.auth.isGranted('IncubationCentre.Mentors.Delete'),
+                                        abp.auth.isGranted('IncubationCentre.Entrepreneurs.Delete'),
                                     confirmMessage: function (data) {
                                         return l(
                                             'EntityDeletionConfirmationMessage',
@@ -36,7 +36,7 @@ $(function () {
                                         );
                                     },
                                     action: function (data) {
-                                        isikUn.incubationCentre.mentors.mentor
+                                        isikUn.incubationCentre.entrepreneurs.entrepreneur
                                             .delete(data.record.id)
                                             .then(function () {
                                                 abp.notify.info(
@@ -91,7 +91,7 @@ $(function () {
         dataTable.ajax.reload();
     });
 
-    $('#NewMentorButton').click(function (e) {
+    $('#NewEntrepreneurButton').click(function (e) {
         e.preventDefault();
         createModal.open();
     });

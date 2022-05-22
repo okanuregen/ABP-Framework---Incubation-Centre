@@ -7,7 +7,7 @@ using Volo.Abp.Identity;
 
 namespace IsikUn.IncubationCentre.Entrepreneurs
 {
-    public class EntrepreneurDto : PersonDto
+    public class CreateUpdateEntrepreneurDto : CreateUpdatePersonDto
     {
         public virtual bool isActivated { get; set; }
     }

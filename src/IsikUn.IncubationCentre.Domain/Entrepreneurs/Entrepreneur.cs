@@ -13,6 +13,5 @@ namespace IsikUn.IncubationCentre.Entrepreneurs
     public class Entrepreneur : Person
     {
         public virtual bool isActivated { get; set; }
-
     }
 }

@@ -1,4 +1,4 @@
-using IsikUn.IncubationCentre.Mentors;
+using IsikUn.IncubationCentre.Entrepreneurs;
 using IsikUn.IncubationCentre.PeopleSkills;
 using IsikUn.IncubationCentre.Skills;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 using Volo.Abp.Identity;
 
-namespace IsikUn.IncubationCentre.Web.Pages.Mentors
+namespace IsikUn.IncubationCentre.Web.Pages.Entrepreneurs
 {
 
     public class EditModalModel : IncubationCentrePageModel
@@ -22,7 +22,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
         public Guid Id { get; set; }
 
         [BindProperty]
-        public UpdateMentorViewModel Mentor { get; set; }
+        public UpdateEntrepreneurViewModel Entrepreneur { get; set; }
 
 
         public List<SelectListItem> Skills { get; set; }
@@ -30,23 +30,23 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
 
 
 
-        private readonly IMentorAppService _mentorAppService;
-        private readonly IMentorRepository _mentorRepository;
+        private readonly IEntrepreneurAppService _entrepreneurAppService;
+        private readonly IEntrepreneurRepository _entrepreneurRepository;
         private readonly ISkillAppService _skillAppService;
         private readonly IIdentityUserRepository _identityUserRepository;
         private readonly IIdentityRoleRepository _identityRoleRepository;
         private readonly IPersonSkillRepository _personSkillRepository;
 
         public EditModalModel(
-            IMentorAppService mentorAppService,
-            IMentorRepository mentorRepository,
+            IEntrepreneurAppService entrepreneurAppService,
+            IEntrepreneurRepository entrepreneurRepository,
             ISkillAppService skillAppService,
             IIdentityUserRepository identityUserRepository,
             IIdentityRoleRepository identityRoleRepository,
             IPersonSkillRepository personSkillRepository)
         {
-            this._mentorAppService = mentorAppService;
-            this._mentorRepository = mentorRepository;
+            this._entrepreneurAppService = entrepreneurAppService;
+            this._entrepreneurRepository = entrepreneurRepository;
             this._skillAppService = skillAppService;
             this._identityUserRepository = identityUserRepository;
             this._identityRoleRepository = identityRoleRepository;
@@ -55,28 +55,28 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
 
         public async Task OnGet()
         {
-            var mentor = await _mentorRepository.GetWithDetailAsync(Id);
-            Mentor = new UpdateMentorViewModel
+            var entrepreneur = await _entrepreneurRepository.GetWithDetailAsync(Id);
+            Entrepreneur = new UpdateEntrepreneurViewModel
             {
                 Id = Id,
-                About = mentor.About,
-                Experience = mentor.Experience,
-                isActivated = mentor.isActivated,
-                IdentityUserId = mentor.IdentityUserId.Value,
-                SkillIds = mentor.Skills.Select(a => a.Id).ToList()
+                About = entrepreneur.About,
+                Experience = entrepreneur.Experience,
+                isActivated = entrepreneur.isActivated,
+                IdentityUserId = entrepreneur.IdentityUserId.Value,
+                SkillIds = entrepreneur.Skills.Select(a => a.Id).ToList()
             };
 
             var skills = await _skillAppService.GetAllItemsAsync();
             Skills = skills
-                .Select(x => new SelectListItem(x.Name, x.Id.ToString(), Mentor.SkillIds.Contains(x.Id)))
+                .Select(x => new SelectListItem(x.Name, x.Id.ToString(), Entrepreneur.SkillIds.Contains(x.Id)))
                 .ToList();
 
-            var mentorRole = (await _identityRoleRepository.GetListAsync(filter: "Mentor")).FirstOrDefault();
-            if (mentorRole != null)
+            var entrepreneurRole = (await _identityRoleRepository.GetListAsync(filter: "Entrepreneur")).FirstOrDefault();
+            if (entrepreneurRole != null)
             {
                 var users = await _identityUserRepository.GetListAsync();
-                Users = users.Where(a => (_identityUserRepository.GetRolesAsync(a.Id).Result).Select(b => b.Id).Contains(mentorRole.Id))
-                        .Select(x => new SelectListItem(string.Format("{0} {1}", x.Name, x.Surname), x.Id.ToString(), x.Id == Mentor.IdentityUserId))
+                Users = users.Where(a => (_identityUserRepository.GetRolesAsync(a.Id).Result).Select(b => b.Id).Contains(entrepreneurRole.Id))
+                        .Select(x => new SelectListItem(string.Format("{0} {1}", x.Name, x.Surname), x.Id.ToString(), x.Id == Entrepreneur.IdentityUserId))
                         .ToList();
             }
             else
@@ -85,7 +85,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
                 {
                     new SelectListItem
                     {
-                        Text = L["NoUserFoundWithThisRole",L["Mentor"]],
+                        Text = L["NoUserFoundWithThisRole",L["Entrepreneur"]],
                         Value = ""
                     }
                 };
@@ -94,20 +94,20 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
 
         public async Task<IActionResult> OnPostAsync()
         {
-            Mentor.Id = Id;
-            var mentor = await _mentorAppService.UpdateAsync(Id, ObjectMapper.Map<UpdateMentorViewModel, CreateUpdateMentorDto>(Mentor));
+            Entrepreneur.Id = Id;
+            var entrepreneur = await _entrepreneurAppService.UpdateAsync(Id, ObjectMapper.Map<UpdateEntrepreneurViewModel, CreateUpdateEntrepreneurDto>(Entrepreneur));
 
             List<Guid> deletedSkillIds = new List<Guid>();
             List<Guid> newSkillIds = new List<Guid>();
 
-            if (mentor.Skills == null || mentor.Skills.Count() == 0) //current skills is empty
+            if (entrepreneur.Skills == null || entrepreneur.Skills.Count() == 0) //current skills is empty
             {
-                newSkillIds = Mentor.SkillIds != null ? Mentor.SkillIds : newSkillIds;
+                newSkillIds = Entrepreneur.SkillIds != null ? Entrepreneur.SkillIds : newSkillIds;
             }
             else
             {
-                deletedSkillIds = Mentor.SkillIds != null ? mentor.Skills.Select(a => a.Id).Where(a => !Mentor.SkillIds.Contains(a)).ToList() : mentor.Skills.Select(a => a.Id).ToList();
-                newSkillIds = Mentor.SkillIds != null ? Mentor.SkillIds.Where(a => !mentor.Skills.Select(b => b.Id).Contains(a)).ToList() : newSkillIds;
+                deletedSkillIds = Entrepreneur.SkillIds != null ? entrepreneur.Skills.Select(a => a.Id).Where(a => !Entrepreneur.SkillIds.Contains(a)).ToList() : entrepreneur.Skills.Select(a => a.Id).ToList();
+                newSkillIds = Entrepreneur.SkillIds != null ? Entrepreneur.SkillIds.Where(a => !entrepreneur.Skills.Select(b => b.Id).Contains(a)).ToList() : newSkillIds;
             }
 
             if (deletedSkillIds.Any())
@@ -132,7 +132,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
         }
     }
 
-    public class UpdateMentorViewModel : CreateUpdateMentorDto
+    public class UpdateEntrepreneurViewModel : CreateUpdateEntrepreneurDto
     {
 
         [SelectItems(nameof(EditModalModel.Skills))]

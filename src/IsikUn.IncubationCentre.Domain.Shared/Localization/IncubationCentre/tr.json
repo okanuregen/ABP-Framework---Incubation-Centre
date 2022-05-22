@@ -34,7 +34,18 @@
     "About": "Hakkında",
     "Experience": "Deneyim",
     "User": "Kullanıcı",
-    "isActive": "Aktif Mi?"
+    "isActive": "Aktif Mi?",
+    "Surname": "Soy İsim",
+    "Entrepreneurs": "Girişimciler",
+    "Menu:Entrepreneurs": "Girişimciler",
+    "Entrepreneur": "Girişimci",
+    "NewEntrepreneur": "Yeni Girişimci",
+    "NoUserFoundWithThisRole": "{0} Rolunde Kullanıcı Bulanamadı",
+    "Permission:Entrepreneurs": "Girişimci Yönetimi",
+    "Permission:Entrepreneurs.Create": "Yeni Girişimci Ekleme",
+    "Permission:Entrepreneurs.Edit": "Girişimci Düzenleme",
+    "Permission:Entrepreneurs.Delete": "Girişimci Silme"
+
 
   }
 }

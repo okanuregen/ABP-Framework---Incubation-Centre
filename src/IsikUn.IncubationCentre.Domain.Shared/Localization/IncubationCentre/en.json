@@ -34,7 +34,18 @@
     "About": "About",
     "Experience": "Experience",
     "User": "User",
-    "isActive": "Is Active ?"
+    "isActive": "Is Active ?",
+    "Surname": "Surname",
+    "Entrepreneurs": "Entrepreneurs",
+    "Menu:Entrepreneurs": "Entrepreneurs",
+    "Entrepreneur": "Entrepreneur",
+    "NewEntrepreneur": "New Entrepreneur",
+    "NoUserFoundWithThisRole": "No User Found With {0} Role",
+    "Permission:Entrepreneurs": "Entrepreneur Management",
+    "Permission:Entrepreneurs.Create": "Creating New Entrepreneurs",
+    "Permission:Entrepreneurs.Edit": "Editing the Entrepreneurs",
+    "Permission:Entrepreneurs.Delete": "Deleting Entrepreneurs"
+
 
   }
 }

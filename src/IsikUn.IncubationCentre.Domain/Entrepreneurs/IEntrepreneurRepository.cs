@@ -4,11 +4,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
 
-namespace IsikUn.IncubationCentre.Mentors
+namespace IsikUn.IncubationCentre.Entrepreneurs
 {
-    public interface IMentorRepository : IRepository<Mentor, Guid>
+    public interface IEntrepreneurRepository : IRepository<Entrepreneur, Guid>
     {
-        Task<List<Mentor>> GetListAsync(
+        Task<List<Entrepreneur>> GetListAsync(
              string filter = null,
              string userName = null,
              string name = null,
@@ -40,6 +40,6 @@ namespace IsikUn.IncubationCentre.Mentors
              bool isActivated = true,
              CancellationToken cancelationToken = default
             );
-        Task<Mentor> GetWithDetailAsync(Guid id, CancellationToken cancelationToken = default);
+        Task<Entrepreneur> GetWithDetailAsync(Guid id, CancellationToken cancelationToken = default);
     }
 }

@@ -13,6 +13,8 @@ public class IncubationCentreMenus
     public const string Skills = Prefix + ".Skills";
     public const string SkillManagement = Prefix + ".SkillManagement";
     public const string Members = Prefix + ".Members";
+    public const string Mentors = Prefix + ".Mentors";
+    public const string Entrepreneurs = Prefix + ".Entrepreneurs";
 
     //Add your menu items here...
 

@@ -2,10 +2,14 @@
 using IsikUn.IncubationCentre.Localization;
 using IsikUn.IncubationCentre.MultiTenancy;
 using IsikUn.IncubationCentre.Permissions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Identity.Web.Navigation;
+using Volo.Abp.PermissionManagement;
 using Volo.Abp.SettingManagement.Web.Navigation;
 using Volo.Abp.TenantManagement.Web.Navigation;
 using Volo.Abp.UI.Navigation;
+using Volo.Abp.Users;
 
 namespace IsikUn.IncubationCentre.Web.Menus;
 
@@ -35,11 +39,18 @@ public class IncubationCentreMenuContributor : IMenuContributor
 
         var members = new ApplicationMenuItem(IncubationCentreMenus.SystemDescriptions, l["Menu:Members"], icon: "fa fa-user-circle-o", order: 2);
         members.AddItem(new ApplicationMenuItem(
-            IncubationCentreMenus.SkillManagement,
+            IncubationCentreMenus.Mentors,
             l["Mentors"],
             url: "/Mentors",
             icon: "fa fa-question",
             requiredPermissionName: IncubationCentrePermissions.Mentors.Default
+        ));
+        members.AddItem(new ApplicationMenuItem(
+            IncubationCentreMenus.Entrepreneurs,
+            l["Entrepreneurs"],
+            url: "/Entrepreneurs",
+            icon: "fa fa-question",
+            requiredPermissionName: IncubationCentrePermissions.Entrepreneurs.Default
         ));
         context.Menu.AddItem(members);
 
@@ -85,6 +96,11 @@ public class IncubationCentreMenuContributor : IMenuContributor
            "/Identity/Users",
            "fa fa-users"
            ));
-        context.Menu.AddItem(administration);
+
+        var currentUser = context.ServiceProvider.GetService<ICurrentUser>();
+        if (currentUser.IsInRole("admin"))
+        {
+            context.Menu.AddItem(administration);
+        }
     }
 }

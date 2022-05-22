@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IsikUn.IncubationCentre.Entrepreneurs;
 using IsikUn.IncubationCentre.Mentors;
 using IsikUn.IncubationCentre.Skills;
 using static IsikUn.IncubationCentre.Web.Pages.Mentors.CreateModalModel;
@@ -20,5 +21,11 @@ public class IncubationCentreWebAutoMapperProfile : Profile
         CreateMap<CreateUpdateMentorDto, MentorDto>().ReverseMap();
         CreateMap<CreateUpdateMentorDto, Mentor>().ReverseMap();
         CreateMap<CreateMentorViewModel, CreateUpdateMentorDto>().ReverseMap();
+
+
+        CreateMap<Entrepreneur, EntrepreneurDto>().ReverseMap();
+        CreateMap<CreateUpdateEntrepreneurDto, EntrepreneurDto>().ReverseMap();
+        CreateMap<CreateUpdateEntrepreneurDto, Entrepreneur>().ReverseMap();
+        //CreateMap<CreateEntrepreneurViewModel, CreateUpdateEntrepreneurDto>().ReverseMap();
     }
 }

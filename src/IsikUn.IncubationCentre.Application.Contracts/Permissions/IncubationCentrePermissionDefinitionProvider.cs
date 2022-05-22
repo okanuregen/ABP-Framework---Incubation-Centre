@@ -19,6 +19,11 @@ public class IncubationCentrePermissionDefinitionProvider : PermissionDefinition
         mentorsPermission.AddChild(IncubationCentrePermissions.Mentors.Create, L("Permission:Mentors.Create"));
         mentorsPermission.AddChild(IncubationCentrePermissions.Mentors.Edit, L("Permission:Mentors.Edit"));
         mentorsPermission.AddChild(IncubationCentrePermissions.Mentors.Delete, L("Permission:Mentors.Delete"));
+
+        var entrepreneursPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Entrepreneurs.Default, L("Permission:Entrepreneurs"));
+        entrepreneursPermission.AddChild(IncubationCentrePermissions.Entrepreneurs.Create, L("Permission:Entrepreneurs.Create"));
+        entrepreneursPermission.AddChild(IncubationCentrePermissions.Entrepreneurs.Edit, L("Permission:Entrepreneurs.Edit"));
+        entrepreneursPermission.AddChild(IncubationCentrePermissions.Entrepreneurs.Delete, L("Permission:Entrepreneurs.Delete"));
     }
 
     private static LocalizableString L(string name)
