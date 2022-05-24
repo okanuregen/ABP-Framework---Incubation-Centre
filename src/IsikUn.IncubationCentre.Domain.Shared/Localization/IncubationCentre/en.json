@@ -30,6 +30,7 @@
     "UserMatchAnotherUserType": "User Has Been Already Have Relationship With Another Account",
     "Menu:Members": "Members",
     "Mentors": "Mentors",
+    "Mentor": "Mentor",
     "NewMentor": "New Mentor",
     "About": "About",
     "Experience": "Experience",
@@ -44,8 +45,31 @@
     "Permission:Entrepreneurs": "Entrepreneur Management",
     "Permission:Entrepreneurs.Create": "Creating New Entrepreneurs",
     "Permission:Entrepreneurs.Edit": "Editing the Entrepreneurs",
-    "Permission:Entrepreneurs.Delete": "Deleting Entrepreneurs"
-
+    "Permission:Entrepreneurs.Delete": "Deleting Entrepreneurs",
+    "Permission:Investors": "Investor Management",
+    "Permission:Investors.Create": "Creating New Investors",
+    "Permission:Investors.Edit": "Editing the Investors",
+    "Permission:Investors.Delete": "Deleting Investors",
+    "Investors": "Investors",
+    "Investor": "Investor",
+    "Menu:Investors": "Investors",
+    "NewInvestor": "New Investor",
+    "Permission:SystemManagers": "System Manager Management",
+    "Permission:SystemManagers.Create": "Creating New System Managers",
+    "Permission:SystemManagers.Edit": "Editing the System Managers",
+    "Permission:SystemManagers.Delete": "Deleting System Managers",
+    "SystemManagers": "System Managers",
+    "SystemManager": "System Manager",
+    "Menu:SystemManagers": "System Managers",
+    "NewSystemManager": "New System Manager",
+    "Permission:Collaborators": "Collaborator Management",
+    "Permission:Collaborators.Create": "Creating New Collaborators",
+    "Permission:Collaborators.Edit": "Editing the Collaborators",
+    "Permission:Collaborators.Delete": "Deleting Collaborators",
+    "Collaborators": "Collaborators",
+    "Collaborator": "Collaborator",
+    "Menu:Collaborators": "Collaborators",
+    "NewCollaborator": "New Collaborator"
 
   }
 }

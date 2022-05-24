@@ -30,6 +30,7 @@
     "UserMatchAnotherUserType": "Seçili Kullanıcı Zaten Başka Bir Hesap İle İlişkilendirilmiş",
     "Menu:Members": "Üyeler",
     "Mentors": "Mentorlar",
+    "Mentor": "Mentor",
     "NewMentor": "Yeni Mentor",
     "About": "Hakkında",
     "Experience": "Deneyim",
@@ -44,8 +45,30 @@
     "Permission:Entrepreneurs": "Girişimci Yönetimi",
     "Permission:Entrepreneurs.Create": "Yeni Girişimci Ekleme",
     "Permission:Entrepreneurs.Edit": "Girişimci Düzenleme",
-    "Permission:Entrepreneurs.Delete": "Girişimci Silme"
-
-
+    "Permission:Entrepreneurs.Delete": "Girişimci Silme",
+    "Permission:Investors": "Yatırımcı Yönetimi",
+    "Permission:Investors.Create": "Yeni Yatırımcı Ekleme",
+    "Permission:Investors.Edit": "Yatırımcı Düzenleme",
+    "Permission:Investors.Delete": "Yatırımcı Silme",
+    "Investors": "Yatırımcılar",
+    "Investor": "Yatırımcı",
+    "Menu:Investors": "Yatırımcılar",
+    "NewInvestor": "Yeni Yatırımcı",
+    "Permission:SystemManagers": "Sistem Yöneticisi Yönetimi",
+    "Permission:SystemManagers.Create": "Yeni Sistem Yöneticisi Ekleme",
+    "Permission:SystemManagers.Edit": "Sistem Yöneticisi Düzenleme",
+    "Permission:SystemManagers.Delete": "Sistem Yöneticisi Silme",
+    "SystemManagers": "Sistem Yöneticileri",
+    "SystemManager": "Sistem Yöneticisi",
+    "Menu:SystemManagers": "Sistem Yöneticileri",
+    "NewSystemManager": "Yeni Sistem Yöneticisi",
+    "Permission:Collaborators": "İş Ortağı Yönetimi",
+    "Permission:Collaborators.Create": "Yeni İş Ortağı Ekleme",
+    "Permission:Collaborators.Edit": "İş Ortağı Düzenleme",
+    "Permission:Collaborators.Delete": "İş Ortağı Silme",
+    "Collaborators": "İş Ortakları",
+    "Collaborator": "İş Ortağı",
+    "Menu:Collaborators": "İş Ortakları",
+    "NewCollaborator": "Yeni İş Ortağı"
   }
 }

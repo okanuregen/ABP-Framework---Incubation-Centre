@@ -12,6 +12,6 @@ namespace IsikUn.IncubationCentre.SystemManagers
 {
     public class SystemManager : Person
     {
-    
+        public virtual bool isActivated { get; set; }
     }
 }

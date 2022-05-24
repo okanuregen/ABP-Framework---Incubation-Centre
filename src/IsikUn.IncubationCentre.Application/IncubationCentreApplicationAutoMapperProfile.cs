@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using IsikUn.IncubationCentre.Collaborators;
 using IsikUn.IncubationCentre.Entrepreneurs;
+using IsikUn.IncubationCentre.Investors;
 using IsikUn.IncubationCentre.Mentors;
 using IsikUn.IncubationCentre.People;
 using IsikUn.IncubationCentre.Skills;
+using IsikUn.IncubationCentre.SystemManagers;
 
 namespace IsikUn.IncubationCentre;
 
@@ -31,5 +34,18 @@ public class IncubationCentreApplicationAutoMapperProfile : Profile
         CreateMap<Entrepreneur, EntrepreneurDto>().ReverseMap();
         CreateMap<CreateUpdateEntrepreneurDto, EntrepreneurDto>().ReverseMap();
         CreateMap<CreateUpdateEntrepreneurDto, Entrepreneur>().ReverseMap();
+
+        CreateMap<Investor, InvestorDto>().ReverseMap();
+        CreateMap<CreateUpdateInvestorDto, InvestorDto>().ReverseMap();
+        CreateMap<CreateUpdateInvestorDto, Investor>().ReverseMap();
+
+        CreateMap<SystemManager, SystemManagerDto>().ReverseMap();
+        CreateMap<CreateUpdateSystemManagerDto, SystemManagerDto>().ReverseMap();
+        CreateMap<CreateUpdateSystemManagerDto, SystemManager>().ReverseMap();
+
+        CreateMap<Collaborator, CollaboratorDto>().ReverseMap();
+        CreateMap<CreateUpdateCollaboratorDto, CollaboratorDto>().ReverseMap();
+        CreateMap<CreateUpdateCollaboratorDto, Collaborator>().ReverseMap();
+
     }
 }

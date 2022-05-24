@@ -1,4 +1,4 @@
-using IsikUn.IncubationCentre.Mentors;
+using IsikUn.IncubationCentre.SystemManagers;
 using IsikUn.IncubationCentre.PeopleSkills;
 using IsikUn.IncubationCentre.Skills;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +13,13 @@ using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 using Volo.Abp.Identity;
 
-namespace IsikUn.IncubationCentre.Web.Pages.Mentors
+namespace IsikUn.IncubationCentre.Web.Pages.SystemManagers
 {
 
     public class CreateModalModel : IncubationCentrePageModel
     {
         [BindProperty]
-        public CreateMentorViewModel Mentor { get; set; }
+        public CreateSystemManagerViewModel SystemManager { get; set; }
 
 
         public List<SelectListItem> Skills { get; set; }
@@ -27,20 +27,20 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
 
 
 
-        private readonly IMentorAppService _mentorAppService;
+        private readonly ISystemManagerAppService _systemManagerAppService;
         private readonly ISkillAppService _skillAppService;
         private readonly IIdentityUserRepository _identityUserRepository;
         private readonly IIdentityRoleRepository _identityRoleRepository;
         private readonly IPersonSkillRepository _personSkillRepository;
 
         public CreateModalModel(
-            IMentorAppService mentorAppService,
+            ISystemManagerAppService systemManagerAppService,
             ISkillAppService skillAppService,
             IIdentityUserRepository identityUserRepository,
             IIdentityRoleRepository identityRoleRepository,
             IPersonSkillRepository personSkillRepository)
         {
-            this._mentorAppService = mentorAppService;
+            this._systemManagerAppService = systemManagerAppService;
             this._skillAppService = skillAppService;
             this._identityUserRepository = identityUserRepository;
             this._identityRoleRepository = identityRoleRepository;
@@ -49,18 +49,18 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
 
         public async Task OnGetAsync()
         {
-            Mentor = new CreateMentorViewModel();
+            SystemManager = new CreateSystemManagerViewModel();
 
             var skills = await _skillAppService.GetAllItemsAsync();
             Skills = skills
                 .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
                 .ToList();
 
-            var mentorRole = (await _identityRoleRepository.GetListAsync(filter: "Mentor")).FirstOrDefault();
-            if (mentorRole != null)
+            var systemManagerRole = (await _identityRoleRepository.GetListAsync(filter: "System Manager")).FirstOrDefault();
+            if (systemManagerRole != null)
             {
                 var users = await _identityUserRepository.GetListAsync();
-                Users = users.Where(a => (_identityUserRepository.GetRolesAsync(a.Id).Result).Select(b=> b.Id).Contains(mentorRole.Id))
+                Users = users.Where(a => (_identityUserRepository.GetRolesAsync(a.Id).Result).Select(b=> b.Id).Contains(systemManagerRole.Id))
                         .Select(x => new SelectListItem(string.Format("{0} ({1} {2})", x.UserName, x.Name, x.Surname), x.Id.ToString()))
                         .ToList();
             }
@@ -70,7 +70,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
                 { 
                     new SelectListItem
                     {
-                        Text = L["NoUserFoundWithThisRole",L["Mentor"]],
+                        Text = L["NoUserFoundWithThisRole",L["SystemManager"]],
                         Value = ""
                     }
                 };
@@ -79,11 +79,11 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var newMentor = await _mentorAppService.CreateAsync(ObjectMapper.Map<CreateMentorViewModel, CreateUpdateMentorDto>(Mentor));
-            var skills = Mentor.SkillIds != null ? Mentor.SkillIds.Select(a => new PersonSkill
+            var newSystemManager = await _systemManagerAppService.CreateAsync(ObjectMapper.Map<CreateSystemManagerViewModel, CreateUpdateSystemManagerDto>(SystemManager));
+            var skills = SystemManager.SkillIds != null ? SystemManager.SkillIds.Select(a => new PersonSkill
             {
                 SkillId = a,
-                PersonId = newMentor.Id
+                PersonId = newSystemManager.Id
             }) : new List<PersonSkill>();
             if (skills.Any())
             {
@@ -92,7 +92,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
             return NoContent();
         }
 
-        public class CreateMentorViewModel : CreateUpdateMentorDto
+        public class CreateSystemManagerViewModel : CreateUpdateSystemManagerDto
         {
 
             [SelectItems(nameof(Skills))]

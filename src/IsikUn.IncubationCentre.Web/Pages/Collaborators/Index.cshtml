@@ -1,0 +1,38 @@
+﻿@page
+@using IsikUn.IncubationCentre.Localization
+@using IsikUn.IncubationCentre.Permissions
+@using IsikUn.IncubationCentre.Web.Pages.Collaborators
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<IncubationCentreResource> L
+@inject IAuthorizationService AuthorizationService
+@model IndexModel
+
+@section scripts
+{
+    <abp-script src="/Pages/Collaborators/Index.js"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["Collaborators"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+                @if (await AuthorizationService
+                    .IsGrantedAsync(IncubationCentrePermissions.Collaborators.Create))
+                {
+                    <abp-button id="NewCollaboratorButton"
+                                text="@L["NewCollaborator"].Value"
+                                icon="plus"
+                                button-type="Primary"/>
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="CollaboratorsTable"></abp-table>
+    </abp-card-body>
+</abp-card>
+

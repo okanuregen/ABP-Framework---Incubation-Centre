@@ -1,4 +1,4 @@
-using IsikUn.IncubationCentre.Mentors;
+using IsikUn.IncubationCentre.Collaborators;
 using IsikUn.IncubationCentre.PeopleSkills;
 using IsikUn.IncubationCentre.Skills;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +13,13 @@ using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 using Volo.Abp.Identity;
 
-namespace IsikUn.IncubationCentre.Web.Pages.Mentors
+namespace IsikUn.IncubationCentre.Web.Pages.Collaborators
 {
 
     public class CreateModalModel : IncubationCentrePageModel
     {
         [BindProperty]
-        public CreateMentorViewModel Mentor { get; set; }
+        public CreateCollaboratorViewModel Collaborator { get; set; }
 
 
         public List<SelectListItem> Skills { get; set; }
@@ -27,20 +27,20 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
 
 
 
-        private readonly IMentorAppService _mentorAppService;
+        private readonly ICollaboratorAppService _collaboratorAppService;
         private readonly ISkillAppService _skillAppService;
         private readonly IIdentityUserRepository _identityUserRepository;
         private readonly IIdentityRoleRepository _identityRoleRepository;
         private readonly IPersonSkillRepository _personSkillRepository;
 
         public CreateModalModel(
-            IMentorAppService mentorAppService,
+            ICollaboratorAppService collaboratorAppService,
             ISkillAppService skillAppService,
             IIdentityUserRepository identityUserRepository,
             IIdentityRoleRepository identityRoleRepository,
             IPersonSkillRepository personSkillRepository)
         {
-            this._mentorAppService = mentorAppService;
+            this._collaboratorAppService = collaboratorAppService;
             this._skillAppService = skillAppService;
             this._identityUserRepository = identityUserRepository;
             this._identityRoleRepository = identityRoleRepository;
@@ -49,18 +49,18 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
 
         public async Task OnGetAsync()
         {
-            Mentor = new CreateMentorViewModel();
+            Collaborator = new CreateCollaboratorViewModel();
 
             var skills = await _skillAppService.GetAllItemsAsync();
             Skills = skills
                 .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
                 .ToList();
 
-            var mentorRole = (await _identityRoleRepository.GetListAsync(filter: "Mentor")).FirstOrDefault();
-            if (mentorRole != null)
+            var collaboratorRole = (await _identityRoleRepository.GetListAsync(filter: "Collaborator")).FirstOrDefault();
+            if (collaboratorRole != null)
             {
                 var users = await _identityUserRepository.GetListAsync();
-                Users = users.Where(a => (_identityUserRepository.GetRolesAsync(a.Id).Result).Select(b=> b.Id).Contains(mentorRole.Id))
+                Users = users.Where(a => (_identityUserRepository.GetRolesAsync(a.Id).Result).Select(b=> b.Id).Contains(collaboratorRole.Id))
                         .Select(x => new SelectListItem(string.Format("{0} ({1} {2})", x.UserName, x.Name, x.Surname), x.Id.ToString()))
                         .ToList();
             }
@@ -70,7 +70,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
                 { 
                     new SelectListItem
                     {
-                        Text = L["NoUserFoundWithThisRole",L["Mentor"]],
+                        Text = L["NoUserFoundWithThisRole",L["Collaborator"]],
                         Value = ""
                     }
                 };
@@ -79,11 +79,11 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var newMentor = await _mentorAppService.CreateAsync(ObjectMapper.Map<CreateMentorViewModel, CreateUpdateMentorDto>(Mentor));
-            var skills = Mentor.SkillIds != null ? Mentor.SkillIds.Select(a => new PersonSkill
+            var newCollaborator = await _collaboratorAppService.CreateAsync(ObjectMapper.Map<CreateCollaboratorViewModel, CreateUpdateCollaboratorDto>(Collaborator));
+            var skills = Collaborator.SkillIds != null ? Collaborator.SkillIds.Select(a => new PersonSkill
             {
                 SkillId = a,
-                PersonId = newMentor.Id
+                PersonId = newCollaborator.Id
             }) : new List<PersonSkill>();
             if (skills.Any())
             {
@@ -92,7 +92,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
             return NoContent();
         }
 
-        public class CreateMentorViewModel : CreateUpdateMentorDto
+        public class CreateCollaboratorViewModel : CreateUpdateCollaboratorDto
         {
 
             [SelectItems(nameof(Skills))]

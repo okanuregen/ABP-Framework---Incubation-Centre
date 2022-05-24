@@ -12,6 +12,6 @@ namespace IsikUn.IncubationCentre.Collaborators
 {
     public class Collaborator : Person
     {
-        
+        public virtual bool isActivated { get; set; }
     }
 }

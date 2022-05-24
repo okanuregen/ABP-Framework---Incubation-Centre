@@ -76,7 +76,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
             {
                 var users = await _identityUserRepository.GetListAsync();
                 Users = users.Where(a => (_identityUserRepository.GetRolesAsync(a.Id).Result).Select(b => b.Id).Contains(mentorRole.Id))
-                        .Select(x => new SelectListItem(string.Format("{0} {1}", x.Name, x.Surname), x.Id.ToString(), x.Id == Mentor.IdentityUserId))
+                        .Select(x => new SelectListItem(string.Format("{0} ({1} {2})", x.UserName, x.Name, x.Surname), x.Id.ToString(), x.Id == Mentor.IdentityUserId))
                         .ToList();
             }
             else

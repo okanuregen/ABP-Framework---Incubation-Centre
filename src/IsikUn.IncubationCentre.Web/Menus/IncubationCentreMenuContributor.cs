@@ -43,15 +43,41 @@ public class IncubationCentreMenuContributor : IMenuContributor
             l["Mentors"],
             url: "/Mentors",
             icon: "fa fa-question",
-            requiredPermissionName: IncubationCentrePermissions.Mentors.Default
+            requiredPermissionName: IncubationCentrePermissions.Mentors.Default,
+            order: 3
+        ));
+        members.AddItem(new ApplicationMenuItem(
+            IncubationCentreMenus.Collaborators,
+            l["Collaborators"],
+            url: "/Collaborators",
+            icon: "fa fa-user-plus",
+            requiredPermissionName: IncubationCentrePermissions.Collaborators.Default,
+            order: 2
         ));
         members.AddItem(new ApplicationMenuItem(
             IncubationCentreMenus.Entrepreneurs,
             l["Entrepreneurs"],
             url: "/Entrepreneurs",
-            icon: "fa fa-question",
-            requiredPermissionName: IncubationCentrePermissions.Entrepreneurs.Default
+            icon: "fa fa-lightbulb-o",
+            requiredPermissionName: IncubationCentrePermissions.Entrepreneurs.Default,
+            order:1
         ));
+        members.AddItem(new ApplicationMenuItem(
+           IncubationCentreMenus.Investors,
+           l["Investors"],
+           url: "/Investors",
+           icon: "fa fa-money",
+           requiredPermissionName: IncubationCentrePermissions.Investors.Default,
+           order: 4
+       ));
+        members.AddItem(new ApplicationMenuItem(
+           IncubationCentreMenus.SystemManagers,
+           l["SystemManagers"],
+           url: "/SystemManagers",
+           icon: "fa fa-key",
+           requiredPermissionName: IncubationCentrePermissions.SystemManagers.Default,
+           order: 5
+       ));
         context.Menu.AddItem(members);
 
 

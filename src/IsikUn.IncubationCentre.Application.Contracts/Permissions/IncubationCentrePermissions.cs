@@ -27,4 +27,28 @@ public static class IncubationCentrePermissions
         public const string Edit = Default + ".Edit";
         public const string Delete = Default + ".Delete";
     }
+
+    public static class Investors
+    {
+        public const string Default = GroupName + ".Investors";
+        public const string Create = Default + ".Create";
+        public const string Edit = Default + ".Edit";
+        public const string Delete = Default + ".Delete";
+    }
+
+    public static class SystemManagers
+    {
+        public const string Default = GroupName + ".SystemManagers";
+        public const string Create = Default + ".Create";
+        public const string Edit = Default + ".Edit";
+        public const string Delete = Default + ".Delete";
+    }
+
+    public static class Collaborators
+    {
+        public const string Default = GroupName + ".Collaborators";
+        public const string Create = Default + ".Create";
+        public const string Edit = Default + ".Edit";
+        public const string Delete = Default + ".Delete";
+    }
 }

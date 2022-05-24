@@ -15,6 +15,9 @@ public class IncubationCentreMenus
     public const string Members = Prefix + ".Members";
     public const string Mentors = Prefix + ".Mentors";
     public const string Entrepreneurs = Prefix + ".Entrepreneurs";
+    public const string Investors = Prefix + ".Investors";
+    public const string SystemManagers = Prefix + ".SystemManagers";
+    public const string Collaborators = Prefix + ".Collaborators";
 
     //Add your menu items here...
 
