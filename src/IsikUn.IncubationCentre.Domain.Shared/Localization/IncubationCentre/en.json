@@ -69,7 +69,17 @@
     "Collaborators": "Collaborators",
     "Collaborator": "Collaborator",
     "Menu:Collaborators": "Collaborators",
-    "NewCollaborator": "New Collaborator"
+    "NewCollaborator": "New Collaborator",
+    "Permission:Documents": "Document Management",
+    "Permission:Documents.Create": "Creating New Documents",
+    "Permission:Documents.Edit": "Editing the Documents",
+    "Permission:Documents.Delete": "Deleting Documents",
+    "Documents": "Documents",
+    "Document": "Document",
+    "Menu:Documents": "Documents",
+    "NewDocument": "New Document",
+    "SameNameFileExist": "File That Have Same Name Already Exists",
+    "DocumentName": "Document Name"
 
   }
 }

@@ -1,4 +1,5 @@
 ﻿using IsikUn.IncubationCentre.Collaborators;
+using IsikUn.IncubationCentre.Documents;
 using IsikUn.IncubationCentre.Entrepreneurs;
 using IsikUn.IncubationCentre.Investors;
 using IsikUn.IncubationCentre.Mentors;
@@ -68,8 +69,8 @@ public class IncubationCentreDbContext :
     public DbSet<Collaborator> Collaborators { get; set; }
     public DbSet<SystemManager> SystemManagers { get; set; }
     public DbSet<Person> People { get; set; }
-
     public DbSet<Skill> Skills { get; set; }
+    public DbSet<Document> Documents { get; set; }
 
     public IncubationCentreDbContext(DbContextOptions<IncubationCentreDbContext> options)
         : base(options)
@@ -144,6 +145,12 @@ public class IncubationCentreDbContext :
             j => j.HasOne(pt => pt.Skill).WithMany(c => c.PeopleSkills).HasForeignKey(g => g.SkillId),
             j => j.HasKey(t => new { t.SkillId, t.PersonId }));
 
+        });
+        builder.Entity<Document>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Documents",
+                IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention();
         });
     }
 }

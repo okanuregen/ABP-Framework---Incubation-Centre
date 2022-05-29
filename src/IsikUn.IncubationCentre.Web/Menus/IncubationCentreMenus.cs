@@ -18,6 +18,7 @@ public class IncubationCentreMenus
     public const string Investors = Prefix + ".Investors";
     public const string SystemManagers = Prefix + ".SystemManagers";
     public const string Collaborators = Prefix + ".Collaborators";
+    public const string Documents = Prefix + ".Documents";
 
     //Add your menu items here...
 

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using IsikUn.IncubationCentre.Collaborators;
+using IsikUn.IncubationCentre.Documents;
 using IsikUn.IncubationCentre.Entrepreneurs;
 using IsikUn.IncubationCentre.Investors;
 using IsikUn.IncubationCentre.Mentors;
 using IsikUn.IncubationCentre.Skills;
 using IsikUn.IncubationCentre.SystemManagers;
+using IsikUn.IncubationCentre.Web.Pages.Documents.ViewModels;
 using static IsikUn.IncubationCentre.Web.Pages.Collaborators.CreateModalModel;
 using static IsikUn.IncubationCentre.Web.Pages.Entrepreneurs.CreateModalModel;
 using static IsikUn.IncubationCentre.Web.Pages.Investors.CreateModalModel;
@@ -48,5 +50,10 @@ public class IncubationCentreWebAutoMapperProfile : Profile
         CreateMap<CreateUpdateCollaboratorDto, CollaboratorDto>().ReverseMap();
         CreateMap<CreateUpdateCollaboratorDto, Collaborator>().ReverseMap();
         CreateMap<CreateCollaboratorViewModel, CreateUpdateCollaboratorDto>().ReverseMap();
+
+        CreateMap<Document, DocumentDto>().ReverseMap();
+        CreateMap<CreateUpdateDocumentDto, DocumentDto>().ReverseMap();
+        CreateMap<CreateUpdateDocumentDto, Document>().ReverseMap();
+        CreateMap<CreateEditDocumentViewModel, CreateUpdateDocumentDto>().ReverseMap();
     }
 }

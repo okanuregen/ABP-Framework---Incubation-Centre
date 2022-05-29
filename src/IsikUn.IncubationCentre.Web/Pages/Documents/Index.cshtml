@@ -1,0 +1,44 @@
+@page
+@using IsikUn.IncubationCentre.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using IsikUn.IncubationCentre.Web.Pages.Documents
+@using IsikUn.IncubationCentre.Localization
+@using IsikUn.IncubationCentre.Web.Menus
+@model IndexModel
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<IncubationCentreResource> L
+@inject IAuthorizationService Authorization
+@{
+    PageLayout.Content.Title = L["Document"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:Document"].Value);
+    PageLayout.Content.MenuItemName = IncubationCentreMenus.Documents;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Documents/Index.js" />
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["Documents"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+			    @if (await Authorization.IsGrantedAsync(IncubationCentrePermissions.Documents.Create))
+                {
+                <abp-button id="NewDocumentButton"
+                            text="@L["NewDocument"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="DocumentsTable" class="nowrap"/>
+    </abp-card-body>
+</abp-card>

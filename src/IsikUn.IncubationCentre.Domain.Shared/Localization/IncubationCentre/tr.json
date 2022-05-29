@@ -69,6 +69,16 @@
     "Collaborators": "İş Ortakları",
     "Collaborator": "İş Ortağı",
     "Menu:Collaborators": "İş Ortakları",
-    "NewCollaborator": "Yeni İş Ortağı"
+    "NewCollaborator": "Yeni İş Ortağı",
+    "Permission:Documents": "Doküman Yönetimi",
+    "Permission:Documents.Create": "Yeni Doküman Ekleme",
+    "Permission:Documents.Edit": "Doküman Düzenleme",
+    "Permission:Documents.Delete": "Doküman Silme",
+    "Documents": "Dokümanlar",
+    "Document": "Doküman",
+    "Menu:Documents": "Dokümanlar",
+    "NewDocument": "Yeni Doküman",
+    "SameNameFileExist": "Aynı İsme Sahip Başka Bir Doküman Zaten Mevcut",
+    "DocumentName": "Doküman İsmi"
   }
 }

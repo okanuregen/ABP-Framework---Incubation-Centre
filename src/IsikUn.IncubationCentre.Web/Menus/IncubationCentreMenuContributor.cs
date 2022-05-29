@@ -90,6 +90,13 @@ public class IncubationCentreMenuContributor : IMenuContributor
             icon: "fa fa-pencil-square-o",
             requiredPermissionName: IncubationCentrePermissions.Skills.Default
         ));
+        systemDescriptions.AddItem(new ApplicationMenuItem(
+            IncubationCentreMenus.SkillManagement,
+            l["Menu:Documents"],
+            url: "/Documents",
+            icon: "fa fa-file",
+            requiredPermissionName: IncubationCentrePermissions.Documents.Default
+        ));
         context.Menu.AddItem(systemDescriptions);
 
 

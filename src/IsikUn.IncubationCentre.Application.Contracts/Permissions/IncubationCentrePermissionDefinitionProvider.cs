@@ -40,6 +40,10 @@ public class IncubationCentrePermissionDefinitionProvider : PermissionDefinition
         collaboratorsPermission.AddChild(IncubationCentrePermissions.Collaborators.Edit, L("Permission:Collaborators.Edit"));
         collaboratorsPermission.AddChild(IncubationCentrePermissions.Collaborators.Delete, L("Permission:Collaborators.Delete"));
 
+        var documentsPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Documents.Default, L("Permission:Documents"));
+        documentsPermission.AddChild(IncubationCentrePermissions.Documents.Create, L("Permission:Documents.Create"));
+        documentsPermission.AddChild(IncubationCentrePermissions.Documents.Edit, L("Permission:Documents.Edit"));
+        documentsPermission.AddChild(IncubationCentrePermissions.Documents.Delete, L("Permission:Documents.Delete"));
     }
 
     private static LocalizableString L(string name)

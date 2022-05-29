@@ -1,16 +1,18 @@
 $(function () {
-    var l = abp.localization.getResource('IncubationCentre');
-    var createModal = new abp.ModalManager(abp.appPath + 'Skills/CreateModal');
-    var editModal = new abp.ModalManager(abp.appPath + 'Skills/EditModal');
 
-    var dataTable = $('#SkillsTable').DataTable(
+    var l = abp.localization.getResource('IncubationCentre');
+
+    var createModal = new abp.ModalManager(abp.appPath + 'Documents/CreateModal');
+    var editModal = new abp.ModalManager(abp.appPath + 'Documents/EditModal');
+
+    var dataTable = $('#DocumentsTable').DataTable(
         abp.libs.datatables.normalizeConfiguration({
             serverSide: true,
             paging: true,
             order: [[1, "asc"]],
             searching: true,
             scrollX: true,
-            ajax: abp.libs.datatables.createAjax(isikUn.incubationCentre.skills.skill.getList),
+            ajax: abp.libs.datatables.createAjax(isikUn.incubationCentre.documents.document.getList),
             columnDefs: [
                 {
                     title: l('Actions'),
@@ -20,7 +22,7 @@ $(function () {
                                 {
                                     text: l('Edit'),
                                     visible:
-                                        abp.auth.isGranted('IncubationCentre.Skills.Edit'),
+                                        abp.auth.isGranted('IncubationCentre.Documents.Edit'),
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
                                     }
@@ -28,7 +30,7 @@ $(function () {
                                 {
                                     text: l('Delete'),
                                     visible:
-                                        abp.auth.isGranted('IncubationCentre.Skills.Delete'),
+                                        abp.auth.isGranted('IncubationCentre.Documents.Delete'),
                                     confirmMessage: function (data) {
                                         return l(
                                             'EntityDeletionConfirmationMessage',
@@ -36,7 +38,7 @@ $(function () {
                                         );
                                     },
                                     action: function (data) {
-                                        isikUn.incubationCentre.skills.skill
+                                        isikUn.incubationCentre.documents.document
                                             .delete(data.record.id)
                                             .then(function () {
                                                 abp.notify.info(
@@ -50,16 +52,14 @@ $(function () {
                     }
                 },
                 {
-                    title: l('Name'),
+                    title: l('DocumentName'),
                     data: "name"
-                },
-                {
-                    title: l('Category'),
-                    data: "category"
                 }
             ]
         })
     );
+
+
 
     createModal.onResult(function () {
         dataTable.ajax.reload();
@@ -69,7 +69,7 @@ $(function () {
         dataTable.ajax.reload();
     });
 
-    $('#NewSkillButton').click(function (e) {
+    $('#NewDocumentButton').click(function (e) {
         e.preventDefault();
         createModal.open();
     });
