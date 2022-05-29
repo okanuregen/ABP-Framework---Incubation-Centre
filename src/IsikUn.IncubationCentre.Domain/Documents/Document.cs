@@ -1,3 +1,4 @@
+using IsikUn.IncubationCentre.Projects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +12,7 @@ namespace IsikUn.IncubationCentre.Documents
     {
         public string Name { get; set; }
         public string FullName { get; set; }
-
-        protected Document()
-        {
-        }
-
-        public Document(
-            Guid id,
-            string name
-        ) : base(id)
-        {
-            Name = name;
-        }
+        public Project Project { get; set; }
+        public Guid ProjectId { get; set; }
     }
 }

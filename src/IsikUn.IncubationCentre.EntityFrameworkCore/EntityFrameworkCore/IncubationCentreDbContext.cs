@@ -3,8 +3,14 @@ using IsikUn.IncubationCentre.Documents;
 using IsikUn.IncubationCentre.Entrepreneurs;
 using IsikUn.IncubationCentre.Investors;
 using IsikUn.IncubationCentre.Mentors;
+using IsikUn.IncubationCentre.Milestones;
 using IsikUn.IncubationCentre.People;
 using IsikUn.IncubationCentre.PeopleSkills;
+using IsikUn.IncubationCentre.Projects;
+using IsikUn.IncubationCentre.ProjectsCollaborators;
+using IsikUn.IncubationCentre.ProjectsFounders;
+using IsikUn.IncubationCentre.ProjectsInvestors;
+using IsikUn.IncubationCentre.ProjectsMentors;
 using IsikUn.IncubationCentre.Skills;
 using IsikUn.IncubationCentre.SystemManagers;
 using Microsoft.EntityFrameworkCore;
@@ -70,7 +76,14 @@ public class IncubationCentreDbContext :
     public DbSet<SystemManager> SystemManagers { get; set; }
     public DbSet<Person> People { get; set; }
     public DbSet<Skill> Skills { get; set; }
+    public DbSet<PersonSkill> PeopleSkills { get; set; }
     public DbSet<Document> Documents { get; set; }
+    public DbSet<Project> Projects { get; set; }
+    public DbSet<ProjectCollaborator> ProjectsCollaborators { get; set; }
+    public DbSet<ProjectFounder> ProjectsFounders { get; set; }
+    public DbSet<ProjectInvestor> ProjectsInvestors { get; set; }
+    public DbSet<ProjectMentor> ProjectsMentors { get; set; }
+    public DbSet<Milestone> Milestones { get; set; }
 
     public IncubationCentreDbContext(DbContextOptions<IncubationCentreDbContext> options)
         : base(options)
@@ -94,11 +107,48 @@ public class IncubationCentreDbContext :
         builder.ConfigureTenantManagement();
 
         /* Configure your own tables/entities inside here */
+        builder.Entity<Project>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Project",
+                IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+
+        builder.Entity<ProjectCollaborator>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "ProjectCollaborator",
+                IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+        builder.Entity<ProjectFounder>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "ProjectFounder",
+                IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+        builder.Entity<ProjectInvestor>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "ProjectInvestor",
+                IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+        builder.Entity<ProjectMentor>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "ProjectMentor",
+                IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
 
         builder.Entity<Person>(b =>
         {
             b.ToTable(IncubationCentreConsts.DbTablePrefix + "People",
                 IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.HasMany(c => c.FoundedProjects).WithMany(c => c.Founders).UsingEntity<ProjectFounder>(
+            j => j.HasOne(pt => pt.Project).WithMany(c => c.ProjectsFounders).HasForeignKey(g => g.ProjectId),
+            j => j.HasOne(pt => pt.Person).WithMany(c => c.ProjectsFounders).HasForeignKey(g => g.PersonId),
+            j => j.HasKey(t => new { t.PersonId, t.ProjectId }));
         });
         builder.Entity<PersonSkill>(b =>
         {
@@ -109,12 +159,23 @@ public class IncubationCentreDbContext :
         {
             b.ToTable(IncubationCentreConsts.DbTablePrefix + "Mentors",
                 IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.HasMany(c => c.MentoringProjects).WithMany(c => c.Mentors).UsingEntity<ProjectMentor>(
+            j => j.HasOne(pt => pt.Project).WithMany(c => c.ProjectsMentors).HasForeignKey(g => g.ProjectId),
+            j => j.HasOne(pt => pt.Mentor).WithMany(c => c.ProjectsMentors).HasForeignKey(g => g.MentorId),
+            j => j.HasKey(t => new { t.MentorId, t.ProjectId }));
         });
         builder.Entity<Investor>(b =>
         {
             b.ToTable(IncubationCentreConsts.DbTablePrefix + "Investors",
                 IncubationCentreConsts.DbSchema);
             b.ConfigureByConvention();
+
+            b.HasMany(c => c.InvestedProjects).WithMany(c => c.Investors).UsingEntity<ProjectInvestor>(
+            j => j.HasOne(pt => pt.Project).WithMany(c => c.ProjectsInvestors).HasForeignKey(g => g.ProjectId),
+            j => j.HasOne(pt => pt.Investor).WithMany(c => c.ProjectsInvestors).HasForeignKey(g => g.InvestorId),
+            j => j.HasKey(t => new { t.InvestorId, t.ProjectId }));
         });
         builder.Entity<Entrepreneur>(b =>
         {
@@ -127,6 +188,12 @@ public class IncubationCentreDbContext :
             b.ToTable(IncubationCentreConsts.DbTablePrefix + "Collaborators",
                 IncubationCentreConsts.DbSchema);
             b.ConfigureByConvention();
+
+            b.HasMany(c => c.CollaboratoringProjects).WithMany(c => c.Collaborators).UsingEntity<ProjectCollaborator>(
+            j => j.HasOne(pt => pt.Project).WithMany(c => c.ProjectsCollaborators).HasForeignKey(g => g.ProjectId),
+            j => j.HasOne(pt => pt.Collaborator).WithMany(c => c.ProjectsCollaborators).HasForeignKey(g => g.CollaboratorId),
+            j => j.HasKey(t => new { t.CollaboratorId, t.ProjectId }));
+
         });
         builder.Entity<SystemManager>(b =>
         {
@@ -152,5 +219,13 @@ public class IncubationCentreDbContext :
                 IncubationCentreConsts.DbSchema);
             b.ConfigureByConvention();
         });
+
+        builder.Entity<Milestone>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Milestone",
+                IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+
     }
 }

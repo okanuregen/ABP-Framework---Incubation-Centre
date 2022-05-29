@@ -1,4 +1,6 @@
 ﻿using IsikUn.IncubationCentre.People;
+using IsikUn.IncubationCentre.Projects;
+using IsikUn.IncubationCentre.ProjectsCollaborators;
 using IsikUn.IncubationCentre.Skills;
 using System;
 using System.Collections.Generic;
@@ -13,5 +15,8 @@ namespace IsikUn.IncubationCentre.Collaborators
     public class Collaborator : Person
     {
         public virtual bool isActivated { get; set; }
+
+        public ICollection<Project> CollaboratoringProjects { get; set; }
+        public List<ProjectCollaborator> ProjectsCollaborators { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using IsikUn.IncubationCentre.People;
+using IsikUn.IncubationCentre.Projects;
+using IsikUn.IncubationCentre.ProjectsInvestors;
 using IsikUn.IncubationCentre.Skills;
 using System;
 using System.Collections.Generic;
@@ -13,5 +15,8 @@ namespace IsikUn.IncubationCentre.Investors
     public class Investor : Person
     {
         public virtual bool isActivated { get; set; }
+
+        public ICollection<Project> InvestedProjects { get; set; }
+        public List<ProjectInvestor> ProjectsInvestors { get; set; }
     }
 }

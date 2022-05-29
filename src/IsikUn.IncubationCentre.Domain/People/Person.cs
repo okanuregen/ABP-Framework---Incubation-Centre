@@ -1,4 +1,6 @@
 ﻿using IsikUn.IncubationCentre.PeopleSkills;
+using IsikUn.IncubationCentre.Projects;
+using IsikUn.IncubationCentre.ProjectsFounders;
 using IsikUn.IncubationCentre.Skills;
 using System;
 using System.Collections.Generic;
@@ -18,5 +20,8 @@ namespace IsikUn.IncubationCentre.People
         public string Experience { get; set; }
         public Guid? IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
+
+        public ICollection<Project> FoundedProjects { get; set; }
+        public List<ProjectFounder> ProjectsFounders { get; set; }
     }
 }
