@@ -10,6 +10,7 @@ namespace IsikUn.IncubationCentre.Documents
         Task<List<Document>> GetListAsync(
              string filter = null,
              string name = null,
+             string fullName = null,
              int skipCount = 0,
              int maxResultCount = int.MaxValue,
              string sorting = null,
@@ -19,6 +20,7 @@ namespace IsikUn.IncubationCentre.Documents
         Task<long> GetCountAsync(
              string filter = null,
              string name = null,
+             string fullName = null,
              CancellationToken cancelationToken = default
             );
         

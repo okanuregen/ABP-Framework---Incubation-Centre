@@ -22,6 +22,7 @@ namespace IsikUn.IncubationCentre.Documents
         public async Task<List<Document>> GetListAsync(
              string filter = null,
              string name = null,
+             string fullName = null,
              int skipCount = 0,
              int maxResultCount = int.MaxValue,
              string sorting = null,
@@ -37,6 +38,7 @@ namespace IsikUn.IncubationCentre.Documents
         public async Task<long> GetCountAsync(
              string filter = null,
              string name = null,
+             string fullName = null,
              CancellationToken cancelationToken = default
             )
         {
@@ -50,10 +52,13 @@ namespace IsikUn.IncubationCentre.Documents
         protected virtual IQueryable<Document> ApplyFilter(
             IQueryable<Document> query,
             string filter,
-            string name = null)
+            string name = null,
+            string fullName = null
+            )
         {
             return query
                     .WhereIf(!string.IsNullOrWhiteSpace(filter), e => e.Name.Contains(filter))
+                    .WhereIf(!string.IsNullOrWhiteSpace(fullName), e => e.FullName.Contains(fullName))
                     .WhereIf(!string.IsNullOrWhiteSpace(name), e => e.Name.Contains(name));
         }
     }

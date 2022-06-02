@@ -19,6 +19,7 @@ public class IncubationCentreMenus
     public const string SystemManagers = Prefix + ".SystemManagers";
     public const string Collaborators = Prefix + ".Collaborators";
     public const string Documents = Prefix + ".Documents";
+    public const string Projects = Prefix + ".Projects";
 
     //Add your menu items here...
 

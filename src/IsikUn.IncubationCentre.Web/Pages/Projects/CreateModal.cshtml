@@ -1,0 +1,38 @@
+﻿@page
+@using IsikUn.IncubationCentre.Localization
+@using IsikUn.IncubationCentre.Permissions
+@using IsikUn.IncubationCentre.Web.Pages.Projects
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model CreateModalModel
+@inject IStringLocalizer<IncubationCentreResource> L
+@{
+    Layout = null;
+}
+<script src="https://unpkg.com/@@yaireo/tagify"></script>
+<script src="https://unpkg.com/@@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+<link href="https://unpkg.com/@@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+<abp-dynamic-form abp-model="Project" data-ajaxForm="true" asp-page="CreateModal">
+    <abp-modal>
+        <abp-modal-header title="@L["CreateProject"].Value"></abp-modal-header>
+        <abp-modal-body>
+            <abp-form-content />
+        </abp-modal-body>
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+</abp-dynamic-form>
+
+<script>
+    $(function(){
+        $("[name='Project.Status'] option").each(function(i,e){
+            $(e).text(l("Enum:ProjectStatus_"+i));
+        });
+        $("#Project_CompletionDate").attr("type","date");
+        $("#Project_Tags").attr("placeholder",`@L["YouCanAddNewTagWithEnterOrComma"]`);
+        var inputTags = document.querySelector("#Project_Tags");
+        var tagify = new Tagify(inputTags, {
+          originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
+        });
+    })
+</script>

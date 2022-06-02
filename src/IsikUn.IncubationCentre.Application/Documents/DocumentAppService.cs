@@ -59,7 +59,7 @@ namespace IsikUn.IncubationCentre.Documents
         public async Task<PagedResultDto<DocumentDto>> GetListAsync(GetDocumentsInput input)
         {
             var totalCount = await _documentRepository.GetCountAsync(input.filter, input.Name);
-            var items = await _documentRepository.GetListAsync(input.filter, input.Name, input.SkipCount, input.MaxResultCount, input.Sorting);
+            var items = await _documentRepository.GetListAsync(input.filter, input.Name, input.FullName,input.SkipCount, input.MaxResultCount, input.Sorting);
 
             return new PagedResultDto<DocumentDto>
             {

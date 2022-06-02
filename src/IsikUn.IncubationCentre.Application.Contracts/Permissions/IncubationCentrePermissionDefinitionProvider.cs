@@ -44,6 +44,16 @@ public class IncubationCentrePermissionDefinitionProvider : PermissionDefinition
         documentsPermission.AddChild(IncubationCentrePermissions.Documents.Create, L("Permission:Documents.Create"));
         documentsPermission.AddChild(IncubationCentrePermissions.Documents.Edit, L("Permission:Documents.Edit"));
         documentsPermission.AddChild(IncubationCentrePermissions.Documents.Delete, L("Permission:Documents.Delete"));
+
+        var milestonesPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Milestones.Default, L("Permission:Milestones"));
+        milestonesPermission.AddChild(IncubationCentrePermissions.Milestones.Create, L("Permission:Milestones.Create"));
+        milestonesPermission.AddChild(IncubationCentrePermissions.Milestones.Edit, L("Permission:Milestones.Edit"));
+        milestonesPermission.AddChild(IncubationCentrePermissions.Milestones.Delete, L("Permission:Milestones.Delete"));
+
+        var projectsPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Projects.Default, L("Permission:Projects"));
+        projectsPermission.AddChild(IncubationCentrePermissions.Projects.Create, L("Permission:Projects.Create"));
+        projectsPermission.AddChild(IncubationCentrePermissions.Projects.Edit, L("Permission:Projects.Edit"));
+        projectsPermission.AddChild(IncubationCentrePermissions.Projects.Delete, L("Permission:Projects.Delete"));
     }
 
     private static LocalizableString L(string name)

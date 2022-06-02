@@ -1,13 +1,7 @@
 ﻿using System.Threading.Tasks;
 using IsikUn.IncubationCentre.Localization;
-using IsikUn.IncubationCentre.MultiTenancy;
 using IsikUn.IncubationCentre.Permissions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
-using Volo.Abp.Identity.Web.Navigation;
-using Volo.Abp.PermissionManagement;
-using Volo.Abp.SettingManagement.Web.Navigation;
-using Volo.Abp.TenantManagement.Web.Navigation;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.Users;
 
@@ -96,6 +90,13 @@ public class IncubationCentreMenuContributor : IMenuContributor
             url: "/Documents",
             icon: "fa fa-file",
             requiredPermissionName: IncubationCentrePermissions.Documents.Default
+        ));
+        systemDescriptions.AddItem(new ApplicationMenuItem(
+            IncubationCentreMenus.SkillManagement,
+            l["Menu:Projects"],
+            url: "/Projects",
+            icon: "fa fa-file-code-o",
+            requiredPermissionName: IncubationCentrePermissions.Projects.Default
         ));
         context.Menu.AddItem(systemDescriptions);
 

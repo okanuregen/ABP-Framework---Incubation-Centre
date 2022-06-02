@@ -79,7 +79,32 @@
     "Menu:Documents": "Documents",
     "NewDocument": "New Document",
     "SameNameFileExist": "File That Have Same Name Already Exists",
-    "DocumentName": "Document Name"
+    "DocumentName": "Document Name",
+    "Permission:Milestones": "Milestone Management",
+    "Permission:Milestones.Create": "Creating New Milestones",
+    "Permission:Milestones.Edit": "Editing the Milestones",
+    "Permission:Milestones.Delete": "Deleting Milestones",
+    "Milestones": "Milestones",
+    "Milestone": "Milestone",
+    "Menu:Milestones": "Milestones",
+    "NewMilestone": "New Milestone",
+    "MilestoneWithThisTitleOnSameProjectExist": "The Project Already Have Milestone With This Title",
+    "MilestoneTitle": "Milestone Title",
+    "ProjectNameAlreadyTaken": "Project Name Already Taken",
+    "YouCanAddNewTagWithEnterOrComma": "You Can Add New Tag With Enter Or Comma",
+    "Enum:ProjectStatus_0": "Started",
+    "Enum:ProjectStatus_1": "OnGoing",
+    "Enum:ProjectStatus_2": "Suspended",
+    "Enum:ProjectStatus_3": "Canceled",
+    "Enum:ProjectStatus_4": "Completed",
+    "Status": "Status",
+    "CompletionDate": "Completion Date",
+    "Tags": "Tags",
+    "SharePerInvest": "Share Per Invest (%)",
+    "InvesmentReady": " Is Ready For Invesment?",
+    "OpenForInvesment": "Is Open For Invesment?",
+    "TotalValuation": "Total Valuation"
+
 
   }
 }

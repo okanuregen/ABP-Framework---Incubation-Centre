@@ -5,11 +5,15 @@ using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
 namespace IsikUn.IncubationCentre.Milestones
 {
-    public interface IMilestonesRepository : IRepository<Milestone, Guid>
+    public interface IMilestoneRepository : IRepository<Milestone, Guid>
     {
         Task<List<Milestone>> GetListAsync(
              string filter = null,
-             string name = null,
+             string title = null,
+             string successcriteria = null,
+             bool filterByisCompleted = false,
+             bool isCompleted = false,
+             string projectId = null,
              int skipCount = 0,
              int maxResultCount = int.MaxValue,
              string sorting = null,
@@ -18,7 +22,11 @@ namespace IsikUn.IncubationCentre.Milestones
 
         Task<long> GetCountAsync(
              string filter = null,
-             string name = null,
+             string title = null,
+             string successcriteria = null,
+             bool filterByisCompleted = false,
+             bool isCompleted = false,
+             string projectId = null,
              CancellationToken cancelationToken = default
             );
         

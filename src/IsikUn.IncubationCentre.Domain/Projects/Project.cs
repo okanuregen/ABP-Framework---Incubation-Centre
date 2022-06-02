@@ -26,7 +26,8 @@ namespace IsikUn.IncubationCentre.Projects
         public string Tags { get; set; }
         public bool InvesmentReady { get; set; }
         public bool OpenForInvesment { get; set; }
-        public int SharePerInvest { get; set; }
+        public double SharePerInvest { get; set; }
+        public int TotalValuation { get; set; }
         public ProjectStatus Status { get; set; }
         public List<Document> Documents{ get; set; }
         public List<Milestone> Milestones{ get; set; }
