@@ -84,27 +84,27 @@ public static class IncubationCentrePermissions
         public const string Delete = Default + ".Delete";
     }
 
-        public class Request
-        {
-            public const string Default = GroupName + ".Request";
-            public const string Update = Default + ".Update";
-            public const string Create = Default + ".Create";
-            public const string Delete = Default + ".Delete";
-        }
+    public class Requests
+    {
+        public const string Default = GroupName + ".Requests";
+        public const string Edit = Default + ".Edit";
+        public const string Create = Default + ".Create";
+        public const string Delete = Default + ".Delete";
+    }
 
-        public class Task
-        {
-            public const string Default = GroupName + ".Task";
-            public const string Update = Default + ".Update";
-            public const string Create = Default + ".Create";
-            public const string Delete = Default + ".Delete";
-        }
+    public class Tasks
+    {
+        public const string Default = GroupName + ".Tasks";
+        public const string Edit = Default + ".Edit";
+        public const string Create = Default + ".Create";
+        public const string Delete = Default + ".Delete";
+    }
 
-        public class Event
-        {
-            public const string Default = GroupName + ".Event";
-            public const string Update = Default + ".Update";
-            public const string Create = Default + ".Create";
-            public const string Delete = Default + ".Delete";
-        }
+    public class Events
+    {
+        public const string Default = GroupName + ".Events";
+        public const string Edit = Default + ".Edit";
+        public const string Create = Default + ".Create";
+        public const string Delete = Default + ".Delete";
+    }
 }

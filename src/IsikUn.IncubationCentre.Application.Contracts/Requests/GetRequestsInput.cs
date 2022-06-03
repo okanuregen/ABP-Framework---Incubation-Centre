@@ -1,13 +1,8 @@
-﻿using IsikUn.IncubationCentre.People;
-using IsikUn.IncubationCentre.Skills;
-using System;
-using System.Collections.Generic;
-using Volo.Abp.Application.Dtos;
-using Volo.Abp.Identity;
+﻿using Volo.Abp.Application.Dtos;
 
 namespace IsikUn.IncubationCentre.Requests
 {
-    public class GetRequetsInput : PagedAndSortedResultRequestDto
+    public class GetRequestsInput : PagedAndSortedResultRequestDto
     {
         public string filter { get; set; }
         public string SenderUserName { get; set; }
@@ -16,7 +11,7 @@ namespace IsikUn.IncubationCentre.Requests
         public string Explanation { get; set; }
 
 
-        public GetRequetsInput()
+        public GetRequestsInput()
         {
 
         }
