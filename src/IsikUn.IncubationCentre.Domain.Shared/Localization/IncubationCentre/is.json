@@ -3,6 +3,22 @@
   "texts": {
     "Menu:Home": "Heim",
     "Welcome": "Velkomin",
-    "LongWelcomeMessage": "Verið velkomin í forritið. Þetta er startup verkefni sem byggir á ABP. Nánari upplýsingar er að finna á abp.io."
+    "LongWelcomeMessage": "Verið velkomin í forritið. Þetta er startup verkefni sem byggir á ABP. Nánari upplýsingar er að finna á abp.io.",
+    "Permission:Application": "Application",
+    "Permission:Create": "Create",
+    "Permission:Update": "Update",
+    "Permission:Delete": "Delete",
+    "Menu:Application": "MenuApplication",
+    "Application": "Application",
+    "ApplicationMembershipType": "ApplicationMembershipType",
+    "ApplicationSenderMail": "ApplicationSenderMail",
+    "ApplicationSenderPhoneNumber": "ApplicationSenderPhoneNumber",
+    "ApplicationExplanation": "ApplicationExplanation",
+    "ApplicationReceiver": "ApplicationReceiver",
+    "ApplicationApplicationStatus": "ApplicationApplicationStatus",
+    "CreateApplication": "CreateApplication",
+    "EditApplication": "EditApplication",
+    "ApplicationDeletionConfirmationMessage": "Are you sure to delete the application {0}?",
+    "SuccessfullyDeleted": "Successfully deleted"
   }
 }

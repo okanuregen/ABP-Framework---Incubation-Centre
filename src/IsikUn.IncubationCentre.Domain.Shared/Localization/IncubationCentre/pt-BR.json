@@ -3,6 +3,22 @@
   "texts": {
     "Menu:Home": "Principal",
     "Welcome": "Seja bem-vindo!",
-    "LongWelcomeMessage": "Bem-vindo a esta aplicação. Este é um projeto inicial baseado no ABP framework. Para mais informações, visite abp.io."
+    "LongWelcomeMessage": "Bem-vindo a esta aplicação. Este é um projeto inicial baseado no ABP framework. Para mais informações, visite abp.io.",
+    "Permission:Application": "Application",
+    "Permission:Create": "Create",
+    "Permission:Update": "Update",
+    "Permission:Delete": "Delete",
+    "Menu:Application": "MenuApplication",
+    "Application": "Application",
+    "ApplicationMembershipType": "ApplicationMembershipType",
+    "ApplicationSenderMail": "ApplicationSenderMail",
+    "ApplicationSenderPhoneNumber": "ApplicationSenderPhoneNumber",
+    "ApplicationExplanation": "ApplicationExplanation",
+    "ApplicationReceiver": "ApplicationReceiver",
+    "ApplicationApplicationStatus": "ApplicationApplicationStatus",
+    "CreateApplication": "CreateApplication",
+    "EditApplication": "EditApplication",
+    "ApplicationDeletionConfirmationMessage": "Are you sure to delete the application {0}?",
+    "SuccessfullyDeleted": "Successfully deleted"
   }
 }

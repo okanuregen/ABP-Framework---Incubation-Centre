@@ -3,6 +3,22 @@
   "texts": {
     "Menu:Home": "Domov",
     "Welcome": "Vitajte",
-    "LongWelcomeMessage": "Vitajte v aplikácii. Toto je štartovací projekt založený na ABP frameworku. Viac informácií nájdete na stránke abp.io."
+    "LongWelcomeMessage": "Vitajte v aplikácii. Toto je štartovací projekt založený na ABP frameworku. Viac informácií nájdete na stránke abp.io.",
+    "Permission:Application": "Application",
+    "Permission:Create": "Create",
+    "Permission:Update": "Update",
+    "Permission:Delete": "Delete",
+    "Menu:Application": "MenuApplication",
+    "Application": "Application",
+    "ApplicationMembershipType": "ApplicationMembershipType",
+    "ApplicationSenderMail": "ApplicationSenderMail",
+    "ApplicationSenderPhoneNumber": "ApplicationSenderPhoneNumber",
+    "ApplicationExplanation": "ApplicationExplanation",
+    "ApplicationReceiver": "ApplicationReceiver",
+    "ApplicationApplicationStatus": "ApplicationApplicationStatus",
+    "CreateApplication": "CreateApplication",
+    "EditApplication": "EditApplication",
+    "ApplicationDeletionConfirmationMessage": "Are you sure to delete the application {0}?",
+    "SuccessfullyDeleted": "Successfully deleted"
   }
 }

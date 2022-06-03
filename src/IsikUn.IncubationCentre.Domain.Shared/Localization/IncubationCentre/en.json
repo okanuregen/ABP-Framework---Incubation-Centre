@@ -103,8 +103,22 @@
     "SharePerInvest": "Share Per Invest (%)",
     "InvesmentReady": " Is Ready For Invesment?",
     "OpenForInvesment": "Is Open For Invesment?",
-    "TotalValuation": "Total Valuation"
-
-
+    "TotalValuation": "Total Valuation",
+    "Permission:Application": "Application",
+    "Permission:Create": "Create",
+    "Permission:Update": "Update",
+    "Permission:Delete": "Delete",
+    "Menu:Application": "MenuApplication",
+    "Application": "Application",
+    "ApplicationMembershipType": "ApplicationMembershipType",
+    "ApplicationSenderMail": "ApplicationSenderMail",
+    "ApplicationSenderPhoneNumber": "ApplicationSenderPhoneNumber",
+    "ApplicationExplanation": "ApplicationExplanation",
+    "ApplicationReceiver": "ApplicationReceiver",
+    "ApplicationApplicationStatus": "ApplicationApplicationStatus",
+    "CreateApplication": "CreateApplication",
+    "EditApplication": "EditApplication",
+    "ApplicationDeletionConfirmationMessage": "Are you sure to delete the application {0}?",
+    "SuccessfullyDeleted": "Successfully deleted"
   }
 }

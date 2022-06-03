@@ -1,4 +1,4 @@
-﻿using IsikUn.IncubationCentre.Collaborators;
+using IsikUn.IncubationCentre.Collaborators;
 using IsikUn.IncubationCentre.Documents;
 using IsikUn.IncubationCentre.Entrepreneurs;
 using IsikUn.IncubationCentre.Investors;
@@ -29,6 +29,7 @@ using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using IsikUn.IncubationCentre.Applications;
 
 namespace IsikUn.IncubationCentre.EntityFrameworkCore;
 
@@ -84,6 +85,7 @@ public class IncubationCentreDbContext :
     public DbSet<ProjectInvestor> ProjectsInvestors { get; set; }
     public DbSet<ProjectMentor> ProjectsMentors { get; set; }
     public DbSet<Milestone> Milestones { get; set; }
+    public DbSet<Application> Applications { get; set; }
 
     public IncubationCentreDbContext(DbContextOptions<IncubationCentreDbContext> options)
         : base(options)
@@ -227,5 +229,12 @@ public class IncubationCentreDbContext :
             b.ConfigureByConvention();
         });
 
+
+        builder.Entity<Application>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Application", 
+                IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention(); 
+        });
     }
 }

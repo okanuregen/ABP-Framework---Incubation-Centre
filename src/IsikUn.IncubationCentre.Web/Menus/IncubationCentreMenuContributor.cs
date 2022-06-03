@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using IsikUn.IncubationCentre.Localization;
 using IsikUn.IncubationCentre.Permissions;
 using Microsoft.Extensions.DependencyInjection;
@@ -135,6 +135,12 @@ public class IncubationCentreMenuContributor : IMenuContributor
         if (currentUser.IsInRole("admin"))
         {
             context.Menu.AddItem(administration);
+        }
+        if (await context.IsGrantedAsync(IncubationCentrePermissions.Applications.Default))
+        {
+            context.Menu.AddItem(
+                new ApplicationMenuItem(IncubationCentreMenus.Application, l["Menu:Application"], "/Applications")
+            );
         }
     }
 }

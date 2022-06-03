@@ -1,4 +1,4 @@
-﻿namespace IsikUn.IncubationCentre.Permissions;
+namespace IsikUn.IncubationCentre.Permissions;
 
 public static class IncubationCentrePermissions
 {
@@ -73,6 +73,14 @@ public static class IncubationCentrePermissions
         public const string Default = GroupName + ".Projects";
         public const string Create = Default + ".Create";
         public const string Edit = Default + ".Edit";
+        public const string Delete = Default + ".Delete";
+    }
+
+    public class Applications
+    {
+        public const string Default = GroupName + ".Applications";
+        public const string Edit = Default + ".Edit";
+        public const string Create = Default + ".Create";
         public const string Delete = Default + ".Delete";
     }
 }

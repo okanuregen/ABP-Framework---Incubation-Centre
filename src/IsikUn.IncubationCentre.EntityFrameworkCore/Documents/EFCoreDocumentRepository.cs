@@ -31,7 +31,7 @@ namespace IsikUn.IncubationCentre.Documents
         {
             var query = ApplyFilter(
                 (await GetQueryableAsync())
-                , filter, name);
+                , filter, name, fullName);
             query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? "Name asc" : sorting);
             return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancelationToken);
         }
@@ -44,7 +44,7 @@ namespace IsikUn.IncubationCentre.Documents
         {
             var query = ApplyFilter(
                 (await GetQueryableAsync())
-                , filter, name);
+                , filter, name, fullName);
             return await query.LongCountAsync(GetCancellationToken(cancelationToken));
 
         }

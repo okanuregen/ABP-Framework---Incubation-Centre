@@ -1,4 +1,4 @@
-﻿namespace IsikUn.IncubationCentre.Web.Menus;
+namespace IsikUn.IncubationCentre.Web.Menus;
 
 public class IncubationCentreMenus
 {
@@ -23,4 +23,5 @@ public class IncubationCentreMenus
 
     //Add your menu items here...
 
+        public const string Application = Prefix + ".Application";
 }

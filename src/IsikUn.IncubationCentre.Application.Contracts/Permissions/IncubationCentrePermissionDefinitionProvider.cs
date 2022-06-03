@@ -1,4 +1,4 @@
-﻿using IsikUn.IncubationCentre.Localization;
+using IsikUn.IncubationCentre.Localization;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Localization;
 
@@ -54,6 +54,11 @@ public class IncubationCentrePermissionDefinitionProvider : PermissionDefinition
         projectsPermission.AddChild(IncubationCentrePermissions.Projects.Create, L("Permission:Projects.Create"));
         projectsPermission.AddChild(IncubationCentrePermissions.Projects.Edit, L("Permission:Projects.Edit"));
         projectsPermission.AddChild(IncubationCentrePermissions.Projects.Delete, L("Permission:Projects.Delete"));
+
+        var applicationPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Applications.Default, L("Permission:Applications"));
+        applicationPermission.AddChild(IncubationCentrePermissions.Applications.Create, L("Permission:Applications.Create"));
+        applicationPermission.AddChild(IncubationCentrePermissions.Applications.Edit, L("Permission:Applications.Update"));
+        applicationPermission.AddChild(IncubationCentrePermissions.Applications.Delete, L("Permission:Applications.Delete"));
     }
 
     private static LocalizableString L(string name)
