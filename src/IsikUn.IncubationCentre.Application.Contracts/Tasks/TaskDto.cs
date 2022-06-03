@@ -1,7 +1,7 @@
 using System;
 using Volo.Abp.Application.Dtos;
 
-namespace IsikUn.IncubationCentre.Tasks.Dtos
+namespace IsikUn.IncubationCentre.Tasks
 {
     [Serializable]
     public class TaskDto : FullAuditedEntityDto<Guid>
