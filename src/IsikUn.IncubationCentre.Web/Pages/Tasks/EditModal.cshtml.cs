@@ -2,10 +2,8 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using IsikUn.IncubationCentre.Tasks;
-using IsikUn.IncubationCentre.Tasks.Dtos;
-using IsikUn.IncubationCentre.Web.Pages.Tasks.Task.ViewModels;
 
-namespace IsikUn.IncubationCentre.Web.Pages.Tasks.Task
+namespace IsikUn.IncubationCentre.Web.Pages.Tasks
 {
     public class EditModalModel : IncubationCentrePageModel
     {
@@ -14,7 +12,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Tasks.Task
         public Guid Id { get; set; }
 
         [BindProperty]
-        public EditTaskViewModel ViewModel { get; set; }
+        public CreateUpdateTaskDto Task { get; set; }
 
         private readonly ITaskAppService _service;
 
@@ -23,16 +21,15 @@ namespace IsikUn.IncubationCentre.Web.Pages.Tasks.Task
             _service = service;
         }
 
-        public virtual async Task OnGetAsync()
+        public virtual async System.Threading.Tasks.Task OnGetAsync()
         {
             var dto = await _service.GetAsync(Id);
-            ViewModel = ObjectMapper.Map<TaskDto, EditTaskViewModel>(dto);
+            Task = ObjectMapper.Map<TaskDto, CreateUpdateTaskDto>(dto);
         }
 
         public virtual async Task<IActionResult> OnPostAsync()
         {
-            var dto = ObjectMapper.Map<EditTaskViewModel, UpdateTaskDto>(ViewModel);
-            await _service.UpdateAsync(Id, dto);
+            await _service.UpdateAsync(Id, Task);
             return NoContent();
         }
     }

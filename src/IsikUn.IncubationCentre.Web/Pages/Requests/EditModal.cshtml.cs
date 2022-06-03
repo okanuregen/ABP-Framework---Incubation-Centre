@@ -2,10 +2,8 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using IsikUn.IncubationCentre.Requests;
-using IsikUn.IncubationCentre.Requests.Dtos;
-using IsikUn.IncubationCentre.Web.Pages.Requests.Request.ViewModels;
 
-namespace IsikUn.IncubationCentre.Web.Pages.Requests.Request
+namespace IsikUn.IncubationCentre.Web.Pages.Requests
 {
     public class EditModalModel : IncubationCentrePageModel
     {
@@ -14,7 +12,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Requests.Request
         public Guid Id { get; set; }
 
         [BindProperty]
-        public EditRequestViewModel ViewModel { get; set; }
+        public CreateUpdateRequestDto RequestDto { get; set; }
 
         private readonly IRequestAppService _service;
 
@@ -26,13 +24,12 @@ namespace IsikUn.IncubationCentre.Web.Pages.Requests.Request
         public virtual async Task OnGetAsync()
         {
             var dto = await _service.GetAsync(Id);
-            ViewModel = ObjectMapper.Map<RequestDto, EditRequestViewModel>(dto);
+            RequestDto = ObjectMapper.Map<RequestDto, CreateUpdateRequestDto>(dto);
         }
 
         public virtual async Task<IActionResult> OnPostAsync()
         {
-            var dto = ObjectMapper.Map<EditRequestViewModel, UpdateRequestDto>(ViewModel);
-            await _service.UpdateAsync(Id, dto);
+            await _service.UpdateAsync(Id, RequestDto);
             return NoContent();
         }
     }

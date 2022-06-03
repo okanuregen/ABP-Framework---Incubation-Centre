@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Volo.Abp.AspNetCore.Mvc.UI.Layout
-@using IsikUn.IncubationCentre.Web.Pages.Tasks.Task
+@using IsikUn.IncubationCentre.Web.Pages.Events
 @using IsikUn.IncubationCentre.Localization
 @using IsikUn.IncubationCentre.Web.Menus
 @model IndexModel
@@ -11,31 +11,28 @@
 @inject IHtmlLocalizer<IncubationCentreResource> L
 @inject IAuthorizationService Authorization
 @{
-    PageLayout.Content.Title = L["Task"].Value;
-    PageLayout.Content.BreadCrumb.Add(L["Menu:Task"].Value);
-    PageLayout.Content.MenuItemName = IncubationCentreMenus.Task;
+    PageLayout.Content.Title = L["Event"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:Event"].Value);
+    PageLayout.Content.MenuItemName = IncubationCentreMenus.Event;
 }
 
 @section scripts
 {
-    <abp-script src="/Pages/Tasks/Task/index.js" />
+    <abp-script src="/Pages/Events/index.js" />
 }
-@section styles
-{
-    <abp-style src="/Pages/Tasks/Task/index.css"/>
-}
+
 
 <abp-card>
     <abp-card-header>
         <abp-row>
             <abp-column size-md="_6">
-                <abp-card-title>@L["Task"]</abp-card-title>
+                <abp-card-title>@L["Event"]</abp-card-title>
             </abp-column>
             <abp-column size-md="_6" class="text-end">
-			    @if (await Authorization.IsGrantedAsync(IncubationCentrePermissions.Task.Create))
+			    @if (await Authorization.IsGrantedAsync(IncubationCentrePermissions.Events.Create))
                 {
-                <abp-button id="NewTaskButton"
-                            text="@L["CreateTask"].Value"
+                <abp-button id="NewEventButton"
+                            text="@L["NewEvent"].Value"
                             icon="plus"
                             button-type="Primary" />
                 }
@@ -43,6 +40,6 @@
         </abp-row>
     </abp-card-header>
     <abp-card-body>
-        <abp-table striped-rows="true" id="TaskTable" class="nowrap"/>
+        <abp-table striped-rows="true" id="EventTable" class="nowrap"/>
     </abp-card-body>
 </abp-card>

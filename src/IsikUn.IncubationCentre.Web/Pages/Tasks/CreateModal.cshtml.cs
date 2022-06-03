@@ -1,15 +1,13 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using IsikUn.IncubationCentre.Tasks;
-using IsikUn.IncubationCentre.Tasks.Dtos;
-using IsikUn.IncubationCentre.Web.Pages.Tasks.Task.ViewModels;
 
-namespace IsikUn.IncubationCentre.Web.Pages.Tasks.Task
+namespace IsikUn.IncubationCentre.Web.Pages.Tasks
 {
     public class CreateModalModel : IncubationCentrePageModel
     {
         [BindProperty]
-        public CreateTaskViewModel ViewModel { get; set; }
+        public CreateUpdateTaskDto Task { get; set; }
 
         private readonly ITaskAppService _service;
 
@@ -20,8 +18,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Tasks.Task
 
         public virtual async Task<IActionResult> OnPostAsync()
         {
-            var dto = ObjectMapper.Map<CreateTaskViewModel, CreateUpdateTaskDto>(ViewModel);
-            await _service.CreateAsync(dto);
+            await _service.CreateAsync(Task);
             return NoContent();
         }
     }

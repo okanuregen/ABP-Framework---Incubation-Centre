@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Volo.Abp.AspNetCore.Mvc.UI.Layout
-@using IsikUn.IncubationCentre.Web.Pages.Events.Event
+@using IsikUn.IncubationCentre.Web.Pages.Requests
 @using IsikUn.IncubationCentre.Localization
 @using IsikUn.IncubationCentre.Web.Menus
 @model IndexModel
@@ -11,31 +11,28 @@
 @inject IHtmlLocalizer<IncubationCentreResource> L
 @inject IAuthorizationService Authorization
 @{
-    PageLayout.Content.Title = L["Event"].Value;
-    PageLayout.Content.BreadCrumb.Add(L["Menu:Event"].Value);
-    PageLayout.Content.MenuItemName = IncubationCentreMenus.Event;
+    PageLayout.Content.Title = L["Request"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:Request"].Value);
+    PageLayout.Content.MenuItemName = IncubationCentreMenus.Request;
 }
 
 @section scripts
 {
-    <abp-script src="/Pages/Events/Event/index.js" />
+    <abp-script src="/Pages/Requests/index.js" />
 }
-@section styles
-{
-    <abp-style src="/Pages/Events/Event/index.css"/>
-}
+
 
 <abp-card>
     <abp-card-header>
         <abp-row>
             <abp-column size-md="_6">
-                <abp-card-title>@L["Event"]</abp-card-title>
+                <abp-card-title>@L["Request"]</abp-card-title>
             </abp-column>
             <abp-column size-md="_6" class="text-end">
-			    @if (await Authorization.IsGrantedAsync(IncubationCentrePermissions.Event.Create))
+			    @if (await Authorization.IsGrantedAsync(IncubationCentrePermissions.Requests.Create))
                 {
-                <abp-button id="NewEventButton"
-                            text="@L["CreateEvent"].Value"
+                <abp-button id="NewRequestButton"
+                            text="@L["NewRequest"].Value"
                             icon="plus"
                             button-type="Primary" />
                 }
@@ -43,6 +40,6 @@
         </abp-row>
     </abp-card-header>
     <abp-card-body>
-        <abp-table striped-rows="true" id="EventTable" class="nowrap"/>
+        <abp-table striped-rows="true" id="RequestTable" class="nowrap"/>
     </abp-card-body>
 </abp-card>

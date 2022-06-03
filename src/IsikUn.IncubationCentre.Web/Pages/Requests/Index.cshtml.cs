@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace IsikUn.IncubationCentre.Web.Pages.Events.Event
+namespace IsikUn.IncubationCentre.Web.Pages.Requests
 {
     public class IndexModel : IncubationCentrePageModel
     {

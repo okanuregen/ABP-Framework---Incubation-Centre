@@ -2,11 +2,11 @@ $(function () {
 
     var l = abp.localization.getResource('IncubationCentre');
 
-    var service = isikUn.incubationCentre.requests.request;
-    var createModal = new abp.ModalManager(abp.appPath + 'Requests/Request/CreateModal');
-    var editModal = new abp.ModalManager(abp.appPath + 'Requests/Request/EditModal');
+    var service = isikUn.incubationCentre.tasks.task;
+    var createModal = new abp.ModalManager(abp.appPath + 'Tasks/CreateModal');
+    var editModal = new abp.ModalManager(abp.appPath + 'Tasks/EditModal');
 
-    var dataTable = $('#RequestTable').DataTable(abp.libs.datatables.normalizeConfiguration({
+    var dataTable = $('#TaskTable').DataTable(abp.libs.datatables.normalizeConfiguration({
         processing: true,
         serverSide: true,
         paging: true,
@@ -22,16 +22,16 @@ $(function () {
                         [
                             {
                                 text: l('Edit'),
-                                visible: abp.auth.isGranted('IncubationCentre.Request.Update'),
+                                visible: abp.auth.isGranted('IncubationCentre.Task.Update'),
                                 action: function (data) {
                                     editModal.open({ id: data.record.id });
                                 }
                             },
                             {
                                 text: l('Delete'),
-                                visible: abp.auth.isGranted('IncubationCentre.Request.Delete'),
+                                visible: abp.auth.isGranted('IncubationCentre.Task.Delete'),
                                 confirmMessage: function (data) {
-                                    return l('RequestDeletionConfirmationMessage', data.record.id);
+                                    return l('TaskDeletionConfirmationMessage', data.record.id);
                                 },
                                 action: function (data) {
                                     service.delete(data.record.id)
@@ -45,28 +45,28 @@ $(function () {
                 }
             },
             {
-                title: l('RequestSenderId'),
-                data: "senderId"
+                title: l('TaskAssignedToId'),
+                data: "assignedToId"
             },
             {
-                title: l('RequestSender'),
-                data: "sender"
+                title: l('TaskAssignedTo'),
+                data: "assignedTo"
             },
             {
-                title: l('RequestReceiverId'),
-                data: "receiverId"
+                title: l('TaskisDone'),
+                data: "isDone"
             },
             {
-                title: l('RequestReceiver'),
-                data: "receiver"
-            },
-            {
-                title: l('RequestTitle'),
+                title: l('TaskTitle'),
                 data: "title"
             },
             {
-                title: l('RequestExplanation'),
-                data: "explanation"
+                title: l('TaskDescription'),
+                data: "description"
+            },
+            {
+                title: l('TaskCompletionDate'),
+                data: "completionDate"
             },
         ]
     }));
@@ -79,7 +79,7 @@ $(function () {
         dataTable.ajax.reload();
     });
 
-    $('#NewRequestButton').click(function (e) {
+    $('#NewTaskButton').click(function (e) {
         e.preventDefault();
         createModal.open();
     });

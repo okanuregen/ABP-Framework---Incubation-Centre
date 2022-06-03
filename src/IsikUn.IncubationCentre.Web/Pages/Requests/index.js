@@ -2,11 +2,11 @@ $(function () {
 
     var l = abp.localization.getResource('IncubationCentre');
 
-    var service = isikUn.incubationCentre.tasks.task;
-    var createModal = new abp.ModalManager(abp.appPath + 'Tasks/Task/CreateModal');
-    var editModal = new abp.ModalManager(abp.appPath + 'Tasks/Task/EditModal');
+    var service = isikUn.incubationCentre.requests.request;
+    var createModal = new abp.ModalManager(abp.appPath + 'Requests/CreateModal');
+    var editModal = new abp.ModalManager(abp.appPath + 'Requests/EditModal');
 
-    var dataTable = $('#TaskTable').DataTable(abp.libs.datatables.normalizeConfiguration({
+    var dataTable = $('#RequestTable').DataTable(abp.libs.datatables.normalizeConfiguration({
         processing: true,
         serverSide: true,
         paging: true,
@@ -22,16 +22,16 @@ $(function () {
                         [
                             {
                                 text: l('Edit'),
-                                visible: abp.auth.isGranted('IncubationCentre.Task.Update'),
+                                visible: abp.auth.isGranted('IncubationCentre.Request.Update'),
                                 action: function (data) {
                                     editModal.open({ id: data.record.id });
                                 }
                             },
                             {
                                 text: l('Delete'),
-                                visible: abp.auth.isGranted('IncubationCentre.Task.Delete'),
+                                visible: abp.auth.isGranted('IncubationCentre.Request.Delete'),
                                 confirmMessage: function (data) {
-                                    return l('TaskDeletionConfirmationMessage', data.record.id);
+                                    return l('RequestDeletionConfirmationMessage', data.record.id);
                                 },
                                 action: function (data) {
                                     service.delete(data.record.id)
@@ -45,28 +45,28 @@ $(function () {
                 }
             },
             {
-                title: l('TaskAssignedToId'),
-                data: "assignedToId"
+                title: l('RequestSenderId'),
+                data: "senderId"
             },
             {
-                title: l('TaskAssignedTo'),
-                data: "assignedTo"
+                title: l('RequestSender'),
+                data: "sender"
             },
             {
-                title: l('TaskisDone'),
-                data: "isDone"
+                title: l('RequestReceiverId'),
+                data: "receiverId"
             },
             {
-                title: l('TaskTitle'),
+                title: l('RequestReceiver'),
+                data: "receiver"
+            },
+            {
+                title: l('RequestTitle'),
                 data: "title"
             },
             {
-                title: l('TaskDescription'),
-                data: "description"
-            },
-            {
-                title: l('TaskCompletionDate'),
-                data: "completionDate"
+                title: l('RequestExplanation'),
+                data: "explanation"
             },
         ]
     }));
@@ -79,7 +79,7 @@ $(function () {
         dataTable.ajax.reload();
     });
 
-    $('#NewTaskButton').click(function (e) {
+    $('#NewRequestButton').click(function (e) {
         e.preventDefault();
         createModal.open();
     });

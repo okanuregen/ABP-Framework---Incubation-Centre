@@ -2,10 +2,8 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using IsikUn.IncubationCentre.Events;
-using IsikUn.IncubationCentre.Events.Dtos;
-using IsikUn.IncubationCentre.Web.Pages.Events.Event.ViewModels;
 
-namespace IsikUn.IncubationCentre.Web.Pages.Events.Event
+namespace IsikUn.IncubationCentre.Web.Pages.Events
 {
     public class EditModalModel : IncubationCentrePageModel
     {
@@ -14,7 +12,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Events.Event
         public Guid Id { get; set; }
 
         [BindProperty]
-        public EditEventViewModel ViewModel { get; set; }
+        public CreateUpdateEventDto Event { get; set; }
 
         private readonly IEventAppService _service;
 
@@ -26,13 +24,12 @@ namespace IsikUn.IncubationCentre.Web.Pages.Events.Event
         public virtual async Task OnGetAsync()
         {
             var dto = await _service.GetAsync(Id);
-            ViewModel = ObjectMapper.Map<EventDto, EditEventViewModel>(dto);
+            Event = ObjectMapper.Map<EventDto, CreateUpdateEventDto>(dto);
         }
 
         public virtual async Task<IActionResult> OnPostAsync()
         {
-            var dto = ObjectMapper.Map<EditEventViewModel, UpdateEventDto>(ViewModel);
-            await _service.UpdateAsync(Id, dto);
+            await _service.UpdateAsync(Id, Event);
             return NoContent();
         }
     }
