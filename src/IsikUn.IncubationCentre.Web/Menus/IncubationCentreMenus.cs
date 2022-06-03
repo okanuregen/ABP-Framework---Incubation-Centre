@@ -24,4 +24,7 @@ public class IncubationCentreMenus
     //Add your menu items here...
 
         public const string Application = Prefix + ".Application";
+        public const string Request = Prefix + ".Request";
+        public const string Task = Prefix + ".Task";
+        public const string Event = Prefix + ".Event";
 }

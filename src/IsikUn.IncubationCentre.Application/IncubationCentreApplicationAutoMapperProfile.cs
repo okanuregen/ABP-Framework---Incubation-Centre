@@ -9,6 +9,12 @@ using IsikUn.IncubationCentre.People;
 using IsikUn.IncubationCentre.Projects;
 using IsikUn.IncubationCentre.Skills;
 using IsikUn.IncubationCentre.Applications;
+using IsikUn.IncubationCentre.Requests;
+using IsikUn.IncubationCentre.Requests.Dtos;
+using IsikUn.IncubationCentre.Tasks;
+using IsikUn.IncubationCentre.Tasks.Dtos;
+using IsikUn.IncubationCentre.Events;
+using IsikUn.IncubationCentre.Events.Dtos;
 using IsikUn.IncubationCentre.SystemManagers;
 
 namespace IsikUn.IncubationCentre;
@@ -25,8 +31,8 @@ public class IncubationCentreApplicationAutoMapperProfile : Profile
         CreateMap<CreateSkillDto, Skill>().ReverseMap();
         CreateMap<CreateSkillDto, SkillDto>().ReverseMap();
         CreateMap<UpdateSkillDto, Skill>().ReverseMap();
-        CreateMap<UpdateSkillDto, SkillDto>().ReverseMap();      
-        
+        CreateMap<UpdateSkillDto, SkillDto>().ReverseMap();
+
         CreateMap<Person, PersonDto>().ReverseMap();
         CreateMap<CreateUpdatePersonDto, PersonDto>().ReverseMap();
         CreateMap<CreateUpdatePersonDto, Person>().ReverseMap();
@@ -66,5 +72,17 @@ public class IncubationCentreApplicationAutoMapperProfile : Profile
         CreateMap<Application, ApplicationDto>().ReverseMap();
         CreateMap<CreateUpdateApplicationDto, ApplicationDto>().ReverseMap();
         CreateMap<CreateUpdateApplicationDto, Application>().ReverseMap();
+
+        CreateMap<Request, RequestDto>().ReverseMap();
+        CreateMap<CreateUpdateRequestDto, RequestDto>().ReverseMap();
+        CreateMap<CreateUpdateRequestDto, Request>().ReverseMap();
+
+        CreateMap<Task, TaskDto>().ReverseMap();
+        CreateMap<CreateUpdateTaskDto, TaskDto>().ReverseMap();
+        CreateMap<CreateUpdateTaskDto, Task>().ReverseMap();
+
+        CreateMap<Event, EventDto>().ReverseMap();
+        CreateMap<CreateUpdateEventDto, EventDto>().ReverseMap();
+        CreateMap<CreateUpdateEventDto, Event>().ReverseMap();
     }
 }

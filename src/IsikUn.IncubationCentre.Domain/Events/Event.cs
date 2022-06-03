@@ -9,13 +9,14 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace IsikUn.IncubationCentre.Events
 {
-    public class Task : FullAuditedEntity<Guid>
+    public class Event : FullAuditedEntity<Guid>
     {
         public string Title { get; set; }
         public DateTime EventDate { get; set; }
         public string Description { get; set; }
         public Guid ProjectId { get; set; }
         public Project Project { get; set; }
+        public Person Creator { get; set; }
 
     }
 }

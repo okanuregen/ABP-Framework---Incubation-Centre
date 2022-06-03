@@ -1,0 +1,48 @@
+@page
+@using IsikUn.IncubationCentre.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using IsikUn.IncubationCentre.Web.Pages.Requests.Request
+@using IsikUn.IncubationCentre.Localization
+@using IsikUn.IncubationCentre.Web.Menus
+@model IndexModel
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<IncubationCentreResource> L
+@inject IAuthorizationService Authorization
+@{
+    PageLayout.Content.Title = L["Request"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:Request"].Value);
+    PageLayout.Content.MenuItemName = IncubationCentreMenus.Request;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Requests/Request/index.js" />
+}
+@section styles
+{
+    <abp-style src="/Pages/Requests/Request/index.css"/>
+}
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["Request"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+			    @if (await Authorization.IsGrantedAsync(IncubationCentrePermissions.Request.Create))
+                {
+                <abp-button id="NewRequestButton"
+                            text="@L["CreateRequest"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="RequestTable" class="nowrap"/>
+    </abp-card-body>
+</abp-card>

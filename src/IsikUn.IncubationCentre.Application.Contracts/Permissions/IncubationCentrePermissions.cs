@@ -83,4 +83,28 @@ public static class IncubationCentrePermissions
         public const string Create = Default + ".Create";
         public const string Delete = Default + ".Delete";
     }
+
+        public class Request
+        {
+            public const string Default = GroupName + ".Request";
+            public const string Update = Default + ".Update";
+            public const string Create = Default + ".Create";
+            public const string Delete = Default + ".Delete";
+        }
+
+        public class Task
+        {
+            public const string Default = GroupName + ".Task";
+            public const string Update = Default + ".Update";
+            public const string Create = Default + ".Create";
+            public const string Delete = Default + ".Delete";
+        }
+
+        public class Event
+        {
+            public const string Default = GroupName + ".Event";
+            public const string Update = Default + ".Update";
+            public const string Create = Default + ".Create";
+            public const string Delete = Default + ".Delete";
+        }
 }

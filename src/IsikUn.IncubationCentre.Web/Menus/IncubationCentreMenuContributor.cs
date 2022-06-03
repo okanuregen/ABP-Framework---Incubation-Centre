@@ -142,5 +142,23 @@ public class IncubationCentreMenuContributor : IMenuContributor
                 new ApplicationMenuItem(IncubationCentreMenus.Application, l["Menu:Application"], "/Applications")
             );
         }
+            if (await context.IsGrantedAsync(IncubationCentrePermissions.Request.Default))
+            {
+                context.Menu.AddItem(
+                    new ApplicationMenuItem(IncubationCentreMenus.Request, l["Menu:Request"], "/Requests/Request")
+                );
+            }
+            if (await context.IsGrantedAsync(IncubationCentrePermissions.Task.Default))
+            {
+                context.Menu.AddItem(
+                    new ApplicationMenuItem(IncubationCentreMenus.Task, l["Menu:Task"], "/Tasks/Task")
+                );
+            }
+            if (await context.IsGrantedAsync(IncubationCentrePermissions.Event.Default))
+            {
+                context.Menu.AddItem(
+                    new ApplicationMenuItem(IncubationCentreMenus.Event, l["Menu:Event"], "/Events/Event")
+                );
+            }
     }
 }

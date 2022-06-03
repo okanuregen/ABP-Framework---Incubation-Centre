@@ -59,6 +59,21 @@ public class IncubationCentrePermissionDefinitionProvider : PermissionDefinition
         applicationPermission.AddChild(IncubationCentrePermissions.Applications.Create, L("Permission:Applications.Create"));
         applicationPermission.AddChild(IncubationCentrePermissions.Applications.Edit, L("Permission:Applications.Update"));
         applicationPermission.AddChild(IncubationCentrePermissions.Applications.Delete, L("Permission:Applications.Delete"));
+
+            var requestPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Request.Default, L("Permission:Request"));
+            requestPermission.AddChild(IncubationCentrePermissions.Request.Create, L("Permission:Create"));
+            requestPermission.AddChild(IncubationCentrePermissions.Request.Update, L("Permission:Update"));
+            requestPermission.AddChild(IncubationCentrePermissions.Request.Delete, L("Permission:Delete"));
+
+            var taskPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Task.Default, L("Permission:Task"));
+            taskPermission.AddChild(IncubationCentrePermissions.Task.Create, L("Permission:Create"));
+            taskPermission.AddChild(IncubationCentrePermissions.Task.Update, L("Permission:Update"));
+            taskPermission.AddChild(IncubationCentrePermissions.Task.Delete, L("Permission:Delete"));
+
+            var eventPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Event.Default, L("Permission:Event"));
+            eventPermission.AddChild(IncubationCentrePermissions.Event.Create, L("Permission:Create"));
+            eventPermission.AddChild(IncubationCentrePermissions.Event.Update, L("Permission:Update"));
+            eventPermission.AddChild(IncubationCentrePermissions.Event.Delete, L("Permission:Delete"));
     }
 
     private static LocalizableString L(string name)

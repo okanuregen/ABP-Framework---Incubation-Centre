@@ -30,6 +30,9 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using IsikUn.IncubationCentre.Applications;
+using IsikUn.IncubationCentre.Requests;
+using IsikUn.IncubationCentre.Tasks;
+using IsikUn.IncubationCentre.Events;
 
 namespace IsikUn.IncubationCentre.EntityFrameworkCore;
 
@@ -86,6 +89,9 @@ public class IncubationCentreDbContext :
     public DbSet<ProjectMentor> ProjectsMentors { get; set; }
     public DbSet<Milestone> Milestones { get; set; }
     public DbSet<Application> Applications { get; set; }
+    public DbSet<Request> Requests { get; set; }
+    public DbSet<Task> Tasks { get; set; }
+    public DbSet<Event> Events { get; set; }
 
     public IncubationCentreDbContext(DbContextOptions<IncubationCentreDbContext> options)
         : base(options)
@@ -224,7 +230,7 @@ public class IncubationCentreDbContext :
 
         builder.Entity<Milestone>(b =>
         {
-            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Milestone",
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Milestones",
                 IncubationCentreConsts.DbSchema);
             b.ConfigureByConvention();
         });
@@ -232,9 +238,39 @@ public class IncubationCentreDbContext :
 
         builder.Entity<Application>(b =>
         {
-            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Application", 
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Applications", 
                 IncubationCentreConsts.DbSchema);
             b.ConfigureByConvention(); 
+        });
+
+
+        builder.Entity<Request>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Requests", IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention(); 
+                
+
+            /* Configure more properties here */
+        });
+
+
+        builder.Entity<Task>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Tasks", IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention(); 
+                
+
+            /* Configure more properties here */
+        });
+
+
+        builder.Entity<Event>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Events", IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention(); 
+                
+
+            /* Configure more properties here */
         });
     }
 }

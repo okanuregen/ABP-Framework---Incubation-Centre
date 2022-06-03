@@ -14,7 +14,16 @@ using static IsikUn.IncubationCentre.Web.Pages.Entrepreneurs.CreateModalModel;
 using static IsikUn.IncubationCentre.Web.Pages.Investors.CreateModalModel;
 using static IsikUn.IncubationCentre.Web.Pages.Mentors.CreateModalModel;
 using static IsikUn.IncubationCentre.Web.Pages.SystemManagers.CreateModalModel;
+using IsikUn.IncubationCentre.Requests.Dtos;
+using IsikUn.IncubationCentre.Web.Pages.Requests.Request.ViewModels;
+using IsikUn.IncubationCentre.Tasks.Dtos;
+using IsikUn.IncubationCentre.Web.Pages.Tasks.Task.ViewModels;
+using IsikUn.IncubationCentre.Events.Dtos;
+using IsikUn.IncubationCentre.Web.Pages.Events.Event.ViewModels;
 using IsikUn.IncubationCentre.Applications;
+using IsikUn.IncubationCentre.Tasks;
+using IsikUn.IncubationCentre.Requests;
+using IsikUn.IncubationCentre.Events;
 
 namespace IsikUn.IncubationCentre.Web;
 
@@ -70,5 +79,17 @@ public class IncubationCentreWebAutoMapperProfile : Profile
         CreateMap<Application, ApplicationDto>().ReverseMap();
         CreateMap<CreateUpdateApplicationDto, ApplicationDto>().ReverseMap();
         CreateMap<CreateUpdateApplicationDto, Application>().ReverseMap();
+
+        CreateMap<Request, RequestDto>().ReverseMap();
+        CreateMap<CreateUpdateRequestDto, RequestDto>().ReverseMap();
+        CreateMap<CreateUpdateRequestDto, Request>().ReverseMap();
+
+        CreateMap<Task, TaskDto>().ReverseMap();
+        CreateMap<CreateUpdateTaskDto, TaskDto>().ReverseMap();
+        CreateMap<CreateUpdateTaskDto, Task>().ReverseMap();
+
+        CreateMap<Event, EventDto>().ReverseMap();
+        CreateMap<CreateUpdateEventDto, EventDto>().ReverseMap();
+        CreateMap<CreateUpdateEventDto, Event>().ReverseMap();
     }
 }
