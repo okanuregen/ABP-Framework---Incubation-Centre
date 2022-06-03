@@ -10,8 +10,10 @@ namespace IsikUn.IncubationCentre.Requests
     {
         Task<List<Request>> GetListAsync(
              string filter = null,
-             string name = null,
-             string fullName = null,
+             string title = null,
+             string explanation = null,
+             string senderUserName = null,
+             string receiverUserName = null,
              int skipCount = 0,
              int maxResultCount = int.MaxValue,
              string sorting = null,
@@ -20,8 +22,10 @@ namespace IsikUn.IncubationCentre.Requests
 
         Task<long> GetCountAsync(
              string filter = null,
-             string name = null,
-             string fullName = null,
+             string title = null,
+             string explanation = null,
+             string senderUserName = null,
+             string receiverUserName = null,
              CancellationToken cancelationToken = default
             );
 

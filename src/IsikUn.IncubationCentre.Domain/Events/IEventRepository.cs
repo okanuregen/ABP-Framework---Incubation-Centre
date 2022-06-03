@@ -10,8 +10,10 @@ namespace IsikUn.IncubationCentre.Events
     {
         Task<List<Event>> GetListAsync(
              string filter = null,
-             string name = null,
-             string fullName = null,
+             string title = null,
+             string description = null,
+             string projectName = null,
+             string creatorUserName = null,
              int skipCount = 0,
              int maxResultCount = int.MaxValue,
              string sorting = null,
@@ -19,9 +21,11 @@ namespace IsikUn.IncubationCentre.Events
          );
 
         Task<long> GetCountAsync(
-             string filter = null,
-             string name = null,
-             string fullName = null,
+            string filter = null,
+             string title = null,
+             string description = null,
+             string projectName = null,
+             string creatorUserName = null,
              CancellationToken cancelationToken = default
             );
 
