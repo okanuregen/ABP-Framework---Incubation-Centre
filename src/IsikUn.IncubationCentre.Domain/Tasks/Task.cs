@@ -10,7 +10,7 @@ namespace IsikUn.IncubationCentre.Tasks
 {
     public class Task : FullAuditedEntity<Guid>
     {
-        public Guid AssignedToId { get; set; }
+        public Guid? AssignedToId { get; set; }
         public Person AssignedTo { get; set; }
         public bool isDone { get; set; }
         public string Title { get; set; }

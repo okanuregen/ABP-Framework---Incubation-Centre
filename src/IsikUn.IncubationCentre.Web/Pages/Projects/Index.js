@@ -12,7 +12,7 @@ $(function () {
 
     var dataTable = $('#ProjectsTable').DataTable(
         abp.libs.datatables.normalizeConfiguration({
-            serverSide: false,
+            serverSide: true,
             paging: true,
             order: [[1, "asc"]],
             searching: true,

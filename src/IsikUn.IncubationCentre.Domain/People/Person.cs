@@ -1,6 +1,8 @@
-﻿using IsikUn.IncubationCentre.PeopleSkills;
+﻿using IsikUn.IncubationCentre.Events;
+using IsikUn.IncubationCentre.PeopleSkills;
 using IsikUn.IncubationCentre.Projects;
 using IsikUn.IncubationCentre.ProjectsFounders;
+using IsikUn.IncubationCentre.Requests;
 using IsikUn.IncubationCentre.Skills;
 using System;
 using System.Collections.Generic;
@@ -23,5 +25,10 @@ namespace IsikUn.IncubationCentre.People
 
         public ICollection<Project> FoundedProjects { get; set; }
         public List<ProjectFounder> ProjectsFounders { get; set; }
+
+        public List<IsikUn.IncubationCentre.Tasks.Task> Tasks { get; set; }
+        public List<Request> SentRequests { get; set; }
+        public List<Request> ReceivedRequests { get; set; }
+        public List<Event> CreatedEvents { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using IsikUn.IncubationCentre.People;
+﻿using IsikUn.IncubationCentre.Applications;
+using IsikUn.IncubationCentre.People;
 using IsikUn.IncubationCentre.Skills;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ namespace IsikUn.IncubationCentre.SystemManagers
     public class SystemManager : Person
     {
         public virtual bool isActivated { get; set; }
+        public List<Application> Applications { get; set; }
     }
 }

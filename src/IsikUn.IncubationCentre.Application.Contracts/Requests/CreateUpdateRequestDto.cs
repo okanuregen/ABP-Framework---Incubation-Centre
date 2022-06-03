@@ -5,9 +5,9 @@ namespace IsikUn.IncubationCentre.Requests
     [Serializable]
     public class CreateUpdateRequestDto
     {
-        public Guid SenderId { get; set; }
+        public Guid? SenderId { get; set; }
 
-        public Guid ReceiverId { get; set; }
+        public Guid? ReceiverId { get; set; }
 
         public string Title { get; set; }
 

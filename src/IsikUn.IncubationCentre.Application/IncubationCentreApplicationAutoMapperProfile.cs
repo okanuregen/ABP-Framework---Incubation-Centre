@@ -10,11 +10,8 @@ using IsikUn.IncubationCentre.Projects;
 using IsikUn.IncubationCentre.Skills;
 using IsikUn.IncubationCentre.Applications;
 using IsikUn.IncubationCentre.Requests;
-using IsikUn.IncubationCentre.Requests.Dtos;
 using IsikUn.IncubationCentre.Tasks;
-using IsikUn.IncubationCentre.Tasks.Dtos;
 using IsikUn.IncubationCentre.Events;
-using IsikUn.IncubationCentre.Events.Dtos;
 using IsikUn.IncubationCentre.SystemManagers;
 
 namespace IsikUn.IncubationCentre;

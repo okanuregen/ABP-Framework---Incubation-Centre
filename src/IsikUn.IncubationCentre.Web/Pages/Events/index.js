@@ -3,8 +3,8 @@ $(function () {
     var l = abp.localization.getResource('IncubationCentre');
 
     var service = isikUn.incubationCentre.events.event;
-    var createModal = new abp.ModalManager(abp.appPath + 'Events/Event/CreateModal');
-    var editModal = new abp.ModalManager(abp.appPath + 'Events/Event/EditModal');
+    var createModal = new abp.ModalManager(abp.appPath + 'Events/CreateModal');
+    var editModal = new abp.ModalManager(abp.appPath + 'Events/EditModal');
 
     var dataTable = $('#EventTable').DataTable(abp.libs.datatables.normalizeConfiguration({
         processing: true,

@@ -1,3 +1,4 @@
+using IsikUn.IncubationCentre.People;
 using System;
 using Volo.Abp.Application.Dtos;
 
@@ -8,7 +9,7 @@ namespace IsikUn.IncubationCentre.Tasks
     {
         public Guid AssignedToId { get; set; }
 
-        public Person AssignedTo { get; set; }
+        public PersonDto AssignedTo { get; set; }
 
         public bool isDone { get; set; }
 

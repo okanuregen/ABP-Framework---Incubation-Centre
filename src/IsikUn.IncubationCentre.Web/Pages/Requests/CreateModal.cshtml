@@ -3,11 +3,11 @@
 @using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal;
 @using IsikUn.IncubationCentre.Localization
 @inject IHtmlLocalizer<IncubationCentreResource> L
-@model IsikUn.IncubationCentre.Web.Pages.Requests.Request.CreateModalModel
+@model IsikUn.IncubationCentre.Web.Pages.Requests.CreateModalModel
 @{
     Layout = null;
 }
-<abp-dynamic-form abp-model="ViewModel" data-ajaxForm="true" asp-page="CreateModal">
+<abp-dynamic-form abp-model="RequestDto" data-ajaxForm="true" asp-page="CreateModal">
     <abp-modal>
         <abp-modal-header title="@L["CreateRequest"].Value"></abp-modal-header>
         <abp-modal-body>

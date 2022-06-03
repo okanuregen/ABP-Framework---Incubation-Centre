@@ -1,5 +1,6 @@
 ﻿using IsikUn.IncubationCentre.Collaborators;
 using IsikUn.IncubationCentre.Documents;
+using IsikUn.IncubationCentre.Events;
 using IsikUn.IncubationCentre.Investors;
 using IsikUn.IncubationCentre.Mentors;
 using IsikUn.IncubationCentre.Milestones;
@@ -47,6 +48,9 @@ namespace IsikUn.IncubationCentre.Projects
         public ICollection<Collaborator> Collaborators { get; set; }
         [JsonIgnore]
         public List<ProjectCollaborator> ProjectsCollaborators { get; set; }
+
+        public List<Event> Events { get; set; }
+
 
     }
 }

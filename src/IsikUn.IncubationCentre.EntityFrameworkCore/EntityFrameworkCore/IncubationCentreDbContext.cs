@@ -120,6 +120,18 @@ public class IncubationCentreDbContext :
             b.ToTable(IncubationCentreConsts.DbTablePrefix + "Project",
                 IncubationCentreConsts.DbSchema);
             b.ConfigureByConvention();
+
+            b.HasMany(c => c.Events)
+               .WithOne(e => e.Project)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasMany(c => c.Milestones)
+               .WithOne(e => e.Project)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasMany(c => c.Documents)
+              .WithOne(e => e.Project)
+              .OnDelete(DeleteBehavior.NoAction);
         });
 
         builder.Entity<ProjectCollaborator>(b =>
@@ -157,6 +169,19 @@ public class IncubationCentreDbContext :
             j => j.HasOne(pt => pt.Project).WithMany(c => c.ProjectsFounders).HasForeignKey(g => g.ProjectId),
             j => j.HasOne(pt => pt.Person).WithMany(c => c.ProjectsFounders).HasForeignKey(g => g.PersonId),
             j => j.HasKey(t => new { t.PersonId, t.ProjectId }));
+
+            b.HasMany(c => c.Tasks)
+                .WithOne(e => e.AssignedTo)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasMany(c => c.ReceivedRequests)
+                .WithOne(e => e.Receiver)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            b.HasMany(c => c.SentRequests)
+                .WithOne(e => e.Sender)
+                .OnDelete(DeleteBehavior.NoAction);
+
         });
         builder.Entity<PersonSkill>(b =>
         {
@@ -208,6 +233,11 @@ public class IncubationCentreDbContext :
             b.ToTable(IncubationCentreConsts.DbTablePrefix + "SystemManagers",
                 IncubationCentreConsts.DbSchema);
             b.ConfigureByConvention();
+
+            b.HasMany(c => c.Applications)
+                .WithOne(e => e.Receiver)
+                .OnDelete(DeleteBehavior.NoAction);
+
         });
         builder.Entity<Skill>(b =>
         {
@@ -257,8 +287,7 @@ public class IncubationCentreDbContext :
         builder.Entity<Task>(b =>
         {
             b.ToTable(IncubationCentreConsts.DbTablePrefix + "Tasks", IncubationCentreConsts.DbSchema);
-            b.ConfigureByConvention(); 
-                
+            b.ConfigureByConvention();
 
             /* Configure more properties here */
         });

@@ -5,7 +5,7 @@ namespace IsikUn.IncubationCentre.Tasks
     [Serializable]
     public class CreateUpdateTaskDto
     {
-        public Guid AssignedToId { get; set; }
+        public Guid? AssignedToId { get; set; }
 
         public bool isDone { get; set; }
 

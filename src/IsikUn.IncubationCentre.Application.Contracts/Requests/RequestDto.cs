@@ -7,11 +7,11 @@ namespace IsikUn.IncubationCentre.Requests
     [Serializable]
     public class RequestDto : FullAuditedEntityDto<Guid>
     {
-        public Guid SenderId { get; set; }
+        public Guid? SenderId { get; set; }
 
         public PersonDto Sender { get; set; }
 
-        public Guid ReceiverId { get; set; }
+        public Guid? ReceiverId { get; set; }
 
         public PersonDto Receiver { get; set; }
 
