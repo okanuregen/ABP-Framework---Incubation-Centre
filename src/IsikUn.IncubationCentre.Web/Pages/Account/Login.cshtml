@@ -141,6 +141,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script>
     $(function () {
+        var l = l || abp.localization.getResource('IncubationCentre');
+
         $(".sidebar-toggle.js-sidebar-toggle").remove();
         $(".abp-account-container").attr("style","height: 100%;width: 99.2%;");
 
@@ -164,6 +166,57 @@
                     }
                 }
             });
+
+        var createApplicationModal = new abp.ModalManager(abp.appPath + 'Applications/CreateModal');
+        $('[data-target="#joinUsModal"]').click(function (e) {
+            e.preventDefault();
+            createApplicationModal.open();
+        });
+
+        $("#joinUsSubmitButton").click(function(e){
+            var data = new FormData(document.querySelector("#JoinUsForm"));
+            var formJSON = Object.fromEntries(data.entries());
+            if(formJSON == undefined || formJSON == {} || formJSON == {}){
+                abp.notify.warn(l("PleaseFillAllInputs"));
+                return;
+            }
+            if(formJSON['Application.MembershipType'] == ""){
+                abp.notify.warn(l("PleaseFillTheInput",l("MembershipType")));
+                return;
+            }
+            if(formJSON['Application.SenderName'] == ""){
+                abp.notify.warn(l("PleaseFillTheInput",l("SenderName")));
+                return;
+            }
+            if(formJSON['Application.SenderSurname'] == ""){
+                abp.notify.warn(l("PleaseFillTheInput",l("SenderSurname")));
+                return;
+            }
+            if(formJSON['Application.SenderMail'] == ""){
+                abp.notify.warn(l("PleaseFillTheInput",l("SenderMail")));
+                return;
+            }
+            if(formJSON['Application.SenderPhoneNumber'] == ""){
+                abp.notify.warn(l("PleaseFillTheInput",l("SenderPhoneNumber")));
+                return;
+            }
+            if(formJSON['Application.Explanation'] == ""){
+                abp.notify.warn(l("PleaseFillTheInput",l("Explanation")));
+                return;
+            }
+            if(formJSON['Application.ApplicationStatus'] == ""){
+                abp.notify.warn(l("PleaseFillTheInput",l("ApplicationStatus")));
+                return;
+            }
+
+            isikUn.incubationCentre.applications.application.create(formJSON).then(function(res){
+                if(res.senderName != undefined) {
+                    $(".btn-close").trigger("click");
+                    abp.message.success(l("ApplicationFromSuccesMessage"));
+                }
+            });
+        });
+
     });
 </script>
 <!-- Button trigger modal -->
@@ -216,7 +269,7 @@
                         <!--TESTIMONIAL 4 -->
                         <div class="item shadow">
                             <div class="p-4 bg-white rounded">
-                               <img src="https://cdn-icons-png.flaticon.com/512/860/860472.png" alt="">
+                                <img src="https://cdn-icons-png.flaticon.com/512/860/860472.png" alt="">
                                 <hr>
                                 <p class="mb-4 text-muted ">Işık University Incubation Center would love to help to bring your ideas to life! With our team, more than 100 mentors who are field-specialized, creating a business from a scratch has never been so easy!</p>
                                 <hr>
@@ -229,17 +282,58 @@
                 <div class="col-sm-12" style="padding-top:23px;">
                     <div class="buttonGroup text-center ps-6">
                         <div class="d-inline-block  me-7">
-                            <span class="d-block">Intersted ?</span>
-                            <button class="btn btn-info">Join Us</button>
+                            <span class="d-block">@L2["Interested?"].Value</span>
+                            <abp-button button-type="Info" data-toggle="modal" data-target="#joinUsModal">@L2["JoinUs"].Value</abp-button>
                         </div>
                         <div class="d-inline-block  ms-7">
-                            <span class="d-block">Already Have An Account ?</span>
-                            <abp-button button-type="Info" data-toggle="modal" data-target="#loginModal">Login</abp-button>
+                            <span class="d-block">@L2["AlreadyHaveAnAccount?"].Value</span>
+                            <abp-button button-type="Info" data-toggle="modal" data-target="#loginModal">@L["Login"].Value</abp-button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <abp-modal centered="true" scrollable="true" size="Default" id="joinUsModal">
+            <abp-modal-header title="@L2["RegisterForm"].Value"></abp-modal-header>
+            <abp-modal-body>
+                <form id="JoinUsForm" data-ajaxform="true" action="/Applications/JoinUs" method="POST" novalidate="novalidate">
+
+                    <div>
+                        <div class="mb-3">
+                            <label class="form-label" for="Application_MembershipType">@L2["MembershipType"].Value</label>
+                            <select class="form-select form-control" data-val="true" data-val-required="The MembershipType field is required." id="Application_MembershipType" name="MembershipType">
+                                <option value="Entrepreneur">@L2["Entrepreneur"].Value</option>
+                                <option value="Mentor">@L2["Mentor"].Value</option>
+                                <option value="Investor">@L2["Investor"].Value</option>
+                                <option value="Collaborator">@L2["Collaborator"].Value</option>
+                            </select>
+
+                            <span class="text-danger field-validation-valid" data-valmsg-for="Application.MembershipType" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="Application_SenderName">@L2["SenderName"].Value</label><input type="text" id="Application_SenderName" name="SenderName" value="" class="form-control "><span class="text-danger field-validation-valid" data-valmsg-for="Application.SenderName" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="Application_SenderSurname">@L2["SenderSurname"].Value</label><input type="text" id="Application_SenderSurname" name="SenderSurname" value="" class="form-control "><span class="text-danger field-validation-valid" data-valmsg-for="Application.SenderSurname" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="Application_SenderMail">@L2["SenderMail"].Value</label><input type="email" id="Application_SenderMail" name="SenderMail" value="" class="form-control "><span class="text-danger field-validation-valid" data-valmsg-for="Application.SenderMail" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="Application_SenderPhoneNumber">@L2["SenderPhoneNumber"].Value</label><input type="text" id="Application_SenderPhoneNumber" name="SenderPhoneNumber" value="" class="form-control "><span class="text-danger field-validation-valid" data-valmsg-for="Application.SenderPhoneNumber" data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="Application_Explanation">@L2["Explanation"].Value</label><textarea type="text" rows="6" placeholder="@L2["WhoYouAre?"].Value&#10;@L2["WhyDoYouWantToJoinUs?"].Value" id="Application_Explanation" name="Explanation" value="" class="form-control "></textarea><span class="text-danger field-validation-valid" data-valmsg-for="Application.Explanation" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                </form>
+            </abp-modal-body>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" type="button" data-dismiss="modal">@L["Cancel"]</button>
+                <button id="joinUsSubmitButton" class="btn btn-primary" data-busy-text="Kaydediliyor..." type="button"><i class="fa fa-check"></i> <span>@L2["Send"]</span></button>
+            </div>
+        </abp-modal>
 
         <abp-modal centered="true" scrollable="true" size="Default" id="loginModal">
             <abp-modal-header title="@L["Login"].Value"></abp-modal-header>

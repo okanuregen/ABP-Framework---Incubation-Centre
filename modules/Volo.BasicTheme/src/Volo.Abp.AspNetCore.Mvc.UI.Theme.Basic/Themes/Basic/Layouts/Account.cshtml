@@ -44,9 +44,8 @@
     }
     <abp-style-bundle name="@BasicThemeBundles.Styles.Global" />
 
-    @await RenderSectionAsync("styles", false)
-
     @await Component.InvokeAsync(typeof(WidgetStylesViewComponent))
+    @await RenderSectionAsync("styles", false)
 
     @await Component.InvokeLayoutHookAsync(LayoutHooks.Head.Last, StandardLayouts.Account)
 </head>

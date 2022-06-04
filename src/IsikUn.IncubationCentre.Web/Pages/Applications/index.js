@@ -31,7 +31,7 @@ $(function () {
                                 text: l('Delete'),
                                 visible: abp.auth.isGranted('IncubationCentre.Application.Delete'),
                                 confirmMessage: function (data) {
-                                    return l('ApplicationDeletionConfirmationMessage', data.record.id);
+                                    return l('EntityDeletionConfirmationMessage', "");
                                 },
                                 action: function (data) {
                                     service.delete(data.record.id)
