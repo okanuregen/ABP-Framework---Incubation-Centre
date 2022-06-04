@@ -1,5 +1,6 @@
 ﻿using IsikUn.IncubationCentre.Collaborators;
 using IsikUn.IncubationCentre.Documents;
+using IsikUn.IncubationCentre.Entrepreneurs;
 using IsikUn.IncubationCentre.Events;
 using IsikUn.IncubationCentre.Investors;
 using IsikUn.IncubationCentre.Mentors;
@@ -7,6 +8,7 @@ using IsikUn.IncubationCentre.Milestones;
 using IsikUn.IncubationCentre.People;
 using IsikUn.IncubationCentre.PeopleSkills;
 using IsikUn.IncubationCentre.ProjectsCollaborators;
+using IsikUn.IncubationCentre.ProjectsEntrepreneurs;
 using IsikUn.IncubationCentre.ProjectsFounders;
 using IsikUn.IncubationCentre.ProjectsInvestors;
 using IsikUn.IncubationCentre.ProjectsMentors;
@@ -48,6 +50,10 @@ namespace IsikUn.IncubationCentre.Projects
         public ICollection<Collaborator> Collaborators { get; set; }
         [JsonIgnore]
         public List<ProjectCollaborator> ProjectsCollaborators { get; set; }
+        [JsonIgnore]
+        public ICollection<Entrepreneur> Entrepreneurs { get; set; }
+        [JsonIgnore]
+        public List<ProjectEntrepreneur> ProjectsEntrepreneurs { get; set; }
 
         public List<Event> Events { get; set; }
 

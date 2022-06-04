@@ -144,6 +144,7 @@
         var l = l || abp.localization.getResource('IncubationCentre');
 
         $(".sidebar-toggle.js-sidebar-toggle").remove();
+        $(".navbar-nav.navbar-align .nav-item").first().remove();
         $(".abp-account-container").attr("style","height: 100%;width: 99.2%;");
 
         $('[data-bs-dismiss="modal"]').attr("data-dismiss","modal");
@@ -276,10 +277,7 @@
                             </div>
                         </div>
                         <!--END OF TESTIMONIAL 4 -->
-
                     </div>
-                </div>
-                <div class="col-sm-12" style="padding-top:23px;">
                     <div class="buttonGroup text-center ps-6">
                         <div class="d-inline-block  me-7">
                             <span class="d-block">@L2["Interested?"].Value</span>

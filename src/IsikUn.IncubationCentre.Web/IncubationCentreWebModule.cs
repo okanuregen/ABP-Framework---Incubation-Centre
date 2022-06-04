@@ -37,6 +37,7 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using IsikUn.IncubationCentre.Web.Middlewares;
 
 namespace IsikUn.IncubationCentre.Web;
 
@@ -203,6 +204,7 @@ public class IncubationCentreWebModule : AbpModule
         app.UseStaticFiles();
         app.UseRouting();
         app.UseAuthentication();
+        app.DashboardRedirectMiddleware();
         app.UseJwtTokenMiddleware();
 
         if (MultiTenancyConsts.IsEnabled)
@@ -221,5 +223,6 @@ public class IncubationCentreWebModule : AbpModule
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
         app.UseConfiguredEndpoints();
+
     }
 }

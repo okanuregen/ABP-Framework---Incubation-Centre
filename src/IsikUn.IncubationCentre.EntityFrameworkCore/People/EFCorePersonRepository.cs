@@ -57,6 +57,19 @@ namespace IsikUn.IncubationCentre.People
             return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancelationToken);
         }
 
+        public async Task<Person> GetWithDetailAsync(Guid IdentityUserId, CancellationToken cancelationToken = default)
+        {
+            var dbSet = (await GetDbSetAsync()).Where(a => a.IdentityUserId == IdentityUserId)
+               .Include(c => c.IdentityUser)
+               .Include(a => a.SentRequests)
+               .Include(a => a.ReceivedRequests)
+               .Include(a => a.Skills)
+               .Include(a => a.Tasks)
+               .Include(a => a.FoundedProjects);
+            var rs = await dbSet.FirstOrDefaultAsync(cancelationToken);
+            return rs;
+        }
+
         protected virtual IQueryable<Person> ApplyFilter(
            IQueryable<Person> query,
              string filter = null,

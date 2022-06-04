@@ -33,6 +33,7 @@ using IsikUn.IncubationCentre.Applications;
 using IsikUn.IncubationCentre.Requests;
 using IsikUn.IncubationCentre.Tasks;
 using IsikUn.IncubationCentre.Events;
+using IsikUn.IncubationCentre.ProjectsEntrepreneurs;
 
 namespace IsikUn.IncubationCentre.EntityFrameworkCore;
 
@@ -84,6 +85,7 @@ public class IncubationCentreDbContext :
     public DbSet<Document> Documents { get; set; }
     public DbSet<Project> Projects { get; set; }
     public DbSet<ProjectCollaborator> ProjectsCollaborators { get; set; }
+    public DbSet<ProjectEntrepreneur> ProjectsEntrepreneurs { get; set; }
     public DbSet<ProjectFounder> ProjectsFounders { get; set; }
     public DbSet<ProjectInvestor> ProjectsInvestors { get; set; }
     public DbSet<ProjectMentor> ProjectsMentors { get; set; }
@@ -137,6 +139,13 @@ public class IncubationCentreDbContext :
         builder.Entity<ProjectCollaborator>(b =>
         {
             b.ToTable(IncubationCentreConsts.DbTablePrefix + "ProjectCollaborator",
+                IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+
+        builder.Entity<ProjectEntrepreneur>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "ProjectEntrepreneur",
                 IncubationCentreConsts.DbSchema);
             b.ConfigureByConvention();
         });
@@ -215,6 +224,11 @@ public class IncubationCentreDbContext :
             b.ToTable(IncubationCentreConsts.DbTablePrefix + "Entrepreneurs",
                 IncubationCentreConsts.DbSchema);
             b.ConfigureByConvention();
+
+            b.HasMany(c => c.MyProjects).WithMany(c => c.Entrepreneurs).UsingEntity<ProjectEntrepreneur>(
+           j => j.HasOne(pt => pt.Project).WithMany(c => c.ProjectsEntrepreneurs).HasForeignKey(g => g.ProjectId),
+           j => j.HasOne(pt => pt.Entrepreneur).WithMany(c => c.ProjectsEntrepreneurs).HasForeignKey(g => g.EntrepreneurId),
+           j => j.HasKey(t => new { t.EntrepreneurId, t.ProjectId }));
         });
         builder.Entity<Collaborator>(b =>
         {

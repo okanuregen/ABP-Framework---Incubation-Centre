@@ -1,0 +1,75 @@
+﻿@page
+@using IsikUn.IncubationCentre.Localization
+@using IsikUn.IncubationCentre.Permissions
+@using IsikUn.IncubationCentre.Web.Pages.Entrepreneurs
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<IncubationCentreResource> L
+@inject IAuthorizationService AuthorizationService
+@model DashboardModel
+
+@section scripts
+{
+<abp-script src="/Pages/Entrepreneurs/Dashboard.js" />
+}
+
+<abp-row>
+    <abp-column size="_12">
+        <abp-card>
+            <abp-card-header>
+                <abp-card-title>
+                    @L["PrograssOfCurrentProject"].Value
+                </abp-card-title>
+            </abp-card-header>
+            <abp-card-body>
+                @if (Model.CurrentProject != null)
+                {
+                    <abp-progress-bar type="Success" value="@Model.CurrentProject.Milestones.Count(a => a.isCompleted) * 100 /Model.CurrentProject.Milestones.Count()" animation="true" strip="true" />
+                }else{
+                    @L["NoFoundOnGoingProject"].Value
+                }
+            </abp-card-body>
+        </abp-card>
+    </abp-column>
+    <abp-column size="_3">
+        <abp-card>
+            <abp-card-header>
+                <abp-card-title>
+                    @L["CurrentProject"].Value
+                </abp-card-title>
+            </abp-card-header>
+            <abp-card-body>
+
+            </abp-card-body>
+        </abp-card>
+    </abp-column>
+    <abp-column size="_9">
+        <abp-row>
+            <abp-column size="_12">
+                <abp-card>
+                    <abp-card-header>
+                        <abp-card-title>
+                            @L["Requests"].Value
+                        </abp-card-title>
+                    </abp-card-header>
+                    <abp-card-body>
+
+                    </abp-card-body>
+                </abp-card>
+            </abp-column>
+            <abp-column size="_12">
+                <abp-card>
+                    <abp-card-header>
+                        <abp-card-title>
+                            @L["Tasks"].Value
+                        </abp-card-title>
+                    </abp-card-header>
+                    <abp-card-body>
+
+                    </abp-card-body>
+                </abp-card>
+            </abp-column>
+        </abp-row>
+    </abp-column>
+
+</abp-row>
