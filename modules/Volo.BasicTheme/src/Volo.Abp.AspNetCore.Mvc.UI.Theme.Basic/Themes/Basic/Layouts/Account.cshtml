@@ -33,6 +33,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/logo.png">
 
     <title>@(ViewBag.Title == null ? BrandingProvider.AppName : ViewBag.Title)</title>
 
@@ -49,49 +51,12 @@
     @await Component.InvokeLayoutHookAsync(LayoutHooks.Head.Last, StandardLayouts.Account)
 </head>
 <body class="abp-account-layout @rtl">
-    @await Component.InvokeLayoutHookAsync(LayoutHooks.Body.First, StandardLayouts.Account)
 
-    @(await Component.InvokeAsync<MainNavbarViewComponent>())
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <div class="@containerClass">
-        <abp-row>
-            <abp-column class="col mx-auto" style="max-width: 440px">
-                @if (MultiTenancyOptions.Value.IsEnabled &&
-                  (TenantResolveResultAccessor.Result?.AppliedResolvers?.Contains(CookieTenantResolveContributor.ContributorName) == true ||
-                   TenantResolveResultAccessor.Result?.AppliedResolvers?.Contains(QueryStringTenantResolveContributor.ContributorName) == true))
-                {
-                    <div class="card shadow-sm rounded mb-3">
-                        <div class="card-body px-5">
-                            <div class="row">
-                                <div class="col">
-                                    <span style="font-size: .8em;" class="text-uppercase text-muted">@MultiTenancyStringLocalizer["Tenant"]</span><br />
-                                    <h6 class="m-0 d-inline-block">
-                                        @if (CurrentTenant.Id == null)
-                                        {
-                                            <span>
-                                                @MultiTenancyStringLocalizer["NotSelected"]
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <strong>@(CurrentTenant.Name ?? CurrentTenant.Id.Value.ToString())</strong>
-                                        }
-                                    </h6>
-                                </div>
-                                <div class="col-auto">
-                                    <a id="AbpTenantSwitchLink" href="javascript:;" class="btn btn-sm mt-3 btn-outline-primary">@MultiTenancyStringLocalizer["Switch"]</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
-                @(await Component.InvokeAsync<PageAlertsViewComponent>())
-                @await Component.InvokeLayoutHookAsync(LayoutHooks.PageContent.First, StandardLayouts.Account)
-                @RenderBody()
-                @await Component.InvokeLayoutHookAsync(LayoutHooks.PageContent.Last, StandardLayouts.Account)
-            </abp-column>
-        </abp-row>
-    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
     <abp-script-bundle name="@BasicThemeBundles.Scripts.Global" />
 
@@ -102,6 +67,10 @@
 
     @await Component.InvokeAsync(typeof(WidgetScriptsViewComponent))
 
-    @await Component.InvokeLayoutHookAsync(LayoutHooks.Body.Last, StandardLayouts.Account)
+    @(await Component.InvokeAsync<PageAlertsViewComponent>())
+    @await Component.InvokeLayoutHookAsync(LayoutHooks.PageContent.First, StandardLayouts.Account)
+    @RenderBody()
+    @await Component.InvokeLayoutHookAsync(LayoutHooks.PageContent.Last, StandardLayouts.Account)
+
 </body>
 </html>

@@ -1,0 +1,299 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.Account.Localization
+@using IsikUn.IncubationCentre.Localization
+@using Volo.Abp.Account.Settings
+@using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Themes.Basic.Components.Footer
+@using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Themes.Basic.Components.MainNavbar
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@using Volo.Abp.Settings
+@model Volo.Abp.Account.Web.Pages.Account.LoginModel
+@inject IHtmlLocalizer<AccountResource> L
+@inject IHtmlLocalizer<IncubationCentreResource> L2
+@inject Volo.Abp.Settings.ISettingProvider SettingProvider
+
+<style>
+
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+    }
+
+    .box {
+        display: flex;
+        flex-flow: column;
+        height: 100%;
+    }
+
+        .box .row.header {
+            flex: 0 1 auto;
+        }
+
+        .box .row.content {
+            flex: 1 1 auto;
+        }
+
+        .box .row.footer {
+            flex: 0 1 40px;
+        }
+
+
+    body {
+        font-family: 'Mulish', sans-serif;
+        background: #673AB7; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #512DA8, #673AB7); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #9ad0ff, #5dadff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    #customers-testimonials .item {
+        text-align: center;
+        margin-bottom: 50px;
+        padding: 15px;
+        opacity: .2;
+        -webkit-transform: scale3d(0.8, 0.8, 1);
+        transform: scale3d(0.8, 0.8, 1);
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+        background-color: #FFF;
+        border-radius: 3px;
+    }
+
+    #customers-testimonials .owl-item.active.center .item {
+        opacity: 1;
+        -webkit-transform: scale3d(1.0, 1.0, 1);
+        transform: scale3d(1.0, 1.0, 1);
+        background-color: #FFF;
+    }
+
+    .owl-carousel .owl-item img {
+        transform-style: preserve-3d;
+        max-width: 90px;
+        margin: 0 auto 17px;
+    }
+
+    #customers-testimonials.owl-carousel .owl-dots .owl-dot.active span, #customers-testimonials.owl-carousel .owl-dots .owl-dot:hover span {
+        background: #fff;
+        transform: translate3d(0px, -50%, 0px) scale(0.6);
+    }
+
+    #customers-testimonials.owl-carousel .owl-dots {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+    }
+
+        #customers-testimonials.owl-carousel .owl-dots .owl-dot {
+            display: inline-block;
+            outline: none;
+        }
+
+            #customers-testimonials.owl-carousel .owl-dots .owl-dot span {
+                background: rgba(255,255,255,0.4);
+                display: inline-block;
+                height: 20px;
+                margin: 0 2px 5px;
+                transform: translate3d(0px, -50%, 0px) scale(0.3);
+                transform-origin: 50% 50% 0;
+                transition: all 250ms ease-out 0s;
+                width: 20px;
+                border-radius: 100%;
+            }
+
+    .commo img {
+        width: 30px !important;
+        height: auto;
+        float: left;
+    }
+
+    .author-img img {
+        width: 60px !important;
+        height: auto;
+        border-radius: 100%;
+        margin-bottom: 0 !important;
+    }
+
+    .navbar-light .navbar-nav .nav-link {
+        color: white !important;
+    }
+
+    .navbar-bg {
+        background: #ffffff14 !important;
+    }
+
+    footer.footer {
+        background: transparent;
+    }
+
+    .owl-item {
+        max-height: 380px !important;
+        height: 380px !important;
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script>
+    $(function () {
+        $(".sidebar-toggle.js-sidebar-toggle").remove();
+        $(".abp-account-container").attr("style","height: 100%;width: 99.2%;");
+
+        $('[data-bs-dismiss="modal"]').attr("data-dismiss","modal");
+        $('#customers-testimonials').owlCarousel({
+                loop: true,
+                center: true,
+                margin:-35,
+                dots:true,
+                autoplayTimeout: 100,
+                smartSpeed: 450,
+                responsive: {
+                    0: {
+                    items: 1
+                    },
+                    768: {
+                    items: 2
+                    },
+                    1170: {
+                    items: 3
+                    }
+                }
+            });
+    });
+</script>
+<!-- Button trigger modal -->
+<div class="box" style="
+    width: 99.7%;
+">
+    <div class="row header">
+        @(await Component.InvokeAsync<MainNavbarViewComponent>())
+    </div>
+    <div class="row content p-0">
+
+        <div class="px-5">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="container-fluid px-3 px-sm-5 my-5 text-center">
+                        <h2 class="text-white">@L2["WelcomeMessage"]</h2>
+                    </div>
+                    <div id="customers-testimonials" class="owl-carousel">
+
+                        <!--TESTIMONIAL 1 -->
+                        <div class="item shadow">
+                            <div class="p-4 bg-white rounded">
+                                <img src="https://cdn-icons-png.flaticon.com/512/860/860472.png" alt="">
+                                <hr>
+                                <p class="mb-4 text-muted ">Işık University Incubation Center would love to help to bring your ideas to life! With our team, more than 100 mentors who are field-specialized, creating a business from a scratch has never been so easy!</p>
+                                <hr>
+                            </div>
+                        </div>
+                        <!--END OF TESTIMONIAL 1 -->
+                        <!--TESTIMONIAL 2 -->
+                        <div class="item shadow">
+                            <div class="p-4 bg-white rounded">
+                                <img src="https://cdn-icons-png.flaticon.com/512/860/860472.png" alt="">
+                                <hr>
+                                <p class="mb-4 text-muted ">Işık University Incubation Center would love to help to bring your ideas to life! With our team, more than 100 mentors who are field-specialized, creating a business from a scratch has never been so easy!</p>
+                                <hr>
+                            </div>
+                        </div>
+                        <!--END OF TESTIMONIAL 2 -->
+                        <!--TESTIMONIAL 3 -->
+                        <div class="item shadow">
+                            <div class="p-4 bg-white rounded">
+                                <img src="https://cdn-icons-png.flaticon.com/512/860/860472.png" alt="">
+                                <hr>
+                                <p class="mb-4 text-muted ">Işık University Incubation Center would love to help to bring your ideas to life! With our team, more than 100 mentors who are field-specialized, creating a business from a scratch has never been so easy!</p>
+                                <hr>
+                            </div>
+                        </div>
+                        <!--END OF TESTIMONIAL 3 -->
+                        <!--TESTIMONIAL 4 -->
+                        <div class="item shadow">
+                            <div class="p-4 bg-white rounded">
+                               <img src="https://cdn-icons-png.flaticon.com/512/860/860472.png" alt="">
+                                <hr>
+                                <p class="mb-4 text-muted ">Işık University Incubation Center would love to help to bring your ideas to life! With our team, more than 100 mentors who are field-specialized, creating a business from a scratch has never been so easy!</p>
+                                <hr>
+                            </div>
+                        </div>
+                        <!--END OF TESTIMONIAL 4 -->
+
+                    </div>
+                </div>
+                <div class="col-sm-12" style="padding-top:23px;">
+                    <div class="buttonGroup text-center ps-6">
+                        <div class="d-inline-block  me-7">
+                            <span class="d-block">Intersted ?</span>
+                            <button class="btn btn-info">Join Us</button>
+                        </div>
+                        <div class="d-inline-block  ms-7">
+                            <span class="d-block">Already Have An Account ?</span>
+                            <abp-button button-type="Info" data-toggle="modal" data-target="#loginModal">Login</abp-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <abp-modal centered="true" scrollable="true" size="Default" id="loginModal">
+            <abp-modal-header title="@L["Login"].Value"></abp-modal-header>
+            <abp-modal-body>
+                <div class="card mt-3 shadow-sm rounded">
+                    <div class="card-body p-5">
+                        @if (Model.EnableLocalLogin)
+                        {
+                            <form method="post" class="mt-4">
+                                <div class="mb-3">
+                                    <label asp-for="LoginInput.UserNameOrEmailAddress" class="form-label"></label>
+                                    <input asp-for="LoginInput.UserNameOrEmailAddress" class="form-control" />
+                                    <span asp-validation-for="LoginInput.UserNameOrEmailAddress" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="LoginInput.Password" class="form-label"></label>
+                                    <input asp-for="LoginInput.Password" class="form-control" />
+                                    <span asp-validation-for="LoginInput.Password" class="text-danger"></span>
+                                </div>
+                                <abp-row>
+                                    <abp-column>
+                                        <abp-input asp-for="LoginInput.RememberMe" class="mb-4" />
+                                    </abp-column>
+                                    <abp-column class="text-end">
+                                        <a href="@Url.Page("./ForgotPassword", new {returnUrl = Model.ReturnUrl, returnUrlHash = Model.ReturnUrlHash})">@L["ForgotPassword"]</a>
+                                    </abp-column>
+                                </abp-row>
+                                <div class="d-grid gap-2">
+                                    <abp-button type="submit" button-type="Primary" name="Action" value="Login" class="btn-lg mt-3">@L["Login"]</abp-button>
+                                    @if (Model.ShowCancelButton)
+                                    {
+                                        <abp-button type="submit" button-type="Secondary" formnovalidate="formnovalidate" name="Action" value="Cancel" class="btn-lg mt-3">@L["Cancel"]</abp-button>
+                                    }
+                                </div>
+                            </form>
+                        }
+
+
+
+                        @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
+                        {
+                            <div class="alert alert-warning">
+                                <strong>@L["InvalidLoginRequest"]</strong>
+                                @L["ThereAreNoLoginSchemesConfiguredForThisClient"]
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </abp-modal-body>
+            <abp-modal-footer buttons="Close"></abp-modal-footer>
+        </abp-modal>
+    </div>
+    <div class="row footer">
+        @(await Component.InvokeAsync<FooterViewComponent>())
+    </div>
+</div>
