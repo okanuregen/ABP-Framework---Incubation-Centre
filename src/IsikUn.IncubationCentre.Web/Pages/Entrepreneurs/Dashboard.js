@@ -1,7 +1,8 @@
 $(function () {
     var l = abp.localization.getResource('IncubationCentre');
-    var createModal = new abp.ModalManager(abp.appPath + 'Entrepreneurs/CreateModal');
-    var editModal = new abp.ModalManager(abp.appPath + 'Entrepreneurs/EditModal');
+
+    var createProjectModal = new abp.ModalManager(abp.appPath + 'Projects/CreateModal');
+    var editProjectModal = new abp.ModalManager(abp.appPath + 'Projects/EditModal');
 
     var dataTable = $('#EntrepreneursTable').DataTable(
         abp.libs.datatables.normalizeConfiguration({
@@ -83,16 +84,16 @@ $(function () {
         })
     );
 
-    createModal.onResult(function () {
-        dataTable.ajax.reload();
-    });
+    //createModal.onResult(function () {
+    //    dataTable.ajax.reload();
+    //});
 
-    editModal.onResult(function () {
-        dataTable.ajax.reload();
-    });
+    //editModal.onResult(function () {
+    //    dataTable.ajax.reload();
+    //});
 
-    $('#NewEntrepreneurButton').click(function (e) {
+    $('#NewProjectButton').click(function (e) {
         e.preventDefault();
-        createModal.open();
+        createProjectModal.open();
     });
 });

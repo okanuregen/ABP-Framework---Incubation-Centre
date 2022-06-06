@@ -10,9 +10,8 @@
 @{
     Layout = null;
 }
-<script src="https://unpkg.com/@@yaireo/tagify"></script>
-<script src="https://unpkg.com/@@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-<link href="https://unpkg.com/@@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
+
 <abp-dynamic-form abp-model="Project" data-ajaxForm="true" asp-page="CreateModal">
     <abp-modal>
         <abp-modal-header title="@L["CreateProject"].Value"></abp-modal-header>
@@ -25,6 +24,7 @@
 
 <script>
     $(function(){
+        var l = abp.localization.getResource('IncubationCentre');
         $("[name='Project.Status'] option").each(function(i,e){
             $(e).text(l("Enum:ProjectStatus_"+i));
         });

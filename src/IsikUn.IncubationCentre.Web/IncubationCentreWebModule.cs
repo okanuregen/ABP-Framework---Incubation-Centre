@@ -109,7 +109,16 @@ public class IncubationCentreWebModule : AbpModule
                     bundle.AddFiles("/styles/app.css");
                 }
             );
+
+            options.ScriptBundles.Configure(
+                BasicThemeBundles.Scripts.Global,
+                bundle =>
+                {
+                    bundle.AddFiles("/scripts/global.js");
+                }
+            );
         });
+
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)

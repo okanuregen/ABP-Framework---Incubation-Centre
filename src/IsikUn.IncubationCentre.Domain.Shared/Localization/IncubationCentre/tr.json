@@ -107,6 +107,11 @@
     "Enum:ProjectStatus_2": "Askıya Alındı",
     "Enum:ProjectStatus_3": "İptal Edildi",
     "Enum:ProjectStatus_4": "Tamamlandı",
+    "Started": "Başladı",
+    "OnGoing": "Devam Ediyor",
+    "Suspended": "Askıya Alındı",
+    "Canceled": "İptal Edildi",
+    "Completed": "Tamamlandı",
     "Status": "Durum",
     "CompletionDate": "Tamamlanma Tarihi",
     "Tags": "Taglar",
@@ -178,6 +183,19 @@
     "WeCannotGetAnyApplicatonForNow": "Şuan İçin Başvuru Alamıyoruz. Lütfen Daha Sonra Tekrar Deneyin veya Destek Ekibimiz İle İletişime Geçin",
     "Send": "Gönder",
     "SameMailExistOnDifferentApplication": "Bu Mail Adresine Ait Başka Bir Başvuru Zaten Yapılmış",
-    "ApplicationFromSuccesMessage": "Formunuz Ulaşmıştır. En Kısa Sürede Geri Dönüş Sağlanacaktır. İyi Günler Dileriz."
+    "ApplicationFromSuccesMessage": "Formunuz Ulaşmıştır. En Kısa Sürede Geri Dönüş Sağlanacaktır. İyi Günler Dileriz.",
+    "ProgressOfCurrentProject": "Güncel Projenizdeki İlerlemeniz",
+    "ProjectProgressCalculation": "Tamamlanan Proje Aşamaları / Toplam Proje Aşamaları",
+    "NoFoundOnGoingProject": "Devam Eden Projeniz Bulunamadı",
+    "OngoingProject": "Devam Eden Projeniz",
+    "HaveAnyIdea?": "Yeni Bir Fikriniz Mi Var?",
+    "CreationDate": "Başlangıç Tarihi",
+    "Recived": "Gelen",
+    "Sent": "Gönderilen",
+    "Date": "Tarih",
+    "SentTo": "Giden",
+    "NoFoundRecivedRequests": "Gelen İstek Bulunamadı",
+    "NoFoundSentRequests": "Giden İstek Bulunamadı",
+    "NoFoundTask": "Her Hangi Bir Görev Bulunamadı"
   }
 }

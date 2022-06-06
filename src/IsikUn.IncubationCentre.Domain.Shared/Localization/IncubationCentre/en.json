@@ -107,6 +107,11 @@
     "Enum:ProjectStatus_2": "Suspended",
     "Enum:ProjectStatus_3": "Canceled",
     "Enum:ProjectStatus_4": "Completed",
+    "Started": "Started",
+    "OnGoing": "OnGoing",
+    "Suspended": "Suspended",
+    "Canceled": "Canceled",
+    "Completed": "Completed",
     "Status": "Status",
     "CompletionDate": "Completion Date",
     "Tags": "Tags",
@@ -178,6 +183,20 @@
     "WeCannotGetAnyApplicatonForNow": "We Cannot Get Any Applicaton For Now. Please Try Later or Contact Our Support Team",
     "Send": "Send",
     "SameMailExistOnDifferentApplication": "Another Application Made With This Email Address",
-    "ApplicationFromSuccesMessage": "Your application has been arrived. Returns will be provided as soon as possible. We wish you a nice day."
+    "ApplicationFromSuccesMessage": "Your application has been arrived. Returns will be provided as soon as possible. We wish you a nice day.",
+    "ProgressOfCurrentProject": "Your Progress Of Current Project",
+    "ProjectProgressCalculation": "It Is Calculated By Complited Milestones / Total Milestones",
+    "NoFoundOnGoingProject": "You Don't Have Any Ongoing Project",
+    "OngoingProject": "Ongoing Project",
+    "HaveAnyIdea?": "Have Any Idea?",
+    "CreationDate": "Creation Date",
+    "Recived": "Recived",
+    "Sent": "Sent",
+    "Date": "Date",
+    "SentTo": "Sent To",
+    "NoFoundRecivedRequests": "No Found Any Recived Requests",
+    "NoFoundSentRequests": "No Found Any Sent Requests",
+    "NoFoundTask": "No Found Any Task"
+
   }
 }

@@ -50,11 +50,15 @@
     @await Component.InvokeAsync(typeof(WidgetStylesViewComponent))
 
     @await RenderSectionAsync("styles", false)
+    <link href="https://unpkg.com/@@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     <script src="https://kit.fontawesome.com/9c206210e0.js" crossorigin="anonymous"></script>
+    
 
     @await Component.InvokeLayoutHookAsync(LayoutHooks.Head.Last, StandardLayouts.Application)
 </head>
 <body class="abp-application-layout @rtl">
+    <script src="https://unpkg.com/@@yaireo/tagify"></script>
+    <script src="https://unpkg.com/@@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
     @await Component.InvokeLayoutHookAsync(LayoutHooks.Body.First, StandardLayouts.Application)
 
 
@@ -70,7 +74,9 @@
             </div>
 
             @await Component.InvokeLayoutHookAsync(LayoutHooks.PageContent.First, StandardLayouts.Application)
-            @RenderBody()
+            <div class="ps-3 pe-2" style="height:100% !important;">
+                @RenderBody()
+            </div>
             @(await Component.InvokeAsync<FooterViewComponent>())
             @await Component.InvokeLayoutHookAsync(LayoutHooks.PageContent.Last, StandardLayouts.Application)
         </div>
