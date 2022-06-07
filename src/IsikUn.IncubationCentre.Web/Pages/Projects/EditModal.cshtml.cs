@@ -33,8 +33,9 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
 
         public virtual async Task OnGetAsync()
         {
-            var dto = await _service.GetAsync(Id);
+            var dto = await _service.GetWithDetailAsync(Id);
             Project = ObjectMapper.Map<ProjectDto, CreateUpdateProjectDto>(dto);
+            Project.EntreprenurId = dto.Entrepreneurs.FirstOrDefault().Id;
         }
 
         public virtual async Task<IActionResult> OnPostAsync()

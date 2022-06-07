@@ -103,6 +103,20 @@ namespace IsikUn.IncubationCentre.Mentors
                     .WhereIf(entrepreneurIds != null && entrepreneurIds.Any(), e => entrepreneurIds.All(a => e.Entrepreneurs.Select(b => b.Id).Contains(a)))
                     .WhereIf(collaboratorIds != null && collaboratorIds.Any(), e => collaboratorIds.All(a => e.Collaborators.Select(b => b.Id).Contains(a)));
         }
+
+        public async Task<Project> GetWithDetailAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            var dbSet = (await GetDbSetAsync())
+                .Where(a => a.Id == id)
+                .Include(c => c.Entrepreneurs)
+                .Include(c => c.Collaborators)
+                .Include(c => c.Investors)
+                .Include(c => c.Mentors)
+                .Include(c => c.Milestones)
+                .Include(a => a.Founders);
+            var rs = await dbSet.FirstOrDefaultAsync(cancellationToken);
+            return rs;
+        }
     }
 }
 

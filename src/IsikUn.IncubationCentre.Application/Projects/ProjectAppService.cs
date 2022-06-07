@@ -89,6 +89,15 @@ namespace IsikUn.IncubationCentre.Projects
             return ObjectMapper.Map<Project, ProjectDto>(project);
         }
 
+
+        [Authorize(IncubationCentrePermissions.Projects.Default)]
+        public async Task<ProjectDto> GetWithDetailAsync(Guid id)
+        {
+            var project = await _projectRepository.GetWithDetailAsync(id);
+            return ObjectMapper.Map<Project, ProjectDto>(project);
+        }
+
+
         [Authorize(IncubationCentrePermissions.Projects.Default)]
         public async Task<PagedResultDto<ProjectDto>> GetListAsync(GetProjectsInput input)
         {

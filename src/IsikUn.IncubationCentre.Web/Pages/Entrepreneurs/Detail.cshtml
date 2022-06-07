@@ -16,13 +16,16 @@
 }
 <script>
     var int = setInterval(function(){
-        if(typeof(page) != "undefined"){
+        if(typeof(abp) != undefined && typeof(page) != undefined){
             var l = l || abp.localization.getResource('IncubationCentre');
-            debugger;
-            var dataTable = $('#ProjectsTable').DataTable(
+            var editProjectModal = new abp.ModalManager(abp.appPath + 'Projects/EditModal');
+
+
+            var dataTableProject = $('#ProjectsTable').DataTable(
                 abp.libs.datatables.normalizeConfiguration({
                     serverSide: false,
                     paging: true,
+                    scrollY: '302px',
                     order: [[1, "asc"]],
                     searching: true,
                     scrollX: true,
@@ -37,17 +40,25 @@
                                 items:
                                     [
                                         {
+                                            text: l('Detail'),
+                                            visible:
+                                                abp.auth.isGranted('IncubationCentre.Projects'),
+                                            action: function (data) {
+                                                location.href="/Projects/Detail?id="+data.record.id;
+                                            }
+                                        },
+                                        {
                                             text: l('Edit'),
                                             visible:
-                                                abp.auth.isGranted('IncubationCentre.Projects.Edit'),
+                                                abp.auth.isGranted('IncubationCentre.Projects.Edit') && ("@Model.IsMyPage" == "True"),
                                             action: function (data) {
-                                                editModal.open({ id: data.record.id });
+                                                editProjectModal.open({ id: data.record.id });
                                             }
                                         },
                                         {
                                             text: l('Delete'),
                                             visible:
-                                                abp.auth.isGranted('IncubationCentre.Projects.Delete'),
+                                                abp.auth.isGranted('IncubationCentre.Projects.Delete') && ("@Model.IsMyPage" == "True"),
                                             confirmMessage: function (data) {
                                                 return l(
                                                     'EntityDeletionConfirmationMessage',
@@ -61,7 +72,7 @@
                                                         abp.notify.info(
                                                             l('SuccessfullyDeleted')
                                                         );
-                                                        dataTable.ajax.reload();
+                                                        dataTableProject.ajax.reload();
                                                     });
                                             }
                                         }
@@ -95,6 +106,7 @@
                             title: l('CompletionDate'),
                             data: "completionDate",
                             render: function (data) {
+                                if(data == null) return "-";
                                 try{
                                     var date = new Date(data).toLocaleDateString();
                                     return date != "Invalid Date" ? date : "-";
@@ -103,11 +115,109 @@
                                 }
                             }
                         }
-                    ].slice(@(Model.IsMyPage ? 0 : 1))
+                    ]
+            }));
+
+            editProjectModal.onResult(function () {
+                dataTableProject.ajax.reload();
+            });
+
+            var dataTableMilestone = $('#MilestonesTable').DataTable(
+                abp.libs.datatables.normalizeConfiguration({
+                    serverSide: false,
+                    paging: true,
+                    scrollY: '302px',
+                    order: [[1, "asc"]],
+                    searching: true,
+                    scrollX: true,
+                    ajax: abp.libs.datatables.createAjax(
+                        isikUn.incubationCentre.entrepreneurs.entrepreneur.getMilestoneList,
+                        { id : '@Model.id' }
+                    ),
+                    columnDefs: [
+                        {
+                            title: l('Actions'),
+                            rowAction: {
+                                items:
+                                    [
+                                        {
+                                            text: l('Edit'),
+                                            visible:
+                                                abp.auth.isGranted('IncubationCentre.Milestones.Edit'),
+                                            action: function (data) {
+                                                editModal.open({ id: data.record.id });
+                                            }
+                                        },
+                                        {
+                                            text: l('Delete'),
+                                            visible:
+                                                abp.auth.isGranted('IncubationCentre.Milestones.Delete'),
+                                            confirmMessage: function (data) {
+                                                return l(
+                                                    'EntityDeletionConfirmationMessage',
+                                                    data.record.name
+                                                );
+                                            },
+                                            action: function (data) {
+                                                isikUn.incubationCentre.projects.project
+                                                    .delete(data.record.id)
+                                                    .then(function () {
+                                                        abp.notify.info(
+                                                            l('SuccessfullyDeleted')
+                                                        );
+                                                        dataTableMilestone.ajax.reload();
+                                                    });
+                                            }
+                                        }
+                                    ]
+                            }
+                        },
+                        {
+                            title: l('ProjectName'),
+                            data: "project.name"
+                        },
+                        {
+                            title: l('Title'),
+                            data: "title"
+                        },
+                        {
+                            title: l('StartDate'),
+                            data: "startDate",
+                            render: function (data) {
+                                try{
+                                    var date = new Date(data).toLocaleDateString();
+                                    return date != "Invalid Date" ? date : "-";
+                                } catch {
+                                    return "-";
+                                }
+                            }
+                        },
+                        {
+                            title: l('EndDate'),
+                            data: "endDate",
+                            render: function (data) {
+                                try{
+                                    var date = new Date(data).toLocaleDateString();
+                                    return date != "Invalid Date" ? date : "-";
+                                } catch {
+                                    return "-";
+                                }
+                            }
+                        },
+                        {
+                            title: l('isCompleted'),
+                            data: "isCompleted",
+                            render: function (data) {
+                                return data ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-times text-danger'></i>";
+                            }
+                        }
+                    ]
                 }));
-            clearInterval(int);
-        }
-    },300);
+                page.defines.mileStoneTable = dataTableMilestone;
+                debugger;
+                clearInterval(int);
+            }
+    },500)
 </script>
 <style>
     .info-area .border-bottom {
@@ -198,7 +308,7 @@
                                         <abp-column size="_6" class="text-end">@(Model.Projects != null ? Model.Projects.Where(a => a.Status == IsikUn.IncubationCentre.Projects.ProjectStatus.OnGoing).Select(a => a.Name).FirstOrDefault() : "-")</abp-column>
                                     </abp-row>
                                     <abp-row class="border-bottom">
-                                        <abp-column size="_3"><b>@L["Skills"].Value:</b></abp-column>
+                                        <abp-column size="_4"><b>@L["Skills"].Value:</b></abp-column>
                                         @if (Model.Entrepreneur.Skills != null)
                                         {
                                             var htmlText = "";
@@ -209,11 +319,11 @@
                                             {
                                                 htmlText += string.Format("<span class='badge badge-info ms-1'>{0} : {1}</span>", skill.Category, skill.AllSkills);
                                             }
-                                            <abp-column size="_9" class="text-end pb-1"> @(htmlText  == "" ? "-" : Html.Raw(htmlText)) </abp-column>
+                                            <abp-column size="_8" class="text-end pb-1"> @(htmlText  == "" ? "-" : Html.Raw(htmlText)) </abp-column>
                                         }
                                         else
                                         {
-                                            <abp-column size="_9" class="text-end">-</abp-column>
+                                            <abp-column size="_8" class="text-end">-</abp-column>
                                         }
                                     </abp-row>
 
@@ -243,6 +353,7 @@
     <abp-column size="_8">
         <abp-row>
             <abp-column size="_12">
+
                 <abp-card data-role="tab" id="ProjectsTab">
                     <abp-card-header>
                         <abp-card-title>
@@ -253,6 +364,7 @@
                         <abp-table striped-rows="true" id="ProjectsTable"></abp-table>
                     </abp-card-body>
                 </abp-card>
+
                 <abp-card data-role="tab" id="MilestonesTab" style="display:none;">
                     <abp-card-header>
                         <abp-card-title>
@@ -260,9 +372,10 @@
                         </abp-card-title>
                     </abp-card-header>
                     <abp-card-body>
-
+                        <abp-table striped-rows="true" id="MilestonesTable"></abp-table>
                     </abp-card-body>
                 </abp-card>
+
                 <abp-card data-role="tab" id="AboutTab" style="display:none;">
                     <abp-card-header>
                         <abp-card-title>

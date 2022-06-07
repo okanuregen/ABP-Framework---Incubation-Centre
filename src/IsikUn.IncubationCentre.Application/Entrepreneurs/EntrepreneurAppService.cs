@@ -1,4 +1,5 @@
 ﻿using IsikUn.IncubationCentre.Localization;
+using IsikUn.IncubationCentre.Milestones;
 using IsikUn.IncubationCentre.People;
 using IsikUn.IncubationCentre.PeopleSkills;
 using IsikUn.IncubationCentre.Permissions;
@@ -97,6 +98,33 @@ namespace IsikUn.IncubationCentre.Entrepreneurs
             {
                 TotalCount = entreprenur.MyProjects != null ? entreprenur.MyProjects.Count : 0,
                 Items = ObjectMapper.Map<List<Project>, List<ProjectDto>>(projects)
+            };
+        }
+
+
+        [Authorize(IncubationCentrePermissions.Entrepreneurs.Default)]
+        public async Task<PagedResultDto<MilestoneDto>> GetMilestoneListAsync(GetEntrepreneursInput input)
+        {
+            var entreprenur = await _entrepreneurRepository.GetWithDetailAsync(input.id.Value);
+            List<Project> projects = entreprenur.MyProjects != null ? entreprenur.MyProjects.ToList() : null;
+            if(projects == null)
+            {
+                return new PagedResultDto<MilestoneDto>
+                {
+                    TotalCount = 0,
+                    Items = new List<MilestoneDto>()
+                };
+            }
+            List<Milestone> milestones = new List<Milestone>();
+            projects.ForEach(a => a.Milestones.ForEach(b => {
+                b.Project = a;
+                milestones.Add(b);
+            }));
+
+            return new PagedResultDto<MilestoneDto>
+            {
+                TotalCount = milestones.Count(),
+                Items = ObjectMapper.Map<List<Milestone>, List<MilestoneDto>>(milestones.OrderBy(a => a.Project.Name).ToList()) 
             };
         }
 

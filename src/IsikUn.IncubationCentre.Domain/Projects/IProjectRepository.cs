@@ -55,5 +55,7 @@ namespace IsikUn.IncubationCentre.Projects
              Guid[] entrepreneurIds = null,
              CancellationToken cancelationToken = default
             );
+
+        Task<Project> GetWithDetailAsync(Guid id, CancellationToken cancellationToken = default);
     }
 }

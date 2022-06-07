@@ -1,4 +1,5 @@
-﻿using IsikUn.IncubationCentre.Projects;
+﻿using IsikUn.IncubationCentre.Milestones;
+using IsikUn.IncubationCentre.Projects;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,5 +22,6 @@ namespace IsikUn.IncubationCentre.Entrepreneurs
 
         Task<EntrepreneurDto> UpdateAsync(Guid id, CreateUpdateEntrepreneurDto input);
         Task<PagedResultDto<ProjectDto>> GetProjectListAsync(GetEntrepreneursInput input);
+        Task<PagedResultDto<MilestoneDto>> GetMilestoneListAsync(GetEntrepreneursInput input);
     }
 }
