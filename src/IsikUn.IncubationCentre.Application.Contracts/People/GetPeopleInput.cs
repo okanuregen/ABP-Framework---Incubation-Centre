@@ -13,7 +13,7 @@ namespace IsikUn.IncubationCentre.People
     public class GetPeopleInput : PagedAndSortedResultRequestDto
     {
         public string filter { get; set; }
-
+        public Guid? id { get; set; }
         public string About { get; set; }
         public Guid[] SkillIds { get; set; }
         public string Experience { get; set; }

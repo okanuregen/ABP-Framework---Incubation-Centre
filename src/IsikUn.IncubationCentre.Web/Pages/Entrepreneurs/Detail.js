@@ -1,7 +1,7 @@
 var l = null;
 var page = {
     defines: {
-        currentTab : "ProjectsTab"
+        currentTab: "ProjectsTab",
     }
 }
 $(function () {
@@ -9,7 +9,6 @@ $(function () {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
     var userId = params.id;
-
 
     var editMyselfModal = new abp.ModalManager(abp.appPath + 'Entrepreneurs/EditModal');
 
@@ -41,7 +40,7 @@ $(function () {
     var createModal = new abp.ModalManager(abp.appPath + 'Entrepreneurs/CreateModal');
     var editModal = new abp.ModalManager(abp.appPath + 'Entrepreneurs/EditModal');
 
-    var dataTable = $('#EntrepreneursTable').DataTable(
+    var dataTable = $('#ProjectTable2').DataTable(
         abp.libs.datatables.normalizeConfiguration({
             serverSide: true,
             paging: true,

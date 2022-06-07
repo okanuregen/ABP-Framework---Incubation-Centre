@@ -106,7 +106,7 @@ namespace IsikUn.IncubationCentre.Projects
                 input.Investors != null ? input.Investors.Select(a => a.Id).ToList() : null,
                 input.Mentors != null ? input.Mentors.Select(a => a.Id).ToList() : null,
                 input.Collaborators != null ? input.Collaborators.Select(a => a.Id).ToList() : null,
-                input.Entrepreneurs != null ? input.Entrepreneurs.Select(a => a.Id).ToList() : null);
+                input.Entrepreneurs);
             var items = await _projectRepository.GetListAsync(
                 input.Status,
                 input.FiterByStatus,
@@ -121,7 +121,7 @@ namespace IsikUn.IncubationCentre.Projects
                 input.Investors != null ? input.Investors.Select(a => a.Id).ToList() : null,
                 input.Mentors != null ? input.Mentors.Select(a => a.Id).ToList() : null,
                 input.Collaborators != null ? input.Collaborators.Select(a => a.Id).ToList() : null,
-                input.Entrepreneurs != null ? input.Entrepreneurs.Select(a => a.Id).ToList() : null,
+                input.Entrepreneurs,
                 input.Sorting, input.SkipCount, input.MaxResultCount);
 
             return new PagedResultDto<ProjectDto>

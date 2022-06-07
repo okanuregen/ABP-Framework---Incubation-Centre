@@ -23,7 +23,7 @@ namespace IsikUn.IncubationCentre.Entrepreneurs
         public async Task<long> GetCountAsync(string filter = null, string userName = null, string name = null, string surname = null, string email = null, string phoneNumber = null, string experience = null, Guid[] SkillIds = null, string about = null, bool filterByActiveted = false, bool isActivated = true, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
-                                     (await GetQueryableAsync())
+                                    ((await GetQueryableAsync()).Include(a => a.Skills).Include(a => a.IdentityUser).Include(a => a.MyProjects).ThenInclude(b => b.Milestones))
                                      ,
                                       filter,
                                       userName,
@@ -102,6 +102,7 @@ namespace IsikUn.IncubationCentre.Entrepreneurs
             var dbSet = (await GetDbSetAsync())
                 .Where(a => a.Id == id)
                 .Include(c => c.Skills)
+                .Include(c => c.MyProjects).ThenInclude(b => b.Milestones)
                 .Include(a => a.IdentityUser);
             var rs = await dbSet.FirstOrDefaultAsync(cancellationToken);
             return rs;

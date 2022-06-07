@@ -2,6 +2,7 @@
 using IsikUn.IncubationCentre.People;
 using IsikUn.IncubationCentre.PeopleSkills;
 using IsikUn.IncubationCentre.Permissions;
+using IsikUn.IncubationCentre.Projects;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
@@ -84,6 +85,18 @@ namespace IsikUn.IncubationCentre.Entrepreneurs
             {
                 TotalCount = totalCount,
                 Items = ObjectMapper.Map<List<Entrepreneur>, List<EntrepreneurDto>>(items)
+            };
+        }
+
+        [Authorize(IncubationCentrePermissions.Entrepreneurs.Default)]
+        public async Task<PagedResultDto<ProjectDto>> GetProjectListAsync(GetEntrepreneursInput input)
+        {
+            var entreprenur =  await _entrepreneurRepository.GetWithDetailAsync(input.id.Value);
+            List<Project> projects = entreprenur.MyProjects != null ? entreprenur.MyProjects.ToList() : null;
+            return new PagedResultDto<ProjectDto>
+            {
+                TotalCount = entreprenur.MyProjects != null ? entreprenur.MyProjects.Count : 0,
+                Items = ObjectMapper.Map<List<Project>, List<ProjectDto>>(projects)
             };
         }
 

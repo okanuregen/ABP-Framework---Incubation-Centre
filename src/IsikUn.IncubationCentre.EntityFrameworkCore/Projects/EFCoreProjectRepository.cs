@@ -23,10 +23,10 @@ namespace IsikUn.IncubationCentre.Mentors
         {
         }
 
-        public async Task<List<Project>> GetListAsync(ProjectStatus status, bool filterByStatus = false, string filter = null, string name = null, string tags = null, bool filterByinvesmentReady = false, bool invesmentReady = false, bool filterByopenForInvesment = false, bool openForInvesment = false, List<Guid> founderIds = null, List<Guid> investorIds = null, List<Guid> mentorIds = null, List<Guid> collaboratorIds = null, List<Guid> entrepreneurIds = null, string sorting = null, int skipCount = 0, int maxResultCount = int.MaxValue, CancellationToken cancelationToken = default)
+        public async Task<List<Project>> GetListAsync(ProjectStatus status, bool filterByStatus = false, string filter = null, string name = null, string tags = null, bool filterByinvesmentReady = false, bool invesmentReady = false, bool filterByopenForInvesment = false, bool openForInvesment = false, List<Guid> founderIds = null, List<Guid> investorIds = null, List<Guid> mentorIds = null, List<Guid> collaboratorIds = null, Guid[] entrepreneurIds = null, string sorting = null, int skipCount = 0, int maxResultCount = int.MaxValue, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
-                          (await GetQueryableAsync()).Include(a => a.Mentors).Include(a => a.Founders).Include(a => a.Investors).Include(a => a.Collaborators),
+                          (await GetQueryableAsync()).Include(a => a.Mentors).Include(a => a.Founders).Include(a => a.Investors).Include(a => a.Collaborators).Include(a => a.Entrepreneurs),
            status,
            filterByStatus,
            filter,
@@ -46,7 +46,7 @@ namespace IsikUn.IncubationCentre.Mentors
             return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancelationToken);
         }
 
-        public async Task<long> GetCountAsync(ProjectStatus status, bool filterByStatus = false, string filter = null, string name = null, string tags = null, bool filterByinvesmentReady = false, bool invesmentReady = false, bool filterByopenForInvesment = false, bool openForInvesment = false, List<Guid> founderIds = null, List<Guid> investorIds = null, List<Guid> mentorIds = null, List<Guid> collaboratorIds = null, List<Guid> entrepreneurIds = null, CancellationToken cancelationToken = default)
+        public async Task<long> GetCountAsync(ProjectStatus status, bool filterByStatus = false, string filter = null, string name = null, string tags = null, bool filterByinvesmentReady = false, bool invesmentReady = false, bool filterByopenForInvesment = false, bool openForInvesment = false, List<Guid> founderIds = null, List<Guid> investorIds = null, List<Guid> mentorIds = null, List<Guid> collaboratorIds = null, Guid[] entrepreneurIds = null, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
                           (await GetQueryableAsync()).Include(a => a.Mentors).Include(a => a.Founders).Include(a => a.Investors).Include(a => a.Collaborators).Include(a => a.Entrepreneurs),
@@ -83,7 +83,7 @@ namespace IsikUn.IncubationCentre.Mentors
            List<Guid> investorIds = null,
            List<Guid> mentorIds = null,
            List<Guid> collaboratorIds = null,
-           List<Guid> entrepreneurIds = null
+           Guid[] entrepreneurIds = null
        )
         {
             return query
