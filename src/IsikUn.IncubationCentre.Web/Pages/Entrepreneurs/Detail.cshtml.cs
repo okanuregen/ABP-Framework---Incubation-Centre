@@ -9,11 +9,17 @@ using IsikUn.IncubationCentre.Entrepreneurs;
 using Volo.Abp.Users;
 using System.Linq;
 using IsikUn.IncubationCentre.People;
+using System;
 
 namespace IsikUn.IncubationCentre.Web.Pages.Entrepreneurs
 {
-    public class DashboardModel : PageModel
+    public class DetailModel : PageModel
     {
+        [BindProperty(SupportsGet = true)]
+        public Guid id { get; set; }
+
+        public bool IsMyPage = false;
+
         public List<IsikUn.IncubationCentre.Tasks.Task> Tasks { get; set; }
         public List<Request> SentRequests { get; set; }
         public List<Request> ReceivedRequests { get; set; }
@@ -28,7 +34,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Entrepreneurs
         private readonly IRequestAppService _requestAppService;
         private readonly ICurrentUser _currentUser;
 
-        public DashboardModel(
+        public DetailModel(
             IEntrepreneurRepository entreprenurRepo,
             IPersonRepository personRepo,
             IProjectAppService projectAppService,
@@ -48,6 +54,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Entrepreneurs
         {
             var person = await _personRepo.GetWithDetailByIdentityUserIdAsync(_currentUser.GetId());
             CurrentUser = await _entreprenurRepo.GetWithDetailAsync(person.Id);
+            IsMyPage = CurrentUser.Id == id;
             SentRequests = person.SentRequests;
             ReceivedRequests = person.ReceivedRequests;
             Tasks = person.Tasks;

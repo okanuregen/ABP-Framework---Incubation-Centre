@@ -23,7 +23,7 @@ namespace IsikUn.IncubationCentre.Mentors
         {
         }
 
-        public async Task<List<Project>> GetListAsync(ProjectStatus status, bool filterByStatus = false, string filter = null, string name = null, string tags = null, bool filterByinvesmentReady = false, bool invesmentReady = false, bool filterByopenForInvesment = false, bool openForInvesment = false, List<Guid> founderIds = null, List<Guid> investorIds = null, List<Guid> mentorIds = null, List<Guid> collaboratorIds = null, string sorting = null, int skipCount = 0, int maxResultCount = int.MaxValue, CancellationToken cancelationToken = default)
+        public async Task<List<Project>> GetListAsync(ProjectStatus status, bool filterByStatus = false, string filter = null, string name = null, string tags = null, bool filterByinvesmentReady = false, bool invesmentReady = false, bool filterByopenForInvesment = false, bool openForInvesment = false, List<Guid> founderIds = null, List<Guid> investorIds = null, List<Guid> mentorIds = null, List<Guid> collaboratorIds = null, List<Guid> entrepreneurIds = null, string sorting = null, int skipCount = 0, int maxResultCount = int.MaxValue, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
                           (await GetQueryableAsync()).Include(a => a.Mentors).Include(a => a.Founders).Include(a => a.Investors).Include(a => a.Collaborators),
@@ -39,16 +39,17 @@ namespace IsikUn.IncubationCentre.Mentors
            founderIds,
            investorIds,
            mentorIds,
-           collaboratorIds
+           collaboratorIds,
+           entrepreneurIds
                           );
             query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? " Name asc " : sorting);
             return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancelationToken);
         }
 
-        public async Task<long> GetCountAsync(ProjectStatus status, bool filterByStatus = false, string filter = null, string name = null, string tags = null, bool filterByinvesmentReady = false, bool invesmentReady = false, bool filterByopenForInvesment = false, bool openForInvesment = false, List<Guid> founderIds = null, List<Guid> investorIds = null, List<Guid> mentorIds = null, List<Guid> collaboratorIds = null, CancellationToken cancelationToken = default)
+        public async Task<long> GetCountAsync(ProjectStatus status, bool filterByStatus = false, string filter = null, string name = null, string tags = null, bool filterByinvesmentReady = false, bool invesmentReady = false, bool filterByopenForInvesment = false, bool openForInvesment = false, List<Guid> founderIds = null, List<Guid> investorIds = null, List<Guid> mentorIds = null, List<Guid> collaboratorIds = null, List<Guid> entrepreneurIds = null, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
-                          (await GetQueryableAsync()).Include(a => a.Mentors).Include(a => a.Founders).Include(a => a.Investors).Include(a => a.Collaborators),
+                          (await GetQueryableAsync()).Include(a => a.Mentors).Include(a => a.Founders).Include(a => a.Investors).Include(a => a.Collaborators).Include(a => a.Entrepreneurs),
                        status,
                        filterByStatus,
                        filter,
@@ -61,7 +62,8 @@ namespace IsikUn.IncubationCentre.Mentors
                        founderIds,
                        investorIds,
                        mentorIds,
-                       collaboratorIds
+                       collaboratorIds,
+                       entrepreneurIds
                           );
             return await query.LongCountAsync(GetCancellationToken(cancelationToken));
         }
@@ -80,7 +82,8 @@ namespace IsikUn.IncubationCentre.Mentors
            List<Guid> founderIds = null,
            List<Guid> investorIds = null,
            List<Guid> mentorIds = null,
-           List<Guid> collaboratorIds = null
+           List<Guid> collaboratorIds = null,
+           List<Guid> entrepreneurIds = null
        )
         {
             return query
@@ -94,10 +97,11 @@ namespace IsikUn.IncubationCentre.Mentors
                     .WhereIf(!string.IsNullOrWhiteSpace(tags), e => e.Name.Contains(tags))
                     .WhereIf(filterByinvesmentReady, e => e.InvesmentReady == invesmentReady)
                     .WhereIf(filterByopenForInvesment, e => e.OpenForInvesment == openForInvesment)
-                    .WhereIf(founderIds != null && founderIds.Any(), e => e.Founders.Select(a => a.Id).All(c => founderIds.Contains(c)))
-                    .WhereIf(investorIds != null && investorIds.Any(), e => e.Investors.Select(a => a.Id).All(c => investorIds.Contains(c)))
-                    .WhereIf(mentorIds != null && mentorIds.Any(), e => e.Mentors.Select(a => a.Id).All(c => mentorIds.Contains(c)))
-                    .WhereIf(collaboratorIds != null && collaboratorIds.Any(), e => e.Collaborators.Select(a => a.Id).All(c => collaboratorIds.Contains(c)));
+                    .WhereIf(founderIds != null && founderIds.Any(), e => founderIds.All(a => e.Founders.Select(b => b.Id).Contains(a)))
+                    .WhereIf(investorIds != null && investorIds.Any(), e => investorIds.All(a => e.Investors.Select(b => b.Id).Contains(a)))
+                    .WhereIf(mentorIds != null && mentorIds.Any(), e => mentorIds.All(a => e.Mentors.Select(b => b.Id).Contains(a)))
+                    .WhereIf(entrepreneurIds != null && entrepreneurIds.Any(), e => entrepreneurIds.All(a => e.Entrepreneurs.Select(b => b.Id).Contains(a)))
+                    .WhereIf(collaboratorIds != null && collaboratorIds.Any(), e => collaboratorIds.All(a => e.Collaborators.Select(b => b.Id).Contains(a)));
         }
     }
 }

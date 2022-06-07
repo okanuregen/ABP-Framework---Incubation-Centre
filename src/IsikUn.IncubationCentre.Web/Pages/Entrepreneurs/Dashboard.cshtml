@@ -7,6 +7,9 @@
 @inject IStringLocalizer<IncubationCentreResource> L
 @inject IAuthorizationService AuthorizationService
 @model DashboardModel
+@{
+    //Model.CurrentProject = new IsikUn.IncubationCentre.Projects.Project();
+}
 @section scripts
 {
 <abp-script src="/Pages/Entrepreneurs/Dashboard.js" />
@@ -79,7 +82,7 @@
         </abp-card>
     </abp-column>
     <abp-column size="_3">
-        <abp-card>
+        <abp-card  style="height:459px;">
             <abp-card-header>
                 <abp-card-title>
                     @L["OngoingProject"].Value
@@ -98,7 +101,12 @@
                         <div>
                             <abp-row class="border-bottom">
                                 <abp-column size="_6"><b>@L["Name"].Value:</b></abp-column>
-                                <abp-column size="_6" class="text-end" data-long-name="true" data-long-name-size="18">@(!string.IsNullOrEmpty(Model.CurrentProject.Name) ? Model.CurrentProject.Name : "-")</abp-column>
+                                <abp-column size="_6" class="text-end">
+                                    <span data-long-name="true" data-long-name-size="18">
+                                        @(!string.IsNullOrEmpty(Model.CurrentProject.Name) ? Model.CurrentProject.Name : "-")
+                                    </span>
+                                    <a href="/Projects/Detail?id=@Model.CurrentProject.Id"><i class="fa fa-external-link"> </i></a>
+                                </abp-column>
                             </abp-row>
                             <abp-row class="border-bottom">
                                 <abp-column size="_6"><b>@L["CreationDate"].Value:</b></abp-column>
@@ -125,7 +133,7 @@
                     }
                     else
                     {
-                        <div class="text-center">
+                        <div class="text-center pt-4">
                             <div class="mb-3 h2">
                                 @L["HaveAnyIdea?"].Value
                             </div>
@@ -216,10 +224,10 @@
                                                     <tr>
                                                         <td class="py-2" data-long-name="true" data-long-name-size="18">@(!string.IsNullOrEmpty(Model.SentRequests[i].Title) ? Model.SentRequests[i].Title : "-")</td>
                                                         @if (Model.SentRequests[i].Receiver != null &&
-                                                           Model.ReceivedRequests[i].Receiver.IdentityUser != null &&
-                                                           string.IsNullOrEmpty(Model.SentRequests[i].Receiver.IdentityUser.Name) &&
-                                                           string.IsNullOrEmpty(Model.SentRequests[i].Receiver.IdentityUser.Surname)
-                                                           )
+                                                       Model.ReceivedRequests[i].Receiver.IdentityUser != null &&
+                                                       string.IsNullOrEmpty(Model.SentRequests[i].Receiver.IdentityUser.Name) &&
+                                                       string.IsNullOrEmpty(Model.SentRequests[i].Receiver.IdentityUser.Surname)
+                                                       )
                                                         {
                                                             <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",Model.SentRequests[i].Receiver.IdentityUser.Name, Model.SentRequests[i].Receiver.IdentityUser.Surname)</td>
                                                         }

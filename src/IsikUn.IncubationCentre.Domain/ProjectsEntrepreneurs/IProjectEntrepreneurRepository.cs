@@ -1,10 +1,4 @@
-﻿using IsikUn.IncubationCentre.Entrepreneurs;
-using IsikUn.IncubationCentre.Entrepreneurs;
-using IsikUn.IncubationCentre.Investors;
-using IsikUn.IncubationCentre.Mentors;
-using IsikUn.IncubationCentre.ProjectsEntrepreneurs;
-using IsikUn.IncubationCentre.Skills;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;

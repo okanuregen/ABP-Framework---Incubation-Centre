@@ -10,18 +10,15 @@ namespace IsikUn.IncubationCentre.Projects
         [Required]
         public string Name { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime? CompletionDate { get; set; }
         /// <summary>
         /// comma seperated string
         /// </summary>
         public string Tags { get; set; }
-        public bool InvesmentReady { get; set; }
-        public bool OpenForInvesment { get; set; }
         [Range(0,100)]
         public double SharePerInvest { get; set; }
+        [Range(0,Double.MaxValue,ErrorMessage = "This field cannot be negative")]
         public int TotalValuation { get; set; }
-        public ProjectStatus Status { get; set; }
+        public Guid? EntreprenurId { get; set; }
         
     }
 }

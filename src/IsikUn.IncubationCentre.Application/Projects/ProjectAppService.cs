@@ -12,6 +12,7 @@ using IsikUn.IncubationCentre.ProjectsMentors;
 using IsikUn.IncubationCentre.ProjectsInvestors;
 using IsikUn.IncubationCentre.ProjectsCollaborators;
 using IsikUn.IncubationCentre.ProjectsFounders;
+using IsikUn.IncubationCentre.ProjectsEntrepreneurs;
 
 namespace IsikUn.IncubationCentre.Projects
 {
@@ -19,6 +20,7 @@ namespace IsikUn.IncubationCentre.Projects
     {
         private readonly IProjectRepository _projectRepository;
         private readonly IProjectMentorRepository _projectMentorRepository;
+        private readonly IProjectEntrepreneurRepository _projectEntreprenurRepository;
         private readonly IProjectInvestorRepository _projectInvestorRepository;
         private readonly IProjectCollaboratorRepository _projectCollaboratorRepository;
         private readonly IProjectFounderRepository _projectFounderRepository;
@@ -26,6 +28,7 @@ namespace IsikUn.IncubationCentre.Projects
         public ProjectAppService(
             IProjectRepository projectRepository,
             IProjectMentorRepository projectMentorRepository,
+            IProjectEntrepreneurRepository projectEntreprenurRepository,
             IProjectInvestorRepository projectInvestorRepository,
             IProjectCollaboratorRepository projectCollaboratorRepository,
             IProjectFounderRepository projectFounderRepository
@@ -33,6 +36,7 @@ namespace IsikUn.IncubationCentre.Projects
         {
             this._projectRepository = projectRepository;
             this._projectMentorRepository = projectMentorRepository;
+            this._projectEntreprenurRepository = projectEntreprenurRepository;
             this._projectInvestorRepository = projectInvestorRepository;
             this._projectCollaboratorRepository = projectCollaboratorRepository;
             this._projectFounderRepository = projectFounderRepository;
@@ -47,9 +51,17 @@ namespace IsikUn.IncubationCentre.Projects
             {
                 throw new UserFriendlyException(L["ProjectNameAlreadyTaken"]);
             }
-
             var project = ObjectMapper.Map<CreateUpdateProjectDto, Project>(input);
             project = await _projectRepository.InsertAsync(project, autoSave: true);
+
+            if (input.EntreprenurId.HasValue)
+            {
+                await _projectEntreprenurRepository.InsertAsync(new ProjectEntrepreneur
+                {
+                    ProjectId = project.Id,
+                    EntrepreneurId = input.EntreprenurId.Value
+                },true);
+            }
             return ObjectMapper.Map<Project, ProjectDto>(project);
         }
 
@@ -93,7 +105,8 @@ namespace IsikUn.IncubationCentre.Projects
                 input.Founders != null ? input.Founders.Select(a => a.Id).ToList():null,
                 input.Investors != null ? input.Investors.Select(a => a.Id).ToList() : null,
                 input.Mentors != null ? input.Mentors.Select(a => a.Id).ToList() : null,
-                input.Collaborators != null ? input.Collaborators.Select(a => a.Id).ToList() : null);
+                input.Collaborators != null ? input.Collaborators.Select(a => a.Id).ToList() : null,
+                input.Entrepreneurs != null ? input.Entrepreneurs.Select(a => a.Id).ToList() : null);
             var items = await _projectRepository.GetListAsync(
                 input.Status,
                 input.FiterByStatus,
@@ -107,7 +120,8 @@ namespace IsikUn.IncubationCentre.Projects
                 input.Founders != null ? input.Founders.Select(a => a.Id).ToList() : null,
                 input.Investors != null ? input.Investors.Select(a => a.Id).ToList() : null,
                 input.Mentors != null ? input.Mentors.Select(a => a.Id).ToList() : null,
-                input.Collaborators != null ? input.Collaborators.Select(a => a.Id).ToList() : null, 
+                input.Collaborators != null ? input.Collaborators.Select(a => a.Id).ToList() : null,
+                input.Entrepreneurs != null ? input.Entrepreneurs.Select(a => a.Id).ToList() : null,
                 input.Sorting, input.SkipCount, input.MaxResultCount);
 
             return new PagedResultDto<ProjectDto>
@@ -129,6 +143,16 @@ namespace IsikUn.IncubationCentre.Projects
             var project = await _projectRepository.GetAsync(id);
             ObjectMapper.Map(input, project);
             project = await _projectRepository.UpdateAsync(project, autoSave: true);
+
+            await _projectEntreprenurRepository.DeleteAsync(a => a.ProjectId == id);
+            if (input.EntreprenurId.HasValue)
+            {
+                await _projectEntreprenurRepository.InsertAsync(new ProjectEntrepreneur
+                {
+                    ProjectId = project.Id,
+                    EntrepreneurId = input.EntreprenurId.Value
+                }, true);
+            }
             return ObjectMapper.Map<Project, ProjectDto>(project);
         }
     }

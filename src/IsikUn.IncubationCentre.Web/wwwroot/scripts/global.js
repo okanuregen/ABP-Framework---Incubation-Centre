@@ -1,6 +1,23 @@
-﻿$(function () {
+﻿var l = null;
+$(function () {
+    l = abp.localization.getResource('IncubationCentre');
+
+    $('#MenuItem_AccountDetail [data-text="MyProfile"]').text(l("MyProfile"));
+    var myProfileLink = $('#MenuItem_AccountDetail').attr("href").split("/");
+    if (myProfileLink.length == 3) {
+        var role = myProfileLink[1].toLowerCase();
+        var identityUserId = $('#MenuItem_AccountDetail').attr("data-currentUser");
+        isikUn.incubationCentre[role][role.slice(0, -1)].getList({ identityUserId: identityUserId }).then(function (user) {
+            if (user.items.length > 0) {
+                $('#MenuItem_AccountDetail').attr("href", $('#MenuItem_AccountDetail').attr("href") + "?id=" + user.items[0].id)
+            } else {
+                $('#MenuItem_AccountDetail').attr("href", "/");
+            }
+        })
+    }
+
     $('[data-long-name="true"]').each(function (i, e) {
-        var text = $(e).text();
+        var text = $(e).text().trim();
         var toolTipPlacemnt = $(e).attr("data-placement");
         var shortTextSize = $(e).attr("data-long-name-size");
         var stSize = parseInt(shortTextSize);
@@ -15,16 +32,6 @@
         $(e).attr("data-placement", ((toolTipPlacemnt != undefined && toolTipPlacemnt != "") ? toolTipPlacemnt : "top"));
         $(e).attr("title", text);
     });
-
-
-
-
-
-
-
-
-
-
 
 
 

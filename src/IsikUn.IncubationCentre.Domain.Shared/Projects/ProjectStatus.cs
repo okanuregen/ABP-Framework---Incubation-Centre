@@ -10,6 +10,9 @@ namespace IsikUn.IncubationCentre.Projects
         OnGoing,
         Suspended,
         Canceled,
-        Completed
+        Completed,
+        InReview,
+        Approved,
+        Declined,
     }
 }

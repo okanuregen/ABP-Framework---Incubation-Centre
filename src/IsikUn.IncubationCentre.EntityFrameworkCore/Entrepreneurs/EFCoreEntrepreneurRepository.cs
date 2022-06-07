@@ -44,7 +44,7 @@ namespace IsikUn.IncubationCentre.Entrepreneurs
         public async Task<List<Entrepreneur>> GetListAsync(string filter = null, string userName = null, string name = null, string surname = null, string email = null, string phoneNumber = null, string experience = null, Guid[] SkillIds = null, string about = null, bool filterByActiveted = false, bool isActivated = true, int skipCount = 0, int maxResultCount = int.MaxValue, string sorting = null, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
-                          ((await GetQueryableAsync()).Include(a => a.Skills).Include(a => a.IdentityUser))
+                          ((await GetQueryableAsync()).Include(a => a.Skills).Include(a => a.IdentityUser).Include(a => a.MyProjects).ThenInclude(b => b.Milestones))
                           ,
                            filter,
                            userName,

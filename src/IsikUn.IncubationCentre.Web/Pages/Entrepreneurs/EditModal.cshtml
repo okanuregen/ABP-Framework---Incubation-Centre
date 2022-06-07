@@ -10,10 +10,15 @@
 @{
     Layout = null;
 }
-
+<script>
+    if(location.href.includes("Entrepreneurs/Detail?id")){
+        $("#Entrepreneur_IdentityUserId").parent("div").hide();
+        $("#Entrepreneur_isActivated").parent("div").hide();
+    }
+</script>
 <form asp-page="/Entrepreneurs/EditModal">
     <abp-modal>
-        <abp-modal-header title="@L["NewEntrepreneur"].Value"></abp-modal-header>
+        <abp-modal-header title="@L["EditEntrepreneur"].Value"></abp-modal-header>
         <abp-modal-body>
             <abp-input asp-for="Id" />
             <abp-select asp-for="Entrepreneur.IdentityUserId" asp-items="Model.Users" />

@@ -31,6 +31,7 @@ namespace IsikUn.IncubationCentre.Projects
         public ICollection<InvestorDto> Investors { get; set; }
         public ICollection<MentorDto> Mentors { get; set; }
         public ICollection<CollaboratorDto> Collaborators { get; set; }
+        public ICollection<EntrepreneurDto> Entrepreneurs { get; set; }
 
         public GetProjectsInput()
         {

@@ -197,10 +197,6 @@
                 abp.notify.warn(l("PleaseFillTheInput",l("SenderMail")));
                 return;
             }
-            if(formJSON['Application.SenderPhoneNumber'] == ""){
-                abp.notify.warn(l("PleaseFillTheInput",l("SenderPhoneNumber")));
-                return;
-            }
             if(formJSON['Application.Explanation'] == ""){
                 abp.notify.warn(l("PleaseFillTheInput",l("Explanation")));
                 return;
@@ -317,9 +313,6 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="Application_SenderMail">@L2["SenderMail"].Value</label><input type="email" id="Application_SenderMail" name="SenderMail" value="" class="form-control "><span class="text-danger field-validation-valid" data-valmsg-for="Application.SenderMail" data-valmsg-replace="true"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="Application_SenderPhoneNumber">@L2["SenderPhoneNumber"].Value</label><input type="text" id="Application_SenderPhoneNumber" name="SenderPhoneNumber" value="" class="form-control "><span class="text-danger field-validation-valid" data-valmsg-for="Application.SenderPhoneNumber" data-valmsg-replace="true"></span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="Application_Explanation">@L2["Explanation"].Value</label><textarea type="text" rows="6" placeholder="@L2["WhoYouAre?"].Value&#10;@L2["WhyDoYouWantToJoinUs?"].Value" id="Application_Explanation" name="Explanation" value="" class="form-control "></textarea><span class="text-danger field-validation-valid" data-valmsg-for="Application.Explanation" data-valmsg-replace="true"></span>

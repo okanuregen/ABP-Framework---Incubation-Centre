@@ -57,7 +57,7 @@ namespace IsikUn.IncubationCentre.People
             return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancelationToken);
         }
 
-        public async Task<Person> GetWithDetailAsync(Guid IdentityUserId, CancellationToken cancelationToken = default)
+        public async Task<Person> GetWithDetailByIdentityUserIdAsync(Guid IdentityUserId, CancellationToken cancelationToken = default)
         {
             var dbSet = (await GetDbSetAsync()).Where(a => a.IdentityUserId == IdentityUserId)
                .Include(c => c.IdentityUser)

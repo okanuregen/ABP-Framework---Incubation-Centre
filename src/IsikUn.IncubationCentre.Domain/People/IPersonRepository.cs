@@ -33,7 +33,7 @@ namespace IsikUn.IncubationCentre.People
              string sorting = null,
              CancellationToken cancelationToken = default
          );
-        Task<Person> GetWithDetailAsync(Guid IdentityUserId, CancellationToken cancelationToken = default);
+        Task<Person> GetWithDetailByIdentityUserIdAsync(Guid IdentityUserId, CancellationToken cancelationToken = default);
 
         Task<long> GetCountAsync(
              string filter = null,

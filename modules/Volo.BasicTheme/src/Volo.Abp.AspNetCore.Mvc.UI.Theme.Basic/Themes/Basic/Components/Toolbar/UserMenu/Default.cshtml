@@ -1,5 +1,6 @@
 ﻿@using Localization.Resources.AbpUi
 @using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
 @using Volo.Abp.MultiTenancy
 @using Volo.Abp.UI.Navigation
 @using Volo.Abp.Users
@@ -7,6 +8,29 @@
 @inject ICurrentTenant CurrentTenant
 @inject IHtmlLocalizer<AbpUiResource> L
 @model ApplicationMenu
+@{
+    string DetailUrl = "/";
+    if (CurrentUser.IsInRole("Mentor"))
+    {
+        DetailUrl = "/Mentors/Detail";
+    }
+    if (CurrentUser.IsInRole("Entrepreneur") || CurrentUser.IsInRole("Girişimci"))
+    {
+        DetailUrl = "/Entrepreneurs/Detail";
+    }
+    if (CurrentUser.IsInRole("Investor") || CurrentUser.IsInRole("Yatırımcı"))
+    {
+        DetailUrl = "/Investors/Detail";
+    }
+    if (CurrentUser.IsInRole("SystemManager") || CurrentUser.IsInRole("SistemYöneticisi"))
+    {
+        DetailUrl = "/SystemManagers/Detail";
+    }
+    if (CurrentUser.IsInRole("Collaborator") || CurrentUser.IsInRole("İşOrtağı"))
+    {
+        DetailUrl = "/Collaborators/Detail";
+    }
+}
 <div class="dropdown">
     <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         @if (CurrentUser.TenantId != null)
@@ -22,6 +46,10 @@
     @if (Model.Items.Any())
     {
         <div class="dropdown-menu dropdown-menu-end border-0 shadow-sm" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="@DetailUrl" target="" data-currentUser="@CurrentUser.Id" id="MenuItem_AccountDetail">
+                     <i class="fa fa-user"></i>
+                     <span data-text="MyProfile"></span>
+            </a>
             @foreach (var menuItem in Model.Items)
             {
                 var elementId = string.IsNullOrEmpty(menuItem.ElementId) ? string.Empty : $"id=\"{menuItem.ElementId}\"";
