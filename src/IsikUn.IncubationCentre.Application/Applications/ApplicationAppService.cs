@@ -13,11 +13,13 @@ using IsikUn.IncubationCentre.Tasks;
 using Volo.Abp.Users;
 using IsikUn.IncubationCentre.People;
 using Volo.Abp.Emailing;
+using Volo.Abp.Identity;
 
 namespace IsikUn.IncubationCentre.Applications
 {
     public class ApplicationAppService : ApplicationService, IApplicationAppService
     {
+        private readonly IIdentityUserAppService _identityUserAppService;
         private readonly IApplicationRepository _applicationRepository;
         private readonly ISystemManagerRepository _systemManagerRepository;
         private readonly ITaskRepository _taskRepository;
@@ -25,6 +27,7 @@ namespace IsikUn.IncubationCentre.Applications
         private readonly ICurrentUser _currentUser;
 
         public ApplicationAppService(
+            IIdentityUserAppService identityUserAppService,
             IApplicationRepository applicationRepository,
             ISystemManagerRepository systemManagerRepository,
             IPersonRepository personRepository,
@@ -32,6 +35,7 @@ namespace IsikUn.IncubationCentre.Applications
             ITaskRepository taskRepository
             )
         {
+            this._identityUserAppService = identityUserAppService;
             this._applicationRepository = applicationRepository;
             this._systemManagerRepository = systemManagerRepository;
             this._currentUser = currentUser;
@@ -77,6 +81,14 @@ namespace IsikUn.IncubationCentre.Applications
             application.ApplicationStatus = ApplicationStatus.Approved;
             //Send Inform Mail To User
             application = await _applicationRepository.UpdateAsync(application, autoSave: true);
+
+
+            //create identityUser and our user
+            var identityUser = new IdentityUserCreateDto
+            {
+                Email = application.SenderMail,
+                UserName = String.Format("{0}.{1}")
+            };
             return ObjectMapper.Map<Application, ApplicationDto>(application);
         }
 

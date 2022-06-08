@@ -12,40 +12,35 @@
 }
 
 
-<form asp-page="/Projects/AssignMentorModal">
-    <abp-modal>
-       <abp-modal-header title="@L["AssignMentor"].Value"></abp-modal-header>
-        <abp-modal-body>
-            <div class="mb-3">
-                <label class="form-label" for="Project_Name">@["ProjectName"].Value</label>
-                <input type="text" id="Project_Name" disabled name="Project.Name" value="@(Model.Project.Name)" class="form-control valid" aria-invalid="false">
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="Project_Name">@["Entreprenur"].Value</label>
-                @try{
-                    <input type="text" id="Project_Name" disabled name="Project.Name" value="@(Model.Project.Entreprenurs.FirstOrDefault().IdentityUser.Name) @(Model.Project.Entreprenurs.FirstOrDefault().IdentityUser.Surname)" class="form-control valid" aria-invalid="false">
-                }
-                @catch(Exception ex){
-                    <input type="text" id="Project_Name" disabled name="Project.Name" value="- class="form-control valid" aria-invalid="false">
-                }
-            </div>
-             <div class="mb-3">
-                <label class="form-label" for="Project_Name">@["ProjectTags"].Value</label>
-                <input type="text" id="Project_Name" disabled name="Project.Name" value="@Model.Project.Tags" class="form-control valid" aria-invalid="false">
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="Project_Name">@["CreationTime"].Value</label>
-                <input type="text" id="Project_Name" disabled name="Project.Name" value="@Model.Project.CreationTime.toString("dd/MM/yyyy")" class="form-control valid" aria-invalid="false">
-            </div>
+<abp-modal>
+    <abp-modal-header title="@L["AssignMentor"].Value"></abp-modal-header>
+    <abp-modal-body>
+        <div class="mb-3">
+            <label class="form-label" for="Project_Name">@L["ProjectName"].Value</label>
+            <input type="text" id="Project_Name" disabled name="Project.Name" value="@(Model.Project.Name)" class="form-control valid" aria-invalid="false">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="Project_Name">@L["Entreprenur"].Value</label>
+            @try
+            {
+                <input type="text" id="Project_Name" disabled name="Project.Name" value="@(Model.Project.Entrepreneurs.FirstOrDefault().IdentityUser.Name) @(Model.Project.Entrepreneurs.FirstOrDefault().IdentityUser.Surname)" class="form-control valid" aria-invalid="false">
+            }
+            catch (Exception ex)
+            {
+                <input type="text" id="Project_Name" disabled name="Project.Name" value="-" class="form-control valid" aria-invalid="false">
+            }
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="Project_Name">@L["ProjectTags"].Value</label>
+            <input type="text" id="Project_Name" disabled name="Project.Name" value="@Model.Project.Tags" class="form-control valid" aria-invalid="false">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="Project_Name">@L["CreationTime"].Value</label>
+            <input type="text" id="Project_Name" disabled name="Project.Name" value="@Model.Project.CreationTime.ToString("dd/MM/yyyy")" class="form-control valid" aria-invalid="false">
 
-            <abp-input asp-for="Project.Name" />
-            <abp-input asp-for="Project.Entrepreneurs.FirstOrDefault().IdentityUser.Name" />
-            <abp-input asp-for="Project.Tags" />
-            <abp-input asp-for="Project.CreationTime" />
-        </abp-modal-body>
-        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
-    </abp-modal>
-</form>
+    </abp-modal-body>
+    <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+</abp-modal>
 
 
 
