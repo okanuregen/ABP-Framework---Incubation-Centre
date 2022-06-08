@@ -222,6 +222,9 @@
     "YouAreApprovingAnAppplication": "{0} İsimli Kişinin Başvurusunu Onaylıyorsun",
     "SuccessfullyApproved": "Başarıyle Onaylandı",
     "YouAreRejectingAnAppplication": "{0} İsimli Kişinin Başvurusunu Reddediyorsun",
-    "SuccessfullyDeclined": "Başarıyla Reddedildi"
+    "SuccessfullyDeclined": "Başarıyla Reddedildi",
+    "NewProjects": "Yeni Projeler",
+    "MentorAssignments": "Mentor Atamaları",
+    "WatingForAssignment": "Mentor Ataması Bekliyor"
   }
 }

@@ -19,11 +19,13 @@
     .info-area .border-bottom {
         padding-top: 10px;
     }
-    .border-none{
-        border:none !important;
+
+    .border-none {
+        border: none !important;
     }
-    .dataTables_scrollBody{
-        min-height:210px !important;
+
+    .dataTables_scrollBody {
+        min-height: 210px !important;
     }
 
     body ::-webkit-scrollbar {
@@ -38,6 +40,9 @@
     body ::-webkit-scrollbar-thumb {
         border-radius: 6px;
         -webkit-box-shadow: inset 0 0 6px #626262e8;
+    }
+    .nav-link.active{
+        background-color:white !important;
     }
 </style>
 <abp-row>
@@ -167,7 +172,7 @@
                                 <abp-card-title class="d-inline-block">
                                     @L["Requests"].Value
                                 </abp-card-title>
-                                 <abp-button id="NewRequestButton"
+                                <abp-button id="NewRequestButton"
                                             text="@L["NewRequest"].Value"
                                             icon="plus"
                                             class="float-end"
@@ -276,7 +281,7 @@
                                 </abp-card-title>
                             </abp-card-header>
                             <abp-card-body class="pt-0">
-                                        <abp-table striped-rows="true" id="NewApplicationTable"></abp-table>
+                                <abp-table striped-rows="true" id="NewApplicationTable"></abp-table>
                             </abp-card-body>
                         </abp-card>
                     </abp-column>
@@ -285,7 +290,34 @@
         </abp-row>
     </abp-column>
 
+    <abp-column size="_12">
 
-    <abp-column size="_12"></abp-column>
+        <abp-tabs name="TabId">
+            <abp-tab name="nav-home" active="true" title='@L["NewProjects"].Value'>
+                <abp-card>
+                    <abp-card-header>
+                        <abp-card-title>
+                            @L["NewProjects"].Value - (@L["WatingForApproved"].Value)
+                        </abp-card-title>
+                    </abp-card-header>
+                    <abp-card-body>
+                        <abp-table striped-rows="true" id="NewProjectsListTable"></abp-table>
+                    </abp-card-body>
+                </abp-card>
+            </abp-tab>
+            <abp-tab name="nav-profile"  title='@L["MentorAssignments"].Value'>
+                <abp-card>
+                    <abp-card-header>
+                        <abp-card-title>
+                            @L["MentorAssignments"].Value - (@L["WatingForAssignment"].Value)
+                        </abp-card-title>
+                    </abp-card-header>
+                    <abp-card-body>
+                        <abp-table striped-rows="true" id="MentorAssignmentsListTable"></abp-table>
+                    </abp-card-body>
+                </abp-card>
+            </abp-tab>
+        </abp-tabs>
 
+    </abp-column>
 </abp-row>

@@ -222,7 +222,11 @@
     "YouAreApprovingAnAppplication": "You Are Approving An Appplication Of {0}",
     "SuccessfullyApproved": "Successfully Approved",
     "YouAreRejectingAnAppplication": "You Are Rejecting An Appplication Of {0}",
-    "SuccessfullyDeclined": "Successfully Declined"
+    "SuccessfullyDeclined": "Successfully Declined",
+    "NewProjects": "New Projects",
+    "MentorAssignments": "Mentor Assignments",
+    "WatingForAssignment": "Wating For Assignment"
+
 
   }
 }
