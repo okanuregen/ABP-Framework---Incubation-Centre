@@ -52,6 +52,7 @@ namespace IsikUn.IncubationCentre.Projects
                 throw new UserFriendlyException(L["ProjectNameAlreadyTaken"]);
             }
             var project = ObjectMapper.Map<CreateUpdateProjectDto, Project>(input);
+            project.Status = ProjectStatus.InReview;
             project = await _projectRepository.InsertAsync(project, autoSave: true);
 
             if (input.EntreprenurId.HasValue)

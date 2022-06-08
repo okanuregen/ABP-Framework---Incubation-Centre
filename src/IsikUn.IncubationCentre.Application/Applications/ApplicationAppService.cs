@@ -10,6 +10,8 @@ using System.Linq;
 using IsikUn.IncubationCentre.Localization;
 using IsikUn.IncubationCentre.SystemManagers;
 using IsikUn.IncubationCentre.Tasks;
+using Volo.Abp.Users;
+using IsikUn.IncubationCentre.People;
 
 namespace IsikUn.IncubationCentre.Applications
 {
@@ -18,19 +20,26 @@ namespace IsikUn.IncubationCentre.Applications
         private readonly IApplicationRepository _applicationRepository;
         private readonly ISystemManagerRepository _systemManagerRepository;
         private readonly ITaskRepository _taskRepository;
+        private readonly IPersonRepository _personRepository;
+        private readonly ICurrentUser _currentUser;
 
         public ApplicationAppService(
             IApplicationRepository applicationRepository,
             ISystemManagerRepository systemManagerRepository,
+            IPersonRepository personRepository,
+            ICurrentUser currentUser,
             ITaskRepository taskRepository
             )
         {
             this._applicationRepository = applicationRepository;
             this._systemManagerRepository = systemManagerRepository;
+            this._currentUser = currentUser;
+            this._personRepository = personRepository;
             this._taskRepository = taskRepository;
             LocalizationResource = typeof(IncubationCentreResource);
         }
 
+        [Authorize(IncubationCentrePermissions.Applications.Create)]
         public async Task<ApplicationDto> CreateAsync(CreateUpdateApplicationDto input)
         {
             var sameMailExist = await _applicationRepository.FindAsync(a => a.SenderMail == input.SenderMail);
@@ -39,25 +48,63 @@ namespace IsikUn.IncubationCentre.Applications
                 throw new UserFriendlyException(L["SameMailExistOnDifferentApplication"]);
             }
 
-            var SystemManagers = await _systemManagerRepository.GetListAsync(filterByActiveted: true, isActivated: true);
-            if(SystemManagers == null || SystemManagers.Count() == 0)
+            var SystemManagers = await _systemManagerRepository.GetListAsync();
+            var newTasks = SystemManagers.Select(a => new IsikUn.IncubationCentre.Tasks.Task
             {
-                throw new UserFriendlyException(L["WeCannotGetAnyApplicatonForNow"]);
-            }
-            var lessTaskSm =  SystemManagers.OrderBy(a => a.Tasks.Count).FirstOrDefault();
-
-            await _taskRepository.InsertAsync(new IsikUn.IncubationCentre.Tasks.Task
-            {
-                AssignedTo = lessTaskSm,
-                AssignedToId = lessTaskSm.Id,
+                AssignedTo = a,
+                AssignedToId = a.Id,
                 isDone = false,
-                Title = String.Format("New Application ({0} {1})",input.SenderName, input.SenderSurname),
+                Title = String.Format("New Application ({0} {1})", input.SenderName, input.SenderSurname),
                 Description = String.Format("{0} {1} wants to join us as {2}. Look at the new applications", input.SenderName, input.SenderSurname, input.MembershipType.ToString())
-            },true);
+            });
+            await _taskRepository.InsertManyAsync(newTasks, true);
 
             input.ApplicationStatus = ApplicationStatus.InReview;
-            input.ReceiverId = lessTaskSm.Id;
             var application = ObjectMapper.Map<CreateUpdateApplicationDto, Application>(input);
+            application = await _applicationRepository.InsertAsync(application, autoSave: true);
+            return ObjectMapper.Map<Application, ApplicationDto>(application);
+        }
+
+        [Authorize(IncubationCentrePermissions.SystemManagers.Default)]
+        public async Task<ApplicationDto> ApproveApplicationAsync(Guid id)
+        {
+            var application = await _applicationRepository.GetAsync(id);
+            if (application == null)
+            {
+                throw new UserFriendlyException(L["NoApplicationFound"]);
+            }
+
+            application.ApplicationStatus = ApplicationStatus.Approved;
+            var person = await _personRepository.GetWithDetailByIdentityUserIdAsync(_currentUser.Id.Value);
+            var systemManger = await _systemManagerRepository.GetAsync(person.Id);
+            if(systemManger != null)
+            {
+                application.ReceiverId = systemManger.Id;
+            }
+
+            //Send Inform Mail To User
+            application = await _applicationRepository.InsertAsync(application, autoSave: true);
+            return ObjectMapper.Map<Application, ApplicationDto>(application);
+        }
+
+        [Authorize(IncubationCentrePermissions.SystemManagers.Default)]
+        public async Task<ApplicationDto> RejectApplicationAsync(Guid id)
+        {
+            var application = await _applicationRepository.GetAsync(id);
+            if (application == null)
+            {
+                throw new UserFriendlyException(L["NoApplicationFound"]);
+            }
+
+            application.ApplicationStatus = ApplicationStatus.Declined;
+            var person = await _personRepository.GetWithDetailByIdentityUserIdAsync(_currentUser.Id.Value);
+            var systemManger = await _systemManagerRepository.GetAsync(person.Id);
+            if (systemManger != null)
+            {
+                application.ReceiverId = systemManger.Id;
+            }
+
+            //Send Inform Mail To User
             application = await _applicationRepository.InsertAsync(application, autoSave: true);
             return ObjectMapper.Map<Application, ApplicationDto>(application);
         }
