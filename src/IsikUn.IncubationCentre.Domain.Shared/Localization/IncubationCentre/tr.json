@@ -227,6 +227,8 @@
     "MentorAssignments": "Mentor Atamaları",
     "WatingForAssignment": "Mentor Ataması Bekliyor",
     "YouAreApprovingAProject": "{0} İsimli Projeyi Onaylıyorsunuz",
-    "YouAreRejectingAProject": "{0} İsimli Projeyi Reddediyorsunuz"
+    "YouAreRejectingAProject": "{0} İsimli Projeyi Reddediyorsunuz",
+    "UnsuccesfullCreatingAccount": "Hesap Oluşturma İşlemi Başarısız Oldu",
+    "SuccessfullyCreatingAccount": "{0} Kullanıcı İsmi İle Hesap Başarılı Bir Şekilde Oluşturuldu"
   }
 }

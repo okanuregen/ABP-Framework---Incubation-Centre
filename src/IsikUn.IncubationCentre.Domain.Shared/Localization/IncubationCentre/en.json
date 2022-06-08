@@ -227,6 +227,8 @@
     "MentorAssignments": "Mentor Assignments",
     "WatingForAssignment": "Wating For Assignment",
     "YouAreApprovingAProject": "You Are Approving A Project Named {0}",
-    "YouAreRejectingAProject": "You Are Rejecting A Project Named {0}"
+    "YouAreRejectingAProject": "You Are Rejecting A Project Named {0}",
+    "UnsuccesfullCreatingAccount": "Account Was Not Created",
+    "SuccessfullyCreatingAccount": "Account Was Created Succesfully With {0} Username"
   }
 }

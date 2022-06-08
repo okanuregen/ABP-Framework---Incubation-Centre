@@ -29,8 +29,11 @@ $(function () {
                                 action: function (data) {
                                     service.approveApplication(data.record.id)
                                         .then(function (data) {
-                                            debugger;
-                                            abp.notify.info(l('SuccessfullyApproved'));
+                                            if (data == null) {
+                                                abp.message.warn(l("UnsuccesfullCreatingAccount"))
+                                            } else {
+                                                abp.message.success(l('SuccessfullyCreatingAccount', data.identityUser.userName));
+                                            }
                                             NewApplicationdataTable.ajax.reload();
                                         });
                                 }

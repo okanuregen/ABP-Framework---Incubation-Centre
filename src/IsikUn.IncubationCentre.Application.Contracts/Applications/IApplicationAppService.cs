@@ -1,3 +1,4 @@
+using IsikUn.IncubationCentre.People;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace IsikUn.IncubationCentre.Applications
       
         Task<ApplicationDto> RejectApplicationAsync(Guid id);
      
-        Task<ApplicationDto> ApproveApplicationAsync(Guid id);
+        Task<PersonDto> ApproveApplicationAsync(Guid id);
 
     }
 }

@@ -14,12 +14,22 @@ using Volo.Abp.Users;
 using IsikUn.IncubationCentre.People;
 using Volo.Abp.Emailing;
 using Volo.Abp.Identity;
+using IsikUn.IncubationCentre.Investors;
+using IsikUn.IncubationCentre.Mentors;
+using IsikUn.IncubationCentre.Collaborators;
+using IsikUn.IncubationCentre.Entrepreneurs;
+using System.Text;
+using System.Globalization;
 
 namespace IsikUn.IncubationCentre.Applications
 {
     public class ApplicationAppService : ApplicationService, IApplicationAppService
     {
         private readonly IIdentityUserAppService _identityUserAppService;
+        private readonly IInvestorAppService _investorAppService;
+        private readonly IMentorAppService _mentorAppService;
+        private readonly ICollaboratorAppService _collaboratorAppService;
+        private readonly IEntrepreneurAppService _entreprenurAppService;
         private readonly IApplicationRepository _applicationRepository;
         private readonly ISystemManagerRepository _systemManagerRepository;
         private readonly ITaskRepository _taskRepository;
@@ -27,6 +37,10 @@ namespace IsikUn.IncubationCentre.Applications
         private readonly ICurrentUser _currentUser;
 
         public ApplicationAppService(
+            IInvestorAppService investorAppService,
+            IMentorAppService mentorAppService,
+            ICollaboratorAppService collaboratorAppService,
+            IEntrepreneurAppService entreprenurAppService,
             IIdentityUserAppService identityUserAppService,
             IApplicationRepository applicationRepository,
             ISystemManagerRepository systemManagerRepository,
@@ -35,6 +49,10 @@ namespace IsikUn.IncubationCentre.Applications
             ITaskRepository taskRepository
             )
         {
+            this._investorAppService = investorAppService;
+            this._mentorAppService = mentorAppService;
+            this._collaboratorAppService = collaboratorAppService;
+            this._entreprenurAppService = entreprenurAppService;
             this._identityUserAppService = identityUserAppService;
             this._applicationRepository = applicationRepository;
             this._systemManagerRepository = systemManagerRepository;
@@ -70,7 +88,7 @@ namespace IsikUn.IncubationCentre.Applications
         }
 
         [Authorize(IncubationCentrePermissions.SystemManagers.Default)]
-        public async Task<ApplicationDto> ApproveApplicationAsync(Guid id)
+        public async Task<PersonDto> ApproveApplicationAsync(Guid id)
         {
             var application = await _applicationRepository.GetAsync(id);
             if (application == null)
@@ -79,17 +97,63 @@ namespace IsikUn.IncubationCentre.Applications
             }
 
             application.ApplicationStatus = ApplicationStatus.Approved;
-            //Send Inform Mail To User
             application = await _applicationRepository.UpdateAsync(application, autoSave: true);
 
+            //create identityUser
+            string[] roles = new string[1];
+            roles[0] = application.MembershipType.ToString();
 
-            //create identityUser and our user
+            var users = await _identityUserAppService.GetListAsync(new GetIdentityUsersInput());
+            
+            var userName = String.Format("{0}.{1}", application.SenderName.ToLower().Replace(" ", ""), application.SenderSurname.ToLower().Replace(" ", ""));
+            userName = String.Join("", userName.Normalize(NormalizationForm.FormD).Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)).Replace("ý", "i");
+            
+            var userNameExist = users.Items.Count(a => a.UserName == userName) > 0;
+            
+            while (userNameExist)
+            {
+                userName = String.Format("{0}.{1}{2}", application.SenderName.ToLower().Replace(" ", ""), application.SenderSurname.ToLower().Replace(" ", ""), new Random().NextInt64(10, 99));
+                userName = String.Join("", userName.Normalize(NormalizationForm.FormD).Where(c => char.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)).Replace("ý", "i");
+                userNameExist = users.Items.Count(a => a.UserName == userName) > 0;
+            }
+
             var identityUser = new IdentityUserCreateDto
             {
                 Email = application.SenderMail,
-                UserName = String.Format("{0}.{1}")
+                UserName = userName,
+                IsActive = true,
+                LockoutEnabled = false,
+                Name = application.SenderName,
+                Surname = application.SenderSurname,
+                Password = "123456Aa.",
+                RoleNames = roles
             };
-            return ObjectMapper.Map<Application, ApplicationDto>(application);
+            var newUser = await _identityUserAppService.CreateAsync(identityUser);
+
+            PersonDto person = null;
+            //our user type
+            switch (application.MembershipType)
+            {
+                case ApplicationType.Investor:
+                    person = await _investorAppService.CreateAsync(new CreateUpdateInvestorDto { IdentityUserId=newUser.Id,isActivated = true, About = String.Format("{0} {1}", application.SenderName, application.SenderSurname) });
+                    break;
+                case ApplicationType.Mentor:
+                    person = await _mentorAppService.CreateAsync(new CreateUpdateMentorDto { IdentityUserId = newUser.Id, isActivated = true, About = String.Format("{0} {1}", application.SenderName, application.SenderSurname) });
+                    break;
+                case ApplicationType.Collaborator:
+                    person = await _collaboratorAppService.CreateAsync(new CreateUpdateCollaboratorDto { IdentityUserId = newUser.Id, isActivated = true, About = String.Format("{0} {1}", application.SenderName, application.SenderSurname) });
+                    break;
+                case ApplicationType.Entrepreneur:
+                    person = await _entreprenurAppService.CreateAsync(new CreateUpdateEntrepreneurDto { IdentityUserId = newUser.Id, isActivated = true,About = String.Format("{0} {1}", application.SenderName, application.SenderSurname) });
+                    break;
+            }
+            if(person != null)
+            {
+                person.IdentityUser = newUser;
+            }
+
+            //Send Inform Mail To User
+            return person;
         }
 
         [Authorize(IncubationCentrePermissions.SystemManagers.Default)]
@@ -130,8 +194,8 @@ namespace IsikUn.IncubationCentre.Applications
         [Authorize(IncubationCentrePermissions.Applications.Default)]
         public async Task<PagedResultDto<ApplicationDto>> GetListAsync(GetApplicationsInput input)
         {
-            var totalCount = await _applicationRepository.GetCountAsync(input.filter, input.SenderName,input.SenderSurname,input.SenderMail,input.SenderPhoneNumber,input.Explanation,input.ApplicationStatus != null ? input.ApplicationStatus.ToString() : null);
-            var items = await _applicationRepository.GetListAsync(input.filter, input.SenderName, input.SenderSurname, input.SenderMail, input.SenderPhoneNumber, input.Explanation, input.ApplicationStatus != null ? input.ApplicationStatus.ToString() : null, input.SkipCount,input.MaxResultCount,input.Sorting);
+            var totalCount = await _applicationRepository.GetCountAsync(input.filter, input.SenderName, input.SenderSurname, input.SenderMail, input.SenderPhoneNumber, input.Explanation, input.ApplicationStatus != null ? input.ApplicationStatus.ToString() : null);
+            var items = await _applicationRepository.GetListAsync(input.filter, input.SenderName, input.SenderSurname, input.SenderMail, input.SenderPhoneNumber, input.Explanation, input.ApplicationStatus != null ? input.ApplicationStatus.ToString() : null, input.SkipCount, input.MaxResultCount, input.Sorting);
 
             return new PagedResultDto<ApplicationDto>
             {

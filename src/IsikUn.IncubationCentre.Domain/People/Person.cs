@@ -1,4 +1,9 @@
-﻿using IsikUn.IncubationCentre.Events;
+﻿using IsikUn.IncubationCentre.Applications;
+using IsikUn.IncubationCentre.Collaborators;
+using IsikUn.IncubationCentre.Entrepreneurs;
+using IsikUn.IncubationCentre.Events;
+using IsikUn.IncubationCentre.Investors;
+using IsikUn.IncubationCentre.Mentors;
 using IsikUn.IncubationCentre.PeopleSkills;
 using IsikUn.IncubationCentre.Projects;
 using IsikUn.IncubationCentre.ProjectsFounders;
@@ -30,5 +35,6 @@ namespace IsikUn.IncubationCentre.People
         public List<Request> SentRequests { get; set; }
         public List<Request> ReceivedRequests { get; set; }
         public List<Event> CreatedEvents { get; set; }
+
     }
 }
