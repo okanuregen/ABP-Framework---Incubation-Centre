@@ -153,9 +153,15 @@
             <abp-column size="_12">
                 <abp-card>
                     <abp-card-header>
-                        <abp-card-title>
-                            @L["Requests"].Value
-                        </abp-card-title>
+                        <abp-card-title class="d-inline-block">
+                                    @L["Requests"].Value
+                                </abp-card-title>
+                                 <abp-button id="NewRequestButton"
+                                            text="@L["NewRequest"].Value"
+                                            icon="plus"
+                                            class="float-end"
+                                            button-type="Primary" />
+                                
                     </abp-card-header>
                     <abp-card-body>
                         <abp-row>
@@ -178,19 +184,18 @@
                                                 {
                                                     <tr>
                                                         <td class="py-2" data-long-name="true" data-long-name-size="18">@(!string.IsNullOrEmpty(Model.ReceivedRequests[i].Title) ? Model.ReceivedRequests[i].Title : "-")</td>
-                                                        @if (Model.ReceivedRequests[i].Receiver != null &&
+                                                        @if (Model.ReceivedRequests[i].Sender != null &&
                                                        Model.ReceivedRequests[i].Receiver.IdentityUser != null &&
-                                                       string.IsNullOrEmpty(Model.ReceivedRequests[i].Receiver.IdentityUser.Name) &&
-                                                       string.IsNullOrEmpty(Model.ReceivedRequests[i].Receiver.IdentityUser.Surname)
+                                                       !string.IsNullOrEmpty(Model.ReceivedRequests[i].Sender.IdentityUser.Name) &&
+                                                       !string.IsNullOrEmpty(Model.ReceivedRequests[i].Sender.IdentityUser.Surname)
                                                        )
                                                         {
-                                                            <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",Model.ReceivedRequests[i].Receiver.IdentityUser.Name, Model.ReceivedRequests[i].Receiver.IdentityUser.Surname)</td>
+                                                            <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",Model.ReceivedRequests[i].Sender.IdentityUser.Name, Model.ReceivedRequests[i].Sender.IdentityUser.Surname)</td>
                                                         }
                                                         else
                                                         {
                                                             <td class="py-2">-</td>
                                                         }
-                                                        <td class="py-2" data-long-name="true" data-long-name-size="12">@(!string.IsNullOrEmpty(Model.ReceivedRequests[i].Receiver.IdentityUser.Name) ? Model.ReceivedRequests[i].Title : "-")</td>
                                                         <td class="py-2">@(Model.ReceivedRequests[i].CreationTime.ToString("dd/MM/yyyy HH:MM"))</td>
                                                     </tr>
                                                 }
@@ -224,9 +229,9 @@
                                                     <tr>
                                                         <td class="py-2" data-long-name="true" data-long-name-size="18">@(!string.IsNullOrEmpty(Model.SentRequests[i].Title) ? Model.SentRequests[i].Title : "-")</td>
                                                         @if (Model.SentRequests[i].Receiver != null &&
-                                                       Model.ReceivedRequests[i].Receiver.IdentityUser != null &&
-                                                       string.IsNullOrEmpty(Model.SentRequests[i].Receiver.IdentityUser.Name) &&
-                                                       string.IsNullOrEmpty(Model.SentRequests[i].Receiver.IdentityUser.Surname)
+                                                       Model.SentRequests[i].Receiver.IdentityUser != null &&
+                                                       !string.IsNullOrEmpty(Model.SentRequests[i].Receiver.IdentityUser.Name) &&
+                                                       !string.IsNullOrEmpty(Model.SentRequests[i].Receiver.IdentityUser.Surname)
                                                        )
                                                         {
                                                             <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",Model.SentRequests[i].Receiver.IdentityUser.Name, Model.SentRequests[i].Receiver.IdentityUser.Surname)</td>

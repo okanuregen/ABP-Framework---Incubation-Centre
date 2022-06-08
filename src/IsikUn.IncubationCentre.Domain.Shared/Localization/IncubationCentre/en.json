@@ -207,7 +207,12 @@
     "Unvan": "Title",
     "MemberSince": "Member Since",
     "CurrentProject": "Current Project",
-    "NoFoundUser": "No Found User"
+    "NoFoundUser": "No Found User",
+    "GeneralStatics": "General Statics",
+    "WatingForApproved": "Wating For Approved",
+    "NewApplications": "New Applications",
+    "Total": "Total",
+    "Members": "Members"
 
   }
 }

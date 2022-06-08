@@ -5,12 +5,12 @@ namespace IsikUn.IncubationCentre.Requests
     [Serializable]
     public class CreateUpdateRequestDto
     {
-        public Guid? SenderId { get; set; }
+        public virtual Guid? SenderId { get; set; }
 
-        public Guid? ReceiverId { get; set; }
+        public virtual Guid? ReceiverId { get; set; }
 
-        public string Title { get; set; }
+        public virtual string Title { get; set; }
 
-        public string Explanation { get; set; }
+        public virtual string Explanation { get; set; }
     }
 }

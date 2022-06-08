@@ -7,12 +7,14 @@
 @{
     Layout = null;
 }
-<abp-dynamic-form abp-model="RequestDto" data-ajaxForm="true" asp-page="CreateModal">
+<form asp-page="/Requests/CreateModal">
     <abp-modal>
-        <abp-modal-header title="@L["CreateRequest"].Value"></abp-modal-header>
+       <abp-modal-header title="@L["NewRequest"].Value"></abp-modal-header>
         <abp-modal-body>
-            <abp-form-content />
+            <abp-select asp-for="RequestDto.ReceiverId" asp-items="Model.Users"/>
+            <abp-input asp-for="RequestDto.Title" />
+            <abp-input asp-for="RequestDto.Explanation" />
         </abp-modal-body>
         <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
     </abp-modal>
-</abp-dynamic-form>
+</form>

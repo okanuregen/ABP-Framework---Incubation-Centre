@@ -207,6 +207,11 @@
     "Unvan": "Unvan",
     "MemberSince": "Üyelik Tarihi",
     "CurrentProject": "Güncel Proje",
-    "NoFoundUser": "Kullanıcı Bulunamadı"
+    "NoFoundUser": "Kullanıcı Bulunamadı",
+    "GeneralStatics": "Genel İstatistikler",
+    "WatingForApproved": "Onay İçin Beklemede",
+    "NewApplications": "Yeni Hesap Başvuruları",
+    "Total": "Toplam",
+    "Members": "Üyeler"
   }
 }

@@ -53,7 +53,6 @@ namespace IsikUn.IncubationCentre.People
                                     skillIds,
                                     about
                                     );
-            query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? " " : sorting);
             return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancelationToken);
         }
 
@@ -61,8 +60,8 @@ namespace IsikUn.IncubationCentre.People
         {
             var dbSet = (await GetDbSetAsync()).Where(a => a.IdentityUserId == IdentityUserId)
                .Include(c => c.IdentityUser)
-               .Include(a => a.SentRequests)
-               .Include(a => a.ReceivedRequests)
+               .Include(a => a.SentRequests).ThenInclude(b=> b.Receiver).ThenInclude(c => c.IdentityUser)
+               .Include(a => a.ReceivedRequests).ThenInclude(b => b.Sender).ThenInclude(c => c.IdentityUser)
                .Include(a => a.Skills)
                .Include(a => a.Tasks)
                .Include(a => a.FoundedProjects);

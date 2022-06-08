@@ -103,7 +103,9 @@ namespace IsikUn.IncubationCentre.SystemManagers
         {
             var dbSet = (await GetDbSetAsync())
                 .Include(c => c.Skills)
-                .Include(a => a.IdentityUser);
+                .Include(a => a.IdentityUser)
+                .Include(a => a.ReceivedRequests)
+                .Include(a => a.SentRequests);
             var rs = await dbSet.Where(a => a.Id == id).FirstOrDefaultAsync(cancellationToken);
             return rs;
         }
