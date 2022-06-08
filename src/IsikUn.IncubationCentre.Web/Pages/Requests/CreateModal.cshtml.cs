@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
+using System.ComponentModel.DataAnnotations;
 
 namespace IsikUn.IncubationCentre.Web.Pages.Requests
 {
@@ -50,6 +51,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Requests
             [SelectItems(nameof(Users))]
             public override Guid? ReceiverId { get; set; }
 
+            [Required]
             public override string Title { get; set; }
             
             [TextArea(Rows = 4)]
