@@ -46,6 +46,8 @@ namespace IsikUn.IncubationCentre.Applications
             string applicationStatus = null
           )
         {
+            ApplicationStatus filteredStatus = ApplicationStatus.Declined;
+            if (applicationStatus != null) filteredStatus = Enum.Parse<ApplicationStatus>(applicationStatus);
             return query
                     .WhereIf(!string.IsNullOrWhiteSpace(filter), e => 
                         e.SenderName.Contains(filter) ||
@@ -60,7 +62,7 @@ namespace IsikUn.IncubationCentre.Applications
                     .WhereIf(!string.IsNullOrWhiteSpace(senderMail), e => e.SenderMail.Contains(senderMail))
                     .WhereIf(!string.IsNullOrWhiteSpace(senderPhoneNumber), e => e.SenderPhoneNumber.Contains(senderPhoneNumber))
                     .WhereIf(!string.IsNullOrWhiteSpace(explanation), e => e.Explanation.Contains(explanation))
-                    .WhereIf(!string.IsNullOrWhiteSpace(applicationStatus), e => e.ApplicationStatus.ToString().Contains(applicationStatus));
+                    .WhereIf(!string.IsNullOrWhiteSpace(applicationStatus), e => e.ApplicationStatus == filteredStatus);
         }
     }
 }

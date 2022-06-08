@@ -75,15 +75,14 @@ namespace IsikUn.IncubationCentre.Applications
             }
 
             application.ApplicationStatus = ApplicationStatus.Approved;
-            var person = await _personRepository.GetWithDetailByIdentityUserIdAsync(_currentUser.Id.Value);
-            var systemManger = await _systemManagerRepository.GetAsync(person.Id);
+            var systemManger = await _systemManagerRepository.GetAsync(a => a.IdentityUserId == _currentUser.Id.Value);
             if(systemManger != null)
             {
                 application.ReceiverId = systemManger.Id;
             }
 
             //Send Inform Mail To User
-            application = await _applicationRepository.InsertAsync(application, autoSave: true);
+            application = await _applicationRepository.UpdateAsync(application, autoSave: true);
             return ObjectMapper.Map<Application, ApplicationDto>(application);
         }
 
@@ -97,15 +96,14 @@ namespace IsikUn.IncubationCentre.Applications
             }
 
             application.ApplicationStatus = ApplicationStatus.Declined;
-            var person = await _personRepository.GetWithDetailByIdentityUserIdAsync(_currentUser.Id.Value);
-            var systemManger = await _systemManagerRepository.GetAsync(person.Id);
+            var systemManger = await _systemManagerRepository.GetAsync(a => a.IdentityUserId == _currentUser.Id.Value);
             if (systemManger != null)
             {
                 application.ReceiverId = systemManger.Id;
             }
 
             //Send Inform Mail To User
-            application = await _applicationRepository.InsertAsync(application, autoSave: true);
+            application = await _applicationRepository.UpdateAsync(application, autoSave: true);
             return ObjectMapper.Map<Application, ApplicationDto>(application);
         }
 

@@ -212,7 +212,17 @@
     "WatingForApproved": "Wating For Approved",
     "NewApplications": "New Applications",
     "Total": "Total",
-    "Members": "Members"
+    "Members": "Members",
+    "Enum:MembershipType_0": "Entrepreneur",
+    "Enum:MembershipType_1": "Mentor",
+    "Enum:MembershipType_2": "Investor",
+    "Enum:MembershipType_3": "Collaborator",
+    "Approve": "Onayla",
+    "Decline": "Reddet",
+    "YouAreApprovingAnAppplication": "You Are Approving An Appplication Of {0}",
+    "SuccessfullyApproved": "Successfully Approved",
+    "YouAreRejectingAnAppplication": "You Are Rejecting An Appplication Of {0}",
+    "SuccessfullyDeclined": "Successfully Declined"
 
   }
 }

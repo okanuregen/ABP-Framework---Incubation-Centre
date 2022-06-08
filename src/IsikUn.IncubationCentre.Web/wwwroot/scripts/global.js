@@ -5,7 +5,7 @@ $(function () {
     $('#MenuItem_AccountDetail [data-text="MyProfile"]').text(l("MyProfile"));
     var myProfileLink = $('#MenuItem_AccountDetail').attr("href").split("/");
     if (myProfileLink.length == 3) {
-        var role = myProfileLink[1].toLowerCase();
+        var role = myProfileLink[1][0].toLowerCase() + myProfileLink[1].substring(1);
         var identityUserId = $('#MenuItem_AccountDetail').attr("data-currentUser");
         isikUn.incubationCentre[role][role.slice(0, -1)].getList({ identityUserId: identityUserId }).then(function (user) {
             if (user.items.length > 0) {

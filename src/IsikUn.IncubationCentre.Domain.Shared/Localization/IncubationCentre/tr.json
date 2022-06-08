@@ -212,6 +212,16 @@
     "WatingForApproved": "Onay İçin Beklemede",
     "NewApplications": "Yeni Hesap Başvuruları",
     "Total": "Toplam",
-    "Members": "Üyeler"
+    "Members": "Üyeler",
+    "Enum:MembershipType_0": "Girişimci",
+    "Enum:MembershipType_1": "Mentor",
+    "Enum:MembershipType_2": "Yatırımcı",
+    "Enum:MembershipType_3": "İş Ortağı",
+    "Approve": "Onayla",
+    "Decline": "Reddet",
+    "YouAreApprovingAnAppplication": "{0} İsimli Kişinin Başvurusunu Onaylıyorsun",
+    "SuccessfullyApproved": "Başarıyle Onaylandı",
+    "YouAreRejectingAnAppplication": "{0} İsimli Kişinin Başvurusunu Reddediyorsun",
+    "SuccessfullyDeclined": "Başarıyla Reddedildi"
   }
 }

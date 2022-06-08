@@ -2,33 +2,57 @@ $(function () {
 
     var l = abp.localization.getResource('IncubationCentre');
 
-    var service = isikUn.incubationCentre.requests.request;
+    var service = isikUn.incubationCentre.applications.application;
     var createRequestModal = new abp.ModalManager(abp.appPath + 'Requests/CreateModal');
 
-    var dataTable = $('#RequestTable').DataTable(abp.libs.datatables.normalizeConfiguration({
-        processing: true,
-        serverSide: true,
+    var NewApplicationdataTable = $('#NewApplicationTable').DataTable(abp.libs.datatables.normalizeConfiguration({
+        serverSide: false,
         paging: true,
-        searching: false,
-        autoWidth: false,
-        scrollCollapse: true,
-        order: [[0, "asc"]],
-        ajax: abp.libs.datatables.createAjax(service.getList),
+        scrollY: '210px',
+        order: [[1, "asc"]],
+        searching: true,
+        scrollX: true,
+        ajax: abp.libs.datatables.createAjax(
+            service.getList, { applicationStatus: "InReview" }),
         columnDefs: [
             {
+                title: l('Actions'),
                 rowAction: {
                     items:
                         [
                             {
-                                text: l('Edit'),
-                                visible: abp.auth.isGranted('IncubationCentre.Request.Update'),
+                                text: l('Approve'),
+                                visible: abp.auth.isGranted('IncubationCentre.SystemManagers'),
+                                confirmMessage: function (data) {
+                                    return l('YouAreApprovingAnAppplication', (data.record.senderName + " " + data.record.senderSurname));
+                                },
                                 action: function (data) {
-                                    editModal.open({ id: data.record.id });
+                                    service.approveApplication(data.record.id)
+                                        .then(function (data) {
+                                            debugger;
+                                            abp.notify.info(l('SuccessfullyApproved'));
+                                            NewApplicationdataTable.ajax.reload();
+                                        });
+                                }
+                            },
+                            {
+                                text: l('Decline'),
+                                visible: abp.auth.isGranted('IncubationCentre.SystemManagers'),
+                                confirmMessage: function (data) {
+                                    return l('YouAreApprovingAnAppplication', (data.record.senderName + " " + data.record.senderSurname));
+                                },
+                                action: function (data) {
+                                    service.rejectApplication(data.record.id)
+                                        .then(function (data) {
+                                            debugger;
+                                            abp.notify.info(l('SuccessfullyDeclined'));
+                                            NewApplicationdataTable.ajax.reload();
+                                        });
                                 }
                             },
                             {
                                 text: l('Delete'),
-                                visible: abp.auth.isGranted('IncubationCentre.Request.Delete'),
+                                visible: abp.auth.isGranted('IncubationCentre.Application.Delete'),
                                 confirmMessage: function (data) {
                                     return l('RequestDeletionConfirmationMessage', data.record.id);
                                 },
@@ -36,7 +60,7 @@ $(function () {
                                     service.delete(data.record.id)
                                         .then(function () {
                                             abp.notify.info(l('SuccessfullyDeleted'));
-                                            dataTable.ajax.reload();
+                                            NewApplicationdataTable.ajax.reload();
                                         });
                                 }
                             }
@@ -44,39 +68,74 @@ $(function () {
                 }
             },
             {
-                title: l('RequestSenderId'),
-                data: "senderId"
+                title: l('MembershipType'),
+                data: "membershipType",
+                render: function (data) {
+                    return l("Enum:MembershipType_"+data)
+                }
             },
             {
-                title: l('RequestSender'),
-                data: "sender"
+                title: l('Name'),
+                data: "senderName"
             },
             {
-                title: l('RequestReceiverId'),
-                data: "receiverId"
+                title: l('Surname'),
+                data: "senderSurname"
             },
             {
-                title: l('RequestReceiver'),
-                data: "receiver"
+                title: l('CreationTime'),
+                data: "creationTime",
+                render: function (data) {
+                    if (data == null) return "-";
+                    try {
+                        var date = new Date(data).toLocaleDateString();
+                        return date != "Invalid Date" ? date : "-";
+                    } catch {
+                        return "-";
+                    }
+                }
             },
             {
-                title: l('RequestTitle'),
-                data: "title"
+                title: l('Mail'),
+                data: "senderMail"
             },
             {
-                title: l('RequestExplanation'),
-                data: "explanation"
-            },
+                title: l('Explanation'),
+                data: "explanation",
+                render: function (data) {
+                    return '<span data-long-name="true" data-long-name-size="10">'+data+'</span>';
+                }
+            }
         ]
     }));
+
+    $('#NewApplicationTable')
+        .on('init.dt', function () {
+            $('[data-long-name="true"]').each(function (i, e) {
+                var text = $(e).text().trim();
+                var toolTipPlacemnt = $(e).attr("data-placement");
+                var shortTextSize = $(e).attr("data-long-name-size");
+                var stSize = parseInt(shortTextSize);
+                stSize = stSize != NaN ? stSize : 10;
+
+                var shortText = text;
+                if (shortText.length > stSize) {
+                    shortText = shortText.slice(0, stSize);
+                    $(e).text(shortText + "...");
+                }
+                $(e).attr("data-toggle", "tooltip");
+                $(e).attr("data-placement", ((toolTipPlacemnt != undefined && toolTipPlacemnt != "") ? toolTipPlacemnt : "top"));
+                $(e).attr("title", text);
+            });
+
+            $('[data-toggle="tooltip"]').tooltip();
+        })
+        .dataTable();
 
     createRequestModal.onResult(function () {
         location.reload();
     });
 
-    editModal.onResult(function () {
-        dataTable.ajax.reload();
-    });
 
     $('#NewRequestButton').click(function (e) {
         e.preventDefault();
