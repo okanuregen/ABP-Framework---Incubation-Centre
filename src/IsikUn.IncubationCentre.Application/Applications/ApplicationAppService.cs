@@ -12,6 +12,7 @@ using IsikUn.IncubationCentre.SystemManagers;
 using IsikUn.IncubationCentre.Tasks;
 using Volo.Abp.Users;
 using IsikUn.IncubationCentre.People;
+using Volo.Abp.Emailing;
 
 namespace IsikUn.IncubationCentre.Applications
 {
@@ -39,7 +40,6 @@ namespace IsikUn.IncubationCentre.Applications
             LocalizationResource = typeof(IncubationCentreResource);
         }
 
-        [Authorize(IncubationCentrePermissions.Applications.Create)]
         public async Task<ApplicationDto> CreateAsync(CreateUpdateApplicationDto input)
         {
             var sameMailExist = await _applicationRepository.FindAsync(a => a.SenderMail == input.SenderMail);
@@ -75,12 +75,6 @@ namespace IsikUn.IncubationCentre.Applications
             }
 
             application.ApplicationStatus = ApplicationStatus.Approved;
-            var systemManger = await _systemManagerRepository.GetAsync(a => a.IdentityUserId == _currentUser.Id.Value);
-            if(systemManger != null)
-            {
-                application.ReceiverId = systemManger.Id;
-            }
-
             //Send Inform Mail To User
             application = await _applicationRepository.UpdateAsync(application, autoSave: true);
             return ObjectMapper.Map<Application, ApplicationDto>(application);
@@ -96,12 +90,6 @@ namespace IsikUn.IncubationCentre.Applications
             }
 
             application.ApplicationStatus = ApplicationStatus.Declined;
-            var systemManger = await _systemManagerRepository.GetAsync(a => a.IdentityUserId == _currentUser.Id.Value);
-            if (systemManger != null)
-            {
-                application.ReceiverId = systemManger.Id;
-            }
-
             //Send Inform Mail To User
             application = await _applicationRepository.UpdateAsync(application, autoSave: true);
             return ObjectMapper.Map<Application, ApplicationDto>(application);

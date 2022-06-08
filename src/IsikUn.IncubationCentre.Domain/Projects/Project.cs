@@ -50,9 +50,7 @@ namespace IsikUn.IncubationCentre.Projects
         public ICollection<Collaborator> Collaborators { get; set; }
         [JsonIgnore]
         public List<ProjectCollaborator> ProjectsCollaborators { get; set; }
-        [JsonIgnore]
         public ICollection<Entrepreneur> Entrepreneurs { get; set; }
-        [JsonIgnore]
         public List<ProjectEntrepreneur> ProjectsEntrepreneurs { get; set; }
 
         public List<Event> Events { get; set; }

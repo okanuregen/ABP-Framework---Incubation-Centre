@@ -121,7 +121,7 @@
     "Status": "Status",
     "CompletionDate": "Completion Date",
     "Tags": "Tags",
-    "SharePerInvest": "Share Per Invest (%)",
+    "SharePerInvest": "Share Per Invest",
     "InvesmentReady": " Is Ready For Invesment?",
     "OpenForInvesment": "Is Open For Invesment?",
     "TotalValuation": "Total Valuation",
@@ -217,16 +217,16 @@
     "Enum:MembershipType_1": "Mentor",
     "Enum:MembershipType_2": "Investor",
     "Enum:MembershipType_3": "Collaborator",
-    "Approve": "Onayla",
-    "Decline": "Reddet",
+    "Approve": "Approve",
+    "Decline": "Decline",
     "YouAreApprovingAnAppplication": "You Are Approving An Appplication Of {0}",
     "SuccessfullyApproved": "Successfully Approved",
     "YouAreRejectingAnAppplication": "You Are Rejecting An Appplication Of {0}",
     "SuccessfullyDeclined": "Successfully Declined",
     "NewProjects": "New Projects",
     "MentorAssignments": "Mentor Assignments",
-    "WatingForAssignment": "Wating For Assignment"
-
-
+    "WatingForAssignment": "Wating For Assignment",
+    "YouAreApprovingAProject": "You Are Approving A Project Named {0}",
+    "YouAreRejectingAProject": "You Are Rejecting A Project Named {0}"
   }
 }

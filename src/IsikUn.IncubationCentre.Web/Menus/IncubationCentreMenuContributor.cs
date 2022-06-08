@@ -132,7 +132,7 @@ public class IncubationCentreMenuContributor : IMenuContributor
            ));
 
         var currentUser = context.ServiceProvider.GetService<ICurrentUser>();
-        if (currentUser.IsInRole("admin"))
+        if (currentUser.IsInRole("admin") || currentUser.IsInRole("SystemManager"))
         {
             context.Menu.AddItem(administration);
         }

@@ -71,6 +71,7 @@ $(function () {
                     title: l('CompletionDate'),
                     data: "completionDate",
                     render: function (data) {
+                        if (data == null) return "-";
                         try {
                             var date = new Date(data).toLocaleDateString();
                             return date != "Invalid Date" ? date : "-";
@@ -83,6 +84,7 @@ $(function () {
                     title: l('Tags'),
                     data: "tags",
                     render: function (data) {
+                        if (data == null) return "-";
                         var text = "";
                         data.split(",").forEach(function (tag) {
                             text += `<span class="badge badge-info me-2">${tag}</span>`

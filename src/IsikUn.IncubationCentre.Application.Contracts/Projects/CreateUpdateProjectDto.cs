@@ -19,6 +19,7 @@ namespace IsikUn.IncubationCentre.Projects
         [Range(0,Double.MaxValue,ErrorMessage = "This field cannot be negative")]
         public int TotalValuation { get; set; }
         public Guid? EntreprenurId { get; set; }
-        
+        public ProjectStatus Status { get; set; }
+
     }
 }

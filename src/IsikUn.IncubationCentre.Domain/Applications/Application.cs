@@ -16,8 +16,6 @@ namespace IsikUn.IncubationCentre.Applications
         public string SenderMail { get; set; }
         public string SenderPhoneNumber { get; set; }
         public string Explanation { get; set; }
-        public Guid? ReceiverId { get; set; }
-        public SystemManager Receiver { get; set; }
         public ApplicationStatus ApplicationStatus { get; set; }
     }
 }

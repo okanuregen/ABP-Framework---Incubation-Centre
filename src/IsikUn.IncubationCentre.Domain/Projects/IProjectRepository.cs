@@ -32,6 +32,8 @@ namespace IsikUn.IncubationCentre.Projects
              List<Guid> mentorIds = null,
              List<Guid> collaboratorIds = null,
              Guid[] entrepreneurIds = null,
+             bool filterByNoMentor = false,
+             bool NoMentor = false,
              string sorting = null,
              int skipCount = 0,
              int maxResultCount = int.MaxValue,
@@ -53,6 +55,8 @@ namespace IsikUn.IncubationCentre.Projects
              List<Guid> mentorIds = null,
              List<Guid> collaboratorIds = null,
              Guid[] entrepreneurIds = null,
+             bool filterByNoMentor = false,
+             bool NoMentor = false,
              CancellationToken cancelationToken = default
             );
 

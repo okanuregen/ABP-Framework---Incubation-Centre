@@ -121,7 +121,7 @@
     "Status": "Durum",
     "CompletionDate": "Tamamlanma Tarihi",
     "Tags": "Taglar",
-    "SharePerInvest": "Yatırım Başına Hisse (%)",
+    "SharePerInvest": "Yatırım Başına Hisse",
     "InvesmentReady": "Yatırıma Hazır Mı?",
     "OpenForInvesment": "Yatırıma Açık Mı?",
     "TotalValuation": "Toplam Değer",
@@ -225,6 +225,8 @@
     "SuccessfullyDeclined": "Başarıyla Reddedildi",
     "NewProjects": "Yeni Projeler",
     "MentorAssignments": "Mentor Atamaları",
-    "WatingForAssignment": "Mentor Ataması Bekliyor"
+    "WatingForAssignment": "Mentor Ataması Bekliyor",
+    "YouAreApprovingAProject": "{0} İsimli Projeyi Onaylıyorsunuz",
+    "YouAreRejectingAProject": "{0} İsimli Projeyi Reddediyorsunuz"
   }
 }

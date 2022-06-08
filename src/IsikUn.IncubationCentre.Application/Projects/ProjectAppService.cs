@@ -66,6 +66,35 @@ namespace IsikUn.IncubationCentre.Projects
             return ObjectMapper.Map<Project, ProjectDto>(project);
         }
 
+        [Authorize(IncubationCentrePermissions.SystemManagers.Default)]
+        public async Task<ProjectDto> ApproveProjectAsync(Guid id)
+        {
+            var project = await _projectRepository.GetAsync(id);
+            if (project == null)
+            {
+                throw new UserFriendlyException(L["NoProjectFound"]);
+            }
+            project.Status = ProjectStatus.Approved;
+
+            //Send Inform Mail To User
+            project = await _projectRepository.UpdateAsync(project, autoSave: true);
+            return ObjectMapper.Map<Project, ProjectDto>(project);
+        }
+
+        [Authorize(IncubationCentrePermissions.SystemManagers.Default)]
+        public async Task<ProjectDto> RejectProjectAsync(Guid id)
+        {
+            var project = await _projectRepository.GetAsync(id);
+            if (project == null)
+            {
+                throw new UserFriendlyException(L["NoProjectFound"]);
+            }
+            project.Status = ProjectStatus.Declined;
+            //Send Inform Mail To User
+            project = await _projectRepository.UpdateAsync(project, autoSave: true);
+            return ObjectMapper.Map<Project, ProjectDto>(project);
+        }
+
         [Authorize(IncubationCentrePermissions.Projects.Delete)]
         public async Task DeleteAsync(Guid id)
         {
@@ -116,7 +145,9 @@ namespace IsikUn.IncubationCentre.Projects
                 input.Investors != null ? input.Investors.Select(a => a.Id).ToList() : null,
                 input.Mentors != null ? input.Mentors.Select(a => a.Id).ToList() : null,
                 input.Collaborators != null ? input.Collaborators.Select(a => a.Id).ToList() : null,
-                input.Entrepreneurs);
+                input.Entrepreneurs,
+                input.FilterByNoMentor,
+                input.NoMentor);
             var items = await _projectRepository.GetListAsync(
                 input.Status,
                 input.FiterByStatus,
@@ -132,6 +163,8 @@ namespace IsikUn.IncubationCentre.Projects
                 input.Mentors != null ? input.Mentors.Select(a => a.Id).ToList() : null,
                 input.Collaborators != null ? input.Collaborators.Select(a => a.Id).ToList() : null,
                 input.Entrepreneurs,
+                input.FilterByNoMentor,
+                input.NoMentor,
                 input.Sorting, input.SkipCount, input.MaxResultCount);
 
             return new PagedResultDto<ProjectDto>

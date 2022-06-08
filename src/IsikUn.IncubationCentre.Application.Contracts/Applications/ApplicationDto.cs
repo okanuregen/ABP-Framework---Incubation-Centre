@@ -17,10 +17,7 @@ namespace IsikUn.IncubationCentre.Applications
 
         public string Explanation { get; set; }
 
-        public SystemManagerDto Receiver { get; set; }
-
         public ApplicationStatus ApplicationStatus { get; set; }
 
-        public Guid ReceiverId { get; set; }
     }
 }

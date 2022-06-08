@@ -22,13 +22,22 @@
 </abp-dynamic-form>
 
 <script>
-        $(function(){
-            $("#Project_EntreprenurId").parent("div").hide();
-            $("#Project_Tags").attr("placeholder",`@L["YouCanAddNewTagWithEnterOrComma"]`);
-            var inputTags = document.querySelector("#Project_Tags");
-            var tagify = new Tagify(inputTags, {
-              originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
-            });
-        })
+            $(function(){
+                var status = $("#Project_Status").val();
+                if(status == "InReview" || status == "Declined"){
+                    $("#Project_Status").attr("readonly","readonly");
+                    $("#Project_Status option:not(:selected)").remove();
+                }else{
+                    $("option[value='Approved']").remove();
+                    $("option[value='InReview']").remove();
+                }
+
+                $("#Project_EntreprenurId").parent("div").hide();
+                $("#Project_Tags").attr("placeholder",`@L["YouCanAddNewTagWithEnterOrComma"]`);
+                var inputTags = document.querySelector("#Project_Tags");
+                var tagify = new Tagify(inputTags, {
+                  originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
+                });
+            })
 </script>
 

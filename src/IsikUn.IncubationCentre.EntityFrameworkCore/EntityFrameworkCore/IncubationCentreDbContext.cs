@@ -248,10 +248,6 @@ public class IncubationCentreDbContext :
                 IncubationCentreConsts.DbSchema);
             b.ConfigureByConvention();
 
-            b.HasMany(c => c.Applications)
-                .WithOne(e => e.Receiver)
-                .OnDelete(DeleteBehavior.NoAction);
-
         });
         builder.Entity<Skill>(b =>
         {

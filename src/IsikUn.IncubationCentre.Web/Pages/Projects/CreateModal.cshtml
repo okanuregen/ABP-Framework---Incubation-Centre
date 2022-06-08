@@ -26,6 +26,7 @@
     $(function(){
         var l = abp.localization.getResource('IncubationCentre');
         $("#Project_EntreprenurId").parent("div").hide();
+        $("#Project_Status").parent("div").hide();
         $("#Project_Tags").attr("placeholder",`@L["YouCanAddNewTagWithEnterOrComma"]`);
         var inputTags = document.querySelector("#Project_Tags");
         var tagify = new Tagify(inputTags, {

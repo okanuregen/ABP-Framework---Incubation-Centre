@@ -19,7 +19,9 @@ namespace IsikUn.IncubationCentre.Applications
         Task<ApplicationDto> CreateAsync(CreateUpdateApplicationDto input);
 
         Task<ApplicationDto> UpdateAsync(Guid id, CreateUpdateApplicationDto input);
+      
         Task<ApplicationDto> RejectApplicationAsync(Guid id);
+     
         Task<ApplicationDto> ApproveApplicationAsync(Guid id);
 
     }

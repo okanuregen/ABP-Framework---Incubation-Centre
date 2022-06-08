@@ -32,7 +32,8 @@ namespace IsikUn.IncubationCentre.Projects
         public ICollection<MentorDto> Mentors { get; set; }
         public ICollection<CollaboratorDto> Collaborators { get; set; }
         public Guid[] Entrepreneurs { get; set; }
-
+        public bool FilterByNoMentor { get; set; }
+        public bool NoMentor { get; set; }
         public GetProjectsInput()
         {
 
