@@ -242,7 +242,9 @@
     "CreationTime": "Date",
     "Enum:ApplicationStatus_0": "InReview",
     "Enum:ApplicationStatus_1": "Approved",
-    "Enum:ApplicationStatus_2": "Declined"
+    "Enum:ApplicationStatus_2": "Declined",
+    "MustChangePassword": "You Have To Change Your Password!"
+
 
   }
 }

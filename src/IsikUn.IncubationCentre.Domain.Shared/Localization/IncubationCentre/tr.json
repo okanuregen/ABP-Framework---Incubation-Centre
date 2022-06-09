@@ -242,7 +242,8 @@
     "CreationTime": "Tarih",
     "Enum:ApplicationStatus_0": "İncelemede",
     "Enum:ApplicationStatus_1": "Onaylandı",
-    "Enum:ApplicationStatus_2": "Reddeildi"
+    "Enum:ApplicationStatus_2": "Reddeildi",
+    "MustChangePassword": "Şifrenizi Değiştirmek Zorundasınız!"
 
   }
 }

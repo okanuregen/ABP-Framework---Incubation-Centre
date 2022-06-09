@@ -218,9 +218,9 @@ public class IncubationCentreWebModule : AbpModule
         app.UseStaticFiles();
         app.UseRouting();
         app.UseAuthentication();
-        app.DashboardRedirectMiddleware();
         app.UseJwtTokenMiddleware();
-
+        app.UseFirstLoggingForceChangePasswordMiddleware();
+        app.DashboardRedirectMiddleware();
         if (MultiTenancyConsts.IsEnabled)
         {
             app.UseMultiTenancy();

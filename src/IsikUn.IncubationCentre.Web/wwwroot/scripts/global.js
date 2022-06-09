@@ -36,8 +36,13 @@ $(function () {
 
 
 
-
-
+    if (window.location.pathname == '/Account/Manage') {
+        debugger;
+        if (window.location.search.includes('redirectType=ForceChangePassword')) {
+                var l = l || abp.localization.getResource("IncubationCentre");
+                abp.message.warn(l("MustChangePassword"));
+        }
+    }
 
 
 
