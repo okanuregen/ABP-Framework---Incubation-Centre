@@ -111,7 +111,7 @@ $(function () {
                 title: l('Explanation'),
                 data: "explanation",
                 render: function (data) {
-                    return '<span data-long-name="true" data-long-name-size="10">'+data+'</span>';
+                    return '<span data-long-name="true" data-long-name-size="105">'+data+'</span>';
                 }
             }
         ]
@@ -119,6 +119,8 @@ $(function () {
 
     $('#NewApplicationTable')
         .on('init.dt', function () {
+            debugger;
+            $('#NewApplicationTable').DataTable().draw();
             $('[data-long-name="true"]').each(function (i, e) {
                 var text = $(e).text().trim();
                 var toolTipPlacemnt = $(e).attr("data-placement");

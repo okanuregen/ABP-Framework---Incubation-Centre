@@ -34,7 +34,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Requests
         public async Task OnGet()
         {
             var users = await _personRepo.GetListAsync();
-            Users = users.Select(x => new SelectListItem(string.Format("{0} ({1} {2})", x.IdentityUser.UserName, x.IdentityUser.Name, x.IdentityUser.Surname), x.Id.ToString())).ToList();
+            Users = users.Where(a => a.IdentityUserId != _currentUser.Id).Select(x => new SelectListItem(string.Format("{0} ({1} {2})", x.IdentityUser.UserName, x.IdentityUser.Name, x.IdentityUser.Surname), x.Id.ToString())).ToList();
         }
 
         public virtual async Task<IActionResult> OnPostAsync()

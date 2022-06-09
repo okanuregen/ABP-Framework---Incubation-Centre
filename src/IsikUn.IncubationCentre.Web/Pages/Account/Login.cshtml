@@ -140,6 +140,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script>
+    function validateEmail(email) 
+    {
+        var re = /\S+@@\S+\.\S+/;
+        return re.test(email);
+    }
+
     $(function () {
         var l = l || abp.localization.getResource('IncubationCentre');
 
@@ -174,34 +180,39 @@
             createApplicationModal.open();
         });
 
+
         $("#joinUsSubmitButton").click(function(e){
+            debugger;
             var data = new FormData(document.querySelector("#JoinUsForm"));
             var formJSON = Object.fromEntries(data.entries());
             if(formJSON == undefined || formJSON == {} || formJSON == {}){
                 abp.notify.warn(l("PleaseFillAllInputs"));
                 return;
             }
-            if(formJSON['Application.MembershipType'] == ""){
+            if(formJSON['MembershipType'] == ""){
                 abp.notify.warn(l("PleaseFillTheInput",l("MembershipType")));
                 return;
             }
-            if(formJSON['Application.SenderName'] == ""){
+            if(formJSON['SenderName'] == ""){
                 abp.notify.warn(l("PleaseFillTheInput",l("SenderName")));
                 return;
             }
-            if(formJSON['Application.SenderSurname'] == ""){
+            if(formJSON['SenderSurname'] == ""){
                 abp.notify.warn(l("PleaseFillTheInput",l("SenderSurname")));
                 return;
             }
-            if(formJSON['Application.SenderMail'] == ""){
+            if(formJSON['SenderMail'] == ""){
                 abp.notify.warn(l("PleaseFillTheInput",l("SenderMail")));
                 return;
+            }else if(!validateEmail(formJSON['SenderMail'])){
+                 abp.notify.warn(l("FillEmailInCorrectFormat"));
+                 return;
             }
-            if(formJSON['Application.Explanation'] == ""){
+            if(formJSON['Explanation'] == ""){
                 abp.notify.warn(l("PleaseFillTheInput",l("Explanation")));
                 return;
             }
-            if(formJSON['Application.ApplicationStatus'] == ""){
+            if(formJSON['ApplicationStatus'] == ""){
                 abp.notify.warn(l("PleaseFillTheInput",l("ApplicationStatus")));
                 return;
             }

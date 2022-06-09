@@ -60,17 +60,17 @@ public class IncubationCentrePermissionDefinitionProvider : PermissionDefinition
         applicationPermission.AddChild(IncubationCentrePermissions.Applications.Edit, L("Permission:Applications.Edit"));
         applicationPermission.AddChild(IncubationCentrePermissions.Applications.Delete, L("Permission:Applications.Delete"));
 
-        var requestPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Requests.Default, L("Permission:Request"));
+        var requestPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Requests.Default, L("Permission:Requests"));
         requestPermission.AddChild(IncubationCentrePermissions.Requests.Create, L("Permission:Requests.Create"));
         requestPermission.AddChild(IncubationCentrePermissions.Requests.Edit, L("Permission:Requests.Edit"));
         requestPermission.AddChild(IncubationCentrePermissions.Requests.Delete, L("Permission:Requests.Delete"));
 
-        var taskPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Tasks.Default, L("Permission:Task"));
+        var taskPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Tasks.Default, L("Permission:Tasks"));
         taskPermission.AddChild(IncubationCentrePermissions.Tasks.Create, L("Permission:Tasks.Create"));
         taskPermission.AddChild(IncubationCentrePermissions.Tasks.Edit, L("Permission:Tasks.Edit"));
         taskPermission.AddChild(IncubationCentrePermissions.Tasks.Delete, L("Permission:Tasks.Delete"));
 
-        var eventPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Events.Default, L("Permission:Event"));
+        var eventPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Events.Default, L("Permission:Events"));
         eventPermission.AddChild(IncubationCentrePermissions.Events.Create, L("Permission:Events.Create"));
         eventPermission.AddChild(IncubationCentrePermissions.Events.Edit, L("Permission:Events.Edit"));
         eventPermission.AddChild(IncubationCentrePermissions.Events.Delete, L("Permission:Events.Delete"));

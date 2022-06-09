@@ -18,17 +18,17 @@ $(function () {
                         items:
                             [
                                 {
-                                    text: l('Edit'),
-                                    visible:
-                                        abp.auth.isGranted('IncubationCentre.Entrepreneurs.Edit'),
-                                    action: function (data) {
-                                        editModal.open({ id: data.record.id });
-                                    }
-                                },
-                                {
                                     text: l('Detail'),
                                     visible:
                                         abp.auth.isGranted('IncubationCentre.Entrepreneurs'),
+                                    action: function (data) {
+                                        location.href = "Entrepreneurs/Detail?id="+data.record.id;
+                                    }
+                                },
+                                {
+                                    text: l('Edit'),
+                                    visible:
+                                        abp.auth.isGranted('IncubationCentre.Entrepreneurs') && abp.auth.isGranted('IncubationCentre.SystemManagers'),
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
                                     }
@@ -36,7 +36,7 @@ $(function () {
                                 {
                                     text: l('Delete'),
                                     visible:
-                                        abp.auth.isGranted('IncubationCentre.Entrepreneurs.Delete'),
+                                        abp.auth.isGranted('IncubationCentre.Entrepreneurs.Delete') && abp.auth.isGranted('IncubationCentre.SystemManagers'),
                                     confirmMessage: function (data) {
                                         return l(
                                             'EntityDeletionConfirmationMessage',

@@ -95,10 +95,13 @@ namespace IsikUn.IncubationCentre.Web.Pages.SystemManagers
             
 
             var person = await _personRepo.GetWithDetailByIdentityUserIdAsync(_currentUser.GetId());
-            CurrentUser = await _smRepo.GetWithDetailAsync(person.Id);
+            if(person != null)
+            {
+                CurrentUser = await _smRepo.GetWithDetailAsync(person.Id);
+                SentRequests = person.SentRequests;
+                ReceivedRequests = person.ReceivedRequests;
+            }
 
-            SentRequests = person.SentRequests;
-            ReceivedRequests = person.ReceivedRequests;
 
         }
     }

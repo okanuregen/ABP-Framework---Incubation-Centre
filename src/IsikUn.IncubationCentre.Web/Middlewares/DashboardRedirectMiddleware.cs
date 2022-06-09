@@ -42,7 +42,7 @@ namespace IsikUn.IncubationCentre.Web.Middlewares
                         httpContext.Response.Redirect("/Investors/Dashboard");
                         return;
                     }
-                    if (httpContext.User.IsInRole("SystemManager") || httpContext.User.IsInRole("SistemYöneticisi"))
+                    if (httpContext.User.IsInRole("System Manager") || httpContext.User.IsInRole("SystemManager") || httpContext.User.IsInRole("SistemYöneticisi"))
                     {
                         httpContext.Response.Redirect("/SystemManagers/Dashboard");
                         return;

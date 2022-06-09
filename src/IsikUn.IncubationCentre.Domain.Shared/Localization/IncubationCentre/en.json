@@ -235,8 +235,14 @@
     "AssigningMentorConfirmMessage": "Are You Sure That You Want To Assing {1} To Project Named {0} As Mentor?",
     "SuccessfullyAssigned": "Assigned Operation Succesful",
     "AssignMentor": "Assign Mentor",
-    "Assign": "Assign"
-
+    "Assign": "Assign",
+    "AdminDashBoardMessage": "You Are Using This App As Developer Account (Admin). You Have All The Permissions To Use The App. Be Careful Before Updating Something. And Don't Forget To Log Out Before Leaving.",
+    "Role": "Role",
+    "FillEmailInCorrectFormat": "Fill Email In Correct (Email) Format",
+    "CreationTime": "Date",
+    "Enum:ApplicationStatus_0": "InReview",
+    "Enum:ApplicationStatus_1": "Approved",
+    "Enum:ApplicationStatus_2": "Declined"
 
   }
 }

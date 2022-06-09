@@ -76,13 +76,20 @@ public class IncubationCentreMenuContributor : IMenuContributor
 
 
 
-        var systemDescriptions = new ApplicationMenuItem(IncubationCentreMenus.SystemDescriptions, l["Menu:SystemManagement"], icon: "fa fa-cubes", order: 3);
+        var systemDescriptions = new ApplicationMenuItem(IncubationCentreMenus.SystemDescriptions, l["Menu:SystemManagement"], icon: "fa fa-cubes", order: 3, requiredPermissionName: IncubationCentrePermissions.SystemManagers.Default);
         systemDescriptions.AddItem(new ApplicationMenuItem(
             IncubationCentreMenus.SkillManagement,
-            l["Menu:SkillDescriptions"],
-            url: "/Skills",
-            icon: "fa fa-pencil-square-o",
-            requiredPermissionName: IncubationCentrePermissions.Skills.Default
+            l["Menu:Applications"],
+            url: "/Applications",
+            icon: "fa fa-plus-circle",
+            requiredPermissionName: IncubationCentrePermissions.Applications.Default
+        ));
+        systemDescriptions.AddItem(new ApplicationMenuItem(
+            IncubationCentreMenus.SkillManagement,
+            l["Menu:Projects"],
+            url: "/Projects",
+            icon: "fa fa-file-code-o",
+            requiredPermissionName: IncubationCentrePermissions.Projects.Default
         ));
         systemDescriptions.AddItem(new ApplicationMenuItem(
             IncubationCentreMenus.SkillManagement,
@@ -93,13 +100,12 @@ public class IncubationCentreMenuContributor : IMenuContributor
         ));
         systemDescriptions.AddItem(new ApplicationMenuItem(
             IncubationCentreMenus.SkillManagement,
-            l["Menu:Projects"],
-            url: "/Projects",
-            icon: "fa fa-file-code-o",
-            requiredPermissionName: IncubationCentrePermissions.Projects.Default
+            l["Menu:SkillDescriptions"],
+            url: "/Skills",
+            icon: "fa fa-pencil-square-o",
+            requiredPermissionName: IncubationCentrePermissions.Skills.Default
         ));
         context.Menu.AddItem(systemDescriptions);
-
 
 
         context.Menu.TryRemoveMenuItem("Abp.Application.Main.Administration");
@@ -132,34 +138,10 @@ public class IncubationCentreMenuContributor : IMenuContributor
            ));
 
         var currentUser = context.ServiceProvider.GetService<ICurrentUser>();
-        if (currentUser.IsInRole("admin") || currentUser.IsInRole("SystemManager"))
+        if (currentUser.IsInRole("admin") || currentUser.IsInRole("SystemManager") || currentUser.IsInRole("System Manager"))
         {
             context.Menu.AddItem(administration);
         }
-        if (await context.IsGrantedAsync(IncubationCentrePermissions.Applications.Default))
-        {
-            context.Menu.AddItem(
-                new ApplicationMenuItem(IncubationCentreMenus.Application, l["Menu:Application"], "/Applications")
-            );
-        }
 
-        if (await context.IsGrantedAsync(IncubationCentrePermissions.Requests.Default))
-        {
-            context.Menu.AddItem(
-                new ApplicationMenuItem(IncubationCentreMenus.Request, l["Menu:Request"], "/Requests")
-            );
-        }
-        if (await context.IsGrantedAsync(IncubationCentrePermissions.Tasks.Default))
-        {
-            context.Menu.AddItem(
-                new ApplicationMenuItem(IncubationCentreMenus.Task, l["Menu:Task"], "/Tasks")
-            );
-        }
-        if (await context.IsGrantedAsync(IncubationCentrePermissions.Events.Default))
-        {
-            context.Menu.AddItem(
-                new ApplicationMenuItem(IncubationCentreMenus.Event, l["Menu:Event"], "/Events")
-            );
-        }
     }
 }

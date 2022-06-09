@@ -26,6 +26,7 @@ namespace IsikUn.IncubationCentre.Applications
     public class ApplicationAppService : ApplicationService, IApplicationAppService
     {
         private readonly IIdentityUserAppService _identityUserAppService;
+        private readonly IIdentityUserRepository _identityUserRepo;
         private readonly IInvestorAppService _investorAppService;
         private readonly IMentorAppService _mentorAppService;
         private readonly ICollaboratorAppService _collaboratorAppService;
@@ -38,6 +39,7 @@ namespace IsikUn.IncubationCentre.Applications
 
         public ApplicationAppService(
             IInvestorAppService investorAppService,
+            IIdentityUserRepository identityUserRepo,
             IMentorAppService mentorAppService,
             ICollaboratorAppService collaboratorAppService,
             IEntrepreneurAppService entreprenurAppService,
@@ -49,6 +51,7 @@ namespace IsikUn.IncubationCentre.Applications
             ITaskRepository taskRepository
             )
         {
+            this._identityUserRepo = identityUserRepo;
             this._investorAppService = investorAppService;
             this._mentorAppService = mentorAppService;
             this._collaboratorAppService = collaboratorAppService;
@@ -65,9 +68,17 @@ namespace IsikUn.IncubationCentre.Applications
         public async Task<ApplicationDto> CreateAsync(CreateUpdateApplicationDto input)
         {
             var sameMailExist = await _applicationRepository.FindAsync(a => a.SenderMail == input.SenderMail);
-            if (sameMailExist != null)
+            if(sameMailExist != null)
             {
                 throw new UserFriendlyException(L["SameMailExistOnDifferentApplication"]);
+            }
+            else
+            {
+                var users = await _identityUserRepo.GetListAsync(); 
+                if(users.Count(a => a.Email == input.SenderMail) > 0)
+                {
+                    throw new UserFriendlyException(L["SameMailExistOnDifferentApplication"]);
+                }
             }
 
             var SystemManagers = await _systemManagerRepository.GetListAsync();
@@ -135,16 +146,16 @@ namespace IsikUn.IncubationCentre.Applications
             switch (application.MembershipType)
             {
                 case ApplicationType.Investor:
-                    person = await _investorAppService.CreateAsync(new CreateUpdateInvestorDto { IdentityUserId=newUser.Id,isActivated = true, About = String.Format("{0} {1}", application.SenderName, application.SenderSurname) });
+                    person = await _investorAppService.CreateAsync(new CreateUpdateInvestorDto { CreationTime = DateTime.Now, IdentityUserId =newUser.Id,isActivated = true, About = String.Format("{0} {1}", application.SenderName, application.SenderSurname) });
                     break;
                 case ApplicationType.Mentor:
-                    person = await _mentorAppService.CreateAsync(new CreateUpdateMentorDto { IdentityUserId = newUser.Id, isActivated = true, About = String.Format("{0} {1}", application.SenderName, application.SenderSurname) });
+                    person = await _mentorAppService.CreateAsync(new CreateUpdateMentorDto { CreationTime = DateTime.Now, IdentityUserId = newUser.Id, isActivated = true, About = String.Format("{0} {1}", application.SenderName, application.SenderSurname) });
                     break;
                 case ApplicationType.Collaborator:
-                    person = await _collaboratorAppService.CreateAsync(new CreateUpdateCollaboratorDto { IdentityUserId = newUser.Id, isActivated = true, About = String.Format("{0} {1}", application.SenderName, application.SenderSurname) });
+                    person = await _collaboratorAppService.CreateAsync(new CreateUpdateCollaboratorDto { CreationTime = DateTime.Now,IdentityUserId = newUser.Id, isActivated = true, About = String.Format("{0} {1}", application.SenderName, application.SenderSurname) });
                     break;
                 case ApplicationType.Entrepreneur:
-                    person = await _entreprenurAppService.CreateAsync(new CreateUpdateEntrepreneurDto { IdentityUserId = newUser.Id, isActivated = true,About = String.Format("{0} {1}", application.SenderName, application.SenderSurname) });
+                    person = await _entreprenurAppService.CreateAsync(new CreateUpdateEntrepreneurDto { CreationTime = DateTime.Now,IdentityUserId = newUser.Id, isActivated = true,About = String.Format("{0} {1}", application.SenderName, application.SenderSurname) });
                     break;
             }
             if(person != null)

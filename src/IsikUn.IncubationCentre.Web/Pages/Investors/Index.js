@@ -20,7 +20,7 @@ $(function () {
                                 {
                                     text: l('Edit'),
                                     visible:
-                                        abp.auth.isGranted('IncubationCentre.Investors.Edit'),
+                                        abp.auth.isGranted('IncubationCentre.Investors.Edit') && abp.auth.isGranted('IncubationCentre.SystemManagers'),
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
                                     }
@@ -28,7 +28,7 @@ $(function () {
                                 {
                                     text: l('Delete'),
                                     visible:
-                                        abp.auth.isGranted('IncubationCentre.Investors.Delete'),
+                                        abp.auth.isGranted('IncubationCentre.Investors.Delete') && abp.auth.isGranted('IncubationCentre.SystemManagers'),
                                     confirmMessage: function (data) {
                                         return l(
                                             'EntityDeletionConfirmationMessage',
