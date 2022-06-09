@@ -18,6 +18,7 @@ using IsikUn.IncubationCentre.Applications;
 using IsikUn.IncubationCentre.Tasks;
 using IsikUn.IncubationCentre.Requests;
 using IsikUn.IncubationCentre.Events;
+using IsikUn.IncubationCentre.Currencies;
 
 namespace IsikUn.IncubationCentre.Web;
 
@@ -85,5 +86,9 @@ public class IncubationCentreWebAutoMapperProfile : Profile
         CreateMap<Event, EventDto>().ReverseMap();
         CreateMap<CreateUpdateEventDto, EventDto>().ReverseMap();
         CreateMap<CreateUpdateEventDto, Event>().ReverseMap();
+
+        CreateMap<Currency, CurrencyDto>().ReverseMap();
+        CreateMap<CreateUpdateCurrencyDto, CurrencyDto>().ReverseMap();
+        CreateMap<CreateUpdateCurrencyDto, Currency>().ReverseMap();
     }
 }

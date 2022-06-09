@@ -20,11 +20,9 @@ public class IncubationCentreMenus
     public const string Collaborators = Prefix + ".Collaborators";
     public const string Documents = Prefix + ".Documents";
     public const string Projects = Prefix + ".Projects";
-
-    //Add your menu items here...
-
-        public const string Application = Prefix + ".Application";
-        public const string Request = Prefix + ".Request";
-        public const string Task = Prefix + ".Task";
-        public const string Event = Prefix + ".Event";
+    public const string Applications = Prefix + ".Applications";
+    public const string Requests = Prefix + ".Requests";
+    public const string Tasks = Prefix + ".Tasks";
+    public const string Events = Prefix + ".Events";
+    public const string Currencies = Prefix + ".Currencies";
 }

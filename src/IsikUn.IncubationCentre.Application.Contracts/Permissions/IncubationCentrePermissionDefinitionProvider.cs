@@ -74,6 +74,11 @@ public class IncubationCentrePermissionDefinitionProvider : PermissionDefinition
         eventPermission.AddChild(IncubationCentrePermissions.Events.Create, L("Permission:Events.Create"));
         eventPermission.AddChild(IncubationCentrePermissions.Events.Edit, L("Permission:Events.Edit"));
         eventPermission.AddChild(IncubationCentrePermissions.Events.Delete, L("Permission:Events.Delete"));
+
+        var currencyPermission = IncubationCentreGroup.AddPermission(IncubationCentrePermissions.Currencies.Default, L("Permission:Currencies"));
+        currencyPermission.AddChild(IncubationCentrePermissions.Currencies.Create, L("Permission:Currencies.Create"));
+        currencyPermission.AddChild(IncubationCentrePermissions.Currencies.Edit, L("Permission:Currencies.Edit"));
+        currencyPermission.AddChild(IncubationCentrePermissions.Currencies.Delete, L("Permission:Currencies.Delete"));
     }
 
     private static LocalizableString L(string name)

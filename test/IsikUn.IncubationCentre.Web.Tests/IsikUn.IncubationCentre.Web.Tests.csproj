@@ -15,8 +15,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.36" />
-    <ProjectReference Include="..\IsikUn.IncubationCentre.Application.Tests\IsikUn.IncubationCentre.Application.Tests.csproj" />
     <ProjectReference Include="..\..\src\IsikUn.IncubationCentre.Web\IsikUn.IncubationCentre.Web.csproj" />
+    <ProjectReference Include="..\IsikUn.IncubationCentre.Application.Tests\IsikUn.IncubationCentre.Application.Tests.csproj" />
     <PackageReference Include="Volo.Abp.AspNetCore.TestBase" Version="5.2.1" />
   </ItemGroup>
 

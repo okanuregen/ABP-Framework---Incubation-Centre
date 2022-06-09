@@ -34,6 +34,7 @@ using IsikUn.IncubationCentre.Requests;
 using IsikUn.IncubationCentre.Tasks;
 using IsikUn.IncubationCentre.Events;
 using IsikUn.IncubationCentre.ProjectsEntrepreneurs;
+using IsikUn.IncubationCentre.Currencies;
 
 namespace IsikUn.IncubationCentre.EntityFrameworkCore;
 
@@ -94,6 +95,7 @@ public class IncubationCentreDbContext :
     public DbSet<Request> Requests { get; set; }
     public DbSet<Task> Tasks { get; set; }
     public DbSet<Event> Events { get; set; }
+    public DbSet<Currency> Currencies { get; set; }
 
     public IncubationCentreDbContext(DbContextOptions<IncubationCentreDbContext> options)
         : base(options)
@@ -306,6 +308,16 @@ public class IncubationCentreDbContext :
         builder.Entity<Event>(b =>
         {
             b.ToTable(IncubationCentreConsts.DbTablePrefix + "Events", IncubationCentreConsts.DbSchema);
+            b.ConfigureByConvention(); 
+                
+
+            /* Configure more properties here */
+        });
+
+
+        builder.Entity<Currency>(b =>
+        {
+            b.ToTable(IncubationCentreConsts.DbTablePrefix + "Currencies", IncubationCentreConsts.DbSchema);
             b.ConfigureByConvention(); 
                 
 

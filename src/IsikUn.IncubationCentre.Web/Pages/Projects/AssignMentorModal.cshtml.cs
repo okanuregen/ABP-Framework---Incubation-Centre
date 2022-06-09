@@ -34,11 +34,6 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
             Mentors = await _mentorRepo.GetListAsync();
         }
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            //var newProject = await _projectAppService.CreateAsync(Project);
-            return NoContent();
-        }
     }
 
 }

@@ -107,4 +107,12 @@ public static class IncubationCentrePermissions
         public const string Create = Default + ".Create";
         public const string Delete = Default + ".Delete";
     }
+
+    public class Currencies
+    {
+        public const string Default = GroupName + ".Currencies";
+        public const string Edit = Default + ".Edit";
+        public const string Create = Default + ".Create";
+        public const string Delete = Default + ".Delete";
+    }
 }

@@ -25,6 +25,7 @@ namespace IsikUn.IncubationCentre.Projects
         public bool FilterOpenForInvesment { get; set; }
         public double SharePerInvest { get; set; }
         public int TotalValuation { get; set; }
+        public string TotalValuationCurrencySymbol { get; set; }
         public ProjectStatus Status { get; set; }
         public bool FiterByStatus { get; set; }
         public ICollection<PersonDto> Founders { get; set; }

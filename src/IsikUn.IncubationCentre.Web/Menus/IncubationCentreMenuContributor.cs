@@ -31,7 +31,7 @@ public class IncubationCentreMenuContributor : IMenuContributor
             )
         );
 
-        var members = new ApplicationMenuItem(IncubationCentreMenus.SystemDescriptions, l["Menu:Members"], icon: "fa fa-user-circle-o", order: 2);
+        var members = new ApplicationMenuItem(IncubationCentreMenus.Members, l["Menu:Members"], icon: "fa fa-user-circle-o", order: 2);
         members.AddItem(new ApplicationMenuItem(
             IncubationCentreMenus.Mentors,
             l["Mentors"],
@@ -78,21 +78,21 @@ public class IncubationCentreMenuContributor : IMenuContributor
 
         var systemDescriptions = new ApplicationMenuItem(IncubationCentreMenus.SystemDescriptions, l["Menu:SystemManagement"], icon: "fa fa-cubes", order: 3, requiredPermissionName: IncubationCentrePermissions.SystemManagers.Default);
         systemDescriptions.AddItem(new ApplicationMenuItem(
-            IncubationCentreMenus.SkillManagement,
+            IncubationCentreMenus.Applications,
             l["Menu:Applications"],
             url: "/Applications",
             icon: "fa fa-plus-circle",
             requiredPermissionName: IncubationCentrePermissions.Applications.Default
         ));
         systemDescriptions.AddItem(new ApplicationMenuItem(
-            IncubationCentreMenus.SkillManagement,
+            IncubationCentreMenus.Projects,
             l["Menu:Projects"],
             url: "/Projects",
             icon: "fa fa-file-code-o",
             requiredPermissionName: IncubationCentrePermissions.Projects.Default
         ));
         systemDescriptions.AddItem(new ApplicationMenuItem(
-            IncubationCentreMenus.SkillManagement,
+            IncubationCentreMenus.Documents,
             l["Menu:Documents"],
             url: "/Documents",
             icon: "fa fa-file",
@@ -104,6 +104,13 @@ public class IncubationCentreMenuContributor : IMenuContributor
             url: "/Skills",
             icon: "fa fa-pencil-square-o",
             requiredPermissionName: IncubationCentrePermissions.Skills.Default
+        ));
+        systemDescriptions.AddItem(new ApplicationMenuItem(
+            IncubationCentreMenus.Currencies,
+            l["Menu:Currencies"],
+            url: "/Currencies",
+            icon: "fa fa-try",
+            requiredPermissionName: IncubationCentrePermissions.Currencies.Default
         ));
         context.Menu.AddItem(systemDescriptions);
 

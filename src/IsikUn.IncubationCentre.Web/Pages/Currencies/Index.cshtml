@@ -1,0 +1,45 @@
+@page
+@using IsikUn.IncubationCentre.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using IsikUn.IncubationCentre.Web.Pages.Currencies.Currency
+@using IsikUn.IncubationCentre.Localization
+@using IsikUn.IncubationCentre.Web.Menus
+@model IndexModel
+@inject IPageLayout PageLayout
+@inject IHtmlLocalizer<IncubationCentreResource> L
+@inject IAuthorizationService Authorization
+@{
+    PageLayout.Content.Title = L["Currency"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:Currency"].Value);
+    PageLayout.Content.MenuItemName = IncubationCentreMenus.Currency;
+}
+
+@section scripts
+{
+    <abp-script src="/Pages/Currencies/Currency/index.js" />
+}
+
+
+<abp-card>
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["Currency"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+			    @if (await Authorization.IsGrantedAsync(IncubationCentrePermissions.Currencies.Create))
+                {
+                <abp-button id="NewCurrencyButton"
+                            text="@L["NewCurrency"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="CurrencyTable" class="nowrap"/>
+    </abp-card-body>
+</abp-card>

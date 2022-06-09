@@ -31,6 +31,7 @@ namespace IsikUn.IncubationCentre.Projects
         public bool OpenForInvesment { get; set; }
         public double SharePerInvest { get; set; }
         public int TotalValuation { get; set; }
+        public string TotalValuationCurrencySymbol { get; set; }
         public ProjectStatus Status { get; set; }
         public List<Document> Documents{ get; set; }
         public List<Milestone> Milestones{ get; set; }
