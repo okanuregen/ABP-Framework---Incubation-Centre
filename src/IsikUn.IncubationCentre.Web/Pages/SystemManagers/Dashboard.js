@@ -1,3 +1,8 @@
+var page = {
+    defines: {
+        MentorAssignmentTable : null
+    }
+}
 $(function () {
 
     var l = abp.localization.getResource('IncubationCentre');
@@ -71,7 +76,7 @@ $(function () {
                 }
             },
             {
-                title: l('MembershipType'),
+                title: l('Role'),
                 data: "membershipType",
                 render: function (data) {
                     return l("Enum:MembershipType_"+data)
@@ -251,6 +256,9 @@ $(function () {
     );
 
     var assignMentortModal = new abp.ModalManager(abp.appPath + 'Projects/AssignMentorModal');
+    assignMentortModal.onOpen(function () {
+        $('#AvailableMentorsTable').DataTable().draw();
+    });
     var MentorAssignmentsListTable = $('#MentorAssignmentsListTable').DataTable(
         abp.libs.datatables.normalizeConfiguration({
             serverSide: false,
@@ -267,7 +275,7 @@ $(function () {
                         items:
                             [
                                 {
-                                    text: l('AssignMentor'),
+                                    text: l('Assign'),
                                     visible: abp.auth.isGranted('IncubationCentre.SystemManagers'),
                                     action: function (data) {
                                         assignMentortModal.open({ projectId: data.record.id });
@@ -285,6 +293,14 @@ $(function () {
                         } catch {
                             return "-";
                         }
+                    }
+                },
+                {
+                    title: l('Mentors'),
+                    data: "mentors",
+                    render: function (data) {
+                        if (data == null) return 0;
+                        return data.length;
                     }
                 },
                 {
@@ -335,6 +351,7 @@ $(function () {
         })
     );
 
+    page.defines.MentorAssignmentTable = MentorAssignmentsListTable;
     $('.nav-tabs a').on('shown.bs.tab', function (event) {
         $('#MentorAssignmentsListTable').DataTable().draw();
     });

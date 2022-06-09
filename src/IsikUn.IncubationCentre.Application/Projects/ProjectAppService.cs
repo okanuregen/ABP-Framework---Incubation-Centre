@@ -13,6 +13,7 @@ using IsikUn.IncubationCentre.ProjectsInvestors;
 using IsikUn.IncubationCentre.ProjectsCollaborators;
 using IsikUn.IncubationCentre.ProjectsFounders;
 using IsikUn.IncubationCentre.ProjectsEntrepreneurs;
+using IsikUn.IncubationCentre.Mentors;
 
 namespace IsikUn.IncubationCentre.Projects
 {
@@ -25,13 +26,16 @@ namespace IsikUn.IncubationCentre.Projects
         private readonly IProjectCollaboratorRepository _projectCollaboratorRepository;
         private readonly IProjectFounderRepository _projectFounderRepository;
 
+        private readonly IMentorRepository _mentorRepository;
+
         public ProjectAppService(
             IProjectRepository projectRepository,
             IProjectMentorRepository projectMentorRepository,
             IProjectEntrepreneurRepository projectEntreprenurRepository,
             IProjectInvestorRepository projectInvestorRepository,
             IProjectCollaboratorRepository projectCollaboratorRepository,
-            IProjectFounderRepository projectFounderRepository
+            IProjectFounderRepository projectFounderRepository,
+            IMentorRepository mentorRepository
             )
         {
             this._projectRepository = projectRepository;
@@ -40,6 +44,7 @@ namespace IsikUn.IncubationCentre.Projects
             this._projectInvestorRepository = projectInvestorRepository;
             this._projectCollaboratorRepository = projectCollaboratorRepository;
             this._projectFounderRepository = projectFounderRepository;
+            this._mentorRepository = mentorRepository;
             LocalizationResource = typeof(IncubationCentreResource);
         }
 
@@ -92,6 +97,35 @@ namespace IsikUn.IncubationCentre.Projects
             project.Status = ProjectStatus.Declined;
             //Send Inform Mail To User
             project = await _projectRepository.UpdateAsync(project, autoSave: true);
+            return ObjectMapper.Map<Project, ProjectDto>(project);
+        }
+
+        [Authorize(IncubationCentrePermissions.SystemManagers.Default)]
+        public async Task<ProjectDto> AssignMentorAsync(Guid id, Guid mentorId)
+        {
+            var project = await _projectRepository.GetWithDetailAsync(id);
+            if (project == null)
+            {
+                throw new UserFriendlyException(L["NoProjectFound"]);
+            }
+            if(project.Mentors != null && project.Mentors.Count(a => a.Id == mentorId) > 0)
+            {
+                throw new UserFriendlyException(L["MentorAlreadyAssingThisProject"]);
+            }
+
+            var mentor = await _mentorRepository.GetAsync(mentorId);
+            if (mentor == null)
+            {
+                throw new UserFriendlyException(L["NoMentorFound"]);
+            }
+            await _projectMentorRepository.InsertAsync(new ProjectMentor
+            {
+                Project = project,
+                ProjectId = project.Id,
+                MentorId = mentorId,
+                Mentor = mentor
+            });
+            project.Mentors.AddIfNotContains(mentor);
             return ObjectMapper.Map<Project, ProjectDto>(project);
         }
 

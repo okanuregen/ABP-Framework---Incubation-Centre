@@ -229,6 +229,14 @@
     "YouAreApprovingAProject": "You Are Approving A Project Named {0}",
     "YouAreRejectingAProject": "You Are Rejecting A Project Named {0}",
     "UnsuccesfullCreatingAccount": "Account Was Not Created",
-    "SuccessfullyCreatingAccount": "Account Was Created Succesfully With {0} Username"
+    "SuccessfullyCreatingAccount": "Account Was Created Succesfully With {0} Username",
+    "MentorAlreadyAssingThisProject": "This Mentor Already Assinged To This Project",
+    "NoMentorFound": "Mentor Bulunamadý",
+    "AssigningMentorConfirmMessage": "Are You Sure That You Want To Assing {1} To Project Named {0} As Mentor?",
+    "SuccessfullyAssigned": "Assigned Operation Succesful",
+    "AssignMentor": "Assign Mentor",
+    "Assign": "Assign"
+
+
   }
 }

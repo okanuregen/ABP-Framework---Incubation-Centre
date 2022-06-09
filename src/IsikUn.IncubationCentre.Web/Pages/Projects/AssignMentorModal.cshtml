@@ -12,7 +12,7 @@
 }
 
 
-<abp-modal>
+<abp-modal centered="true" scrollable="true" size="ExtraLarge">
     <abp-modal-header title="@L["AssignMentor"].Value"></abp-modal-header>
     <abp-modal-body>
         <div class="mb-3">
@@ -21,11 +21,11 @@
         </div>
         <div class="mb-3">
             <label class="form-label" for="Project_Name">@L["Entreprenur"].Value</label>
-            @try
+            @if(Model.Project.Entrepreneurs != null && Model.Project.Entrepreneurs.Count() > 0 && Model.Project.Entrepreneurs.FirstOrDefault().IdentityUser != null && Model.Project.Entrepreneurs.FirstOrDefault().IdentityUser.Name != null && Model.Project.Entrepreneurs.FirstOrDefault().IdentityUser.Surname != null)
             {
                 <input type="text" id="Project_Name" disabled name="Project.Name" value="@(Model.Project.Entrepreneurs.FirstOrDefault().IdentityUser.Name) @(Model.Project.Entrepreneurs.FirstOrDefault().IdentityUser.Surname)" class="form-control valid" aria-invalid="false">
             }
-            catch (Exception ex)
+            else
             {
                 <input type="text" id="Project_Name" disabled name="Project.Name" value="-" class="form-control valid" aria-invalid="false">
             }
@@ -37,7 +37,11 @@
         <div class="mb-3">
             <label class="form-label" for="Project_Name">@L["CreationTime"].Value</label>
             <input type="text" id="Project_Name" disabled name="Project.Name" value="@Model.Project.CreationTime.ToString("dd/MM/yyyy")" class="form-control valid" aria-invalid="false">
-
+        </div>
+        <hr/>
+        <div>
+            <abp-table striped-rows="true" id="AvailableMentorsTable"></abp-table>
+        </div>
     </abp-modal-body>
     <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
 </abp-modal>
@@ -54,5 +58,78 @@
         var tagify = new Tagify(inputTags, {
           originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
         });
-    })
+
+
+        var dataTable = $('#AvailableMentorsTable').DataTable(
+            abp.libs.datatables.normalizeConfiguration({
+                serverSide: true,
+                paging: true,
+                order: [[1, "asc"]],
+                searching: true,
+                scrollX: true,
+                ajax: abp.libs.datatables.createAjax(isikUn.incubationCentre.mentors.mentor.getList),
+                columnDefs: [
+                    {
+                        title: l('Actions'),
+                        rowAction: {
+                            items:
+                                [
+                                    {
+                                        text: l('AssignMentor'),
+                                        visible:
+                                            abp.auth.isGranted('IncubationCentre.SystemManagers'),
+                                        confirmMessage: function (data) {
+                                            return l(
+                                                'AssigningMentorConfirmMessage',
+                                                '@(Model.Project.Name)'.toUpperCase(),data.record.identityUser.name.toUpperCase() + " " + data.record.identityUser.surname.toUpperCase()
+                                            );
+                                        },
+                                        action: function (data) {
+                                            isikUn.incubationCentre.projects.project
+                                                .assignMentor('@Model.projectId',data.record.id)
+                                                .then(function () {
+                                                    abp.notify.info(
+                                                        l('SuccessfullyAssigned')
+                                                    );
+                                                    if(page.defines.MentorAssignmentTable != undefined && page.defines.MentorAssignmentTable != null){
+                                                        page.defines.MentorAssignmentTable.ajax.reload();
+                                                    }
+                                                    dataTable.ajax.reload();
+                                                });
+                                        }
+                                    }
+                                ]
+                        }
+                    },
+                    {
+                        title: l('Name'),
+                        data: "identityUser.name"
+                    },
+                    {
+                        title: l('Surname'),
+                        data: "identityUser.surname"
+                    },
+                    {
+                        title: l('NumOfMentoringProjects'),
+                        data: "mentoringProjects",
+                        render:function(data){
+                            return data != null ? data.length : 0;
+                        }
+                    },
+                    {
+                        title: l('Skills'),
+                        data: "skills",
+                        render: function (data) {
+                            var text = "";
+                            data.map(x => x.name).forEach(function (skill) {
+                                text += `<span class="badge badge-info me-2">${skill}</span>`
+                            });
+                            return text == "" ? "-" : text;
+                        }
+                    }
+                ]
+            })
+        );
+      
+    });
 </script>

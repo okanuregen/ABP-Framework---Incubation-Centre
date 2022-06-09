@@ -38,6 +38,7 @@ using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
 using IsikUn.IncubationCentre.Web.Middlewares;
+using System.Text.Json.Serialization;
 
 namespace IsikUn.IncubationCentre.Web;
 
@@ -86,6 +87,10 @@ public class IncubationCentreWebModule : AbpModule
         ConfigureNavigationServices();
         ConfigureAutoApiControllers();
         ConfigureSwaggerServices(context.Services);
+
+        context.Services.AddControllers().AddJsonOptions(x =>
+                        x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+        );
     }
 
     private void ConfigureUrls(IConfiguration configuration)

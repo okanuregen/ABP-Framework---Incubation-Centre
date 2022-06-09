@@ -229,6 +229,12 @@
     "YouAreApprovingAProject": "{0} İsimli Projeyi Onaylıyorsunuz",
     "YouAreRejectingAProject": "{0} İsimli Projeyi Reddediyorsunuz",
     "UnsuccesfullCreatingAccount": "Hesap Oluşturma İşlemi Başarısız Oldu",
-    "SuccessfullyCreatingAccount": "{0} Kullanıcı İsmi İle Hesap Başarılı Bir Şekilde Oluşturuldu"
+    "SuccessfullyCreatingAccount": "{0} Kullanıcı İsmi İle Hesap Başarılı Bir Şekilde Oluşturuldu",
+    "MentorAlreadyAssingThisProject": "Seçmiş Olduğunuz Mentor Zaten Bu Projeye Mentorluk Etmektedir",
+    "NoMentorFound": "Mentor Bulunamadı",
+    "AssigningMentorConfirmMessage": "{0} Projesine {1} Adlı Mentoru Atamak İstediğinize Emin Misiniz?",
+    "SuccessfullyAssigned": "Atama İşlemi Başarılı",
+    "AssignMentor": "Mentor Atama",
+    "Assign": "Seç"
   }
 }
