@@ -40,7 +40,8 @@ namespace IsikUn.IncubationCentre.DbMigrator
                 {
                     Country = "Turkey",
                     Title = "Turkish Lira",
-                    Symbol = "₺"
+                    Symbol = "₺",
+                    IsDefault = true,
                 };
 
                 await _currencyRepository.InsertAsync(currency);

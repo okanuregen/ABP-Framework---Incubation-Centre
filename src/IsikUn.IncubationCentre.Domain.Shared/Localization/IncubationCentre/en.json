@@ -243,8 +243,24 @@
     "Enum:ApplicationStatus_0": "InReview",
     "Enum:ApplicationStatus_1": "Approved",
     "Enum:ApplicationStatus_2": "Declined",
-    "MustChangePassword": "You Have To Change Your Password!"
-
+    "MustChangePassword": "You Have To Change Your Password!",
+    "Permission:Currencies": "Currency Management",
+    "Permission:Currencies.Create": "Creating New Currencies",
+    "Permission:Currencies.Edit": "Editing The Currencies",
+    "Permission:Currencies.Delete": "Deleting Currencies",
+    "Currencies": "Currencies",
+    "Currency": "Currency",
+    "Menu:Currencies": "Currencies",
+    "NewCurrency": "New Currency",
+    "Country": "Country",
+    "Symbol": "Symbol",
+    "CurrencyTitleExist": "This Currency Title Already Exist",
+    "CurrencySymbolExist": "This Currency Symbol Already Exist",
+    "CannotDeleteDefaultCurrency": "You Cannot Delete Default Currency",
+    "MakeOtherCurrenyDefault": "Before Making Not The Default One This Currency, Make Another One Default",
+    "IsDefault": "Default ?",
+    "TotalValuationCurrencySymbol": "Currency",
+    "CurrencySymbol": "Currency"
 
   }
 }

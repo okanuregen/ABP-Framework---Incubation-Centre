@@ -88,7 +88,7 @@
                     @L["OngoingProject"].Value
                 </abp-card-title>
             </abp-card-header>
-            <abp-card-body>
+            <abp-card-body class="bg-white">
                 <div class="icon-area text-center mb-4">
                     <div class="border rounded p-1  mx-auto float-center" style="width: 129px;border-radius: 71px !important;">
                         <img src="/img/project-icon.png" width="120">
@@ -115,6 +115,10 @@
                             <abp-row class="border-bottom">
                                 <abp-column size="_6"><b>@L["Status"].Value:</b></abp-column>
                                 <abp-column size="_6" class="text-end" data-long-name="true" data-long-name-size="18">@(L[Model.CurrentProject.Status.ToString()].Value)</abp-column>
+                            </abp-row>
+                            <abp-row class="border-bottom">
+                                <abp-column size="_6"><b>@L["Collaborators"].Value:</b></abp-column>
+                                <abp-column size="_6" class="text-end">@(Model.CurrentProject.Collaborators != null ? Model.CurrentProject.Collaborators.Count() : "0")</abp-column>
                             </abp-row>
                             <abp-row class="border-bottom">
                                 <abp-column size="_6"><b>@L["Investors"].Value:</b></abp-column>

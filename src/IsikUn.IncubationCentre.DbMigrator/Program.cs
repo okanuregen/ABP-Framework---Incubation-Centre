@@ -38,8 +38,5 @@ class Program
             .ConfigureServices((hostContext, services) =>
             {
                 services.AddHostedService<DbMigratorHostedService>();
-                var dataSeeder =  services.GetServiceLazy<IDataSeeder>().Value;
-                dataSeeder.SeedAsync().Wait();
-                
             });
 }

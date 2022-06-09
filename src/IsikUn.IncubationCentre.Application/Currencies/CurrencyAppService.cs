@@ -40,7 +40,7 @@ namespace IsikUn.IncubationCentre.Currencies
             }
             if (input.IsDefault)
             {
-                var currentDefault = await _currencyRepository.GetAsync(a => a.IsDefault);
+                var currentDefault = await _currencyRepository.FindAsync(a => a.IsDefault);
                 if(currentDefault != null)
                 {
                     currentDefault.IsDefault = false;
@@ -107,7 +107,7 @@ namespace IsikUn.IncubationCentre.Currencies
 
             if (input.IsDefault)
             {
-                var currentDefault = await _currencyRepository.GetAsync(a => a.IsDefault && a.Id != id);
+                var currentDefault = await _currencyRepository.FindAsync(a => a.IsDefault && a.Id != id);
                 if (currentDefault != null)
                 {
                     currentDefault.IsDefault = false;
@@ -116,7 +116,7 @@ namespace IsikUn.IncubationCentre.Currencies
             }
             else
             {
-                var currentDefault = await _currencyRepository.GetAsync(a => a.IsDefault);
+                var currentDefault = await _currencyRepository.FindAsync(a => a.IsDefault);
                 if(currentDefault != null && currentDefault.Id == id)
                 {
                     throw new UserFriendlyException(L["MakeOtherCurrenyDefault"]);

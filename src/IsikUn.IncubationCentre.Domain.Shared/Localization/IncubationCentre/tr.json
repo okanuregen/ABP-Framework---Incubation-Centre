@@ -243,7 +243,23 @@
     "Enum:ApplicationStatus_0": "İncelemede",
     "Enum:ApplicationStatus_1": "Onaylandı",
     "Enum:ApplicationStatus_2": "Reddeildi",
-    "MustChangePassword": "Şifrenizi Değiştirmek Zorundasınız!"
-
+    "MustChangePassword": "Şifrenizi Değiştirmek Zorundasınız!",
+    "Permission:Currencies": "Para Birimi Yönetimi",
+    "Permission:Currencies.Create": "Yeni Para Birimi Ekleme",
+    "Permission:Currencies.Edit": "Para Birimi Düzenleme",
+    "Permission:Currencies.Delete": "Para Birimi Silme",
+    "Currencies": "Para Birimler",
+    "Currency": "Para Birimi",
+    "Menu:Currencies": "Para Birimileri",
+    "NewCurrency": "Yeni Para Birimi",
+    "Country": "Ülke",
+    "Symbol": "Sembol",
+    "CurrencyTitleExist": "Aynı İsimli Para Birimi Zaten Sistemde Kayıtlı",
+    "CurrencySymbolExist": "Aynı Sembollü Para Birimi Zaten Sistemde Kayıtlı",
+    "CannotDeleteDefaultCurrency": "Varsayılan Para Birimini Silemessiniz",
+    "MakeOtherCurrenyDefault": "Sistemde Bir Varsayılan Para Birimi Bulunmak Zorunda",
+    "IsDefault": "Varsayılan Mı?",
+    "TotalValuationCurrencySymbol": "Para Birimi",
+    "CurrencySymbol": "Para Birimi"
   }
 }

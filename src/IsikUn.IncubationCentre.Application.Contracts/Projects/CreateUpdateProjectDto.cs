@@ -18,7 +18,7 @@ namespace IsikUn.IncubationCentre.Projects
         public double SharePerInvest { get; set; }
         [Range(0,Double.MaxValue,ErrorMessage = "This field cannot be negative")]
         public int TotalValuation { get; set; }
-        public string TotalValuationCurrencySymbol { get; set; }
+        public virtual string TotalValuationCurrencySymbol { get; set; }
 
         public Guid? EntreprenurId { get; set; }
         public ProjectStatus Status { get; set; }

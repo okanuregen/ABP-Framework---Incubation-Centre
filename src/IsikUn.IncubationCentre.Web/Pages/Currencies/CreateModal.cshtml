@@ -16,3 +16,7 @@
         <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
     </abp-modal>
 </abp-dynamic-form>
+<script>
+    var l = abp.localization.getResource('IncubationCentre');
+    $("[for='ViewModel_IsDefault']").text(l($("[for='ViewModel_IsDefault']").text()));
+</script>

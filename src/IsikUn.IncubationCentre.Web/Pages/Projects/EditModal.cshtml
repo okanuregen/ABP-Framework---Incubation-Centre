@@ -10,34 +10,45 @@
 @{
     Layout = null;
 }
-<abp-dynamic-form abp-model="Project" data-ajaxForm="true" asp-page="EditModal">
+<form asp-page="/Projects/EditModal">
     <abp-modal>
         <abp-modal-header title="@L["EditProject"].Value"></abp-modal-header>
         <abp-modal-body>
-            <abp-input asp-for="Id" />
-            <abp-form-content />
+            <abp-input asp-for="Project.Name" />
+            <abp-input asp-for="Project.Tags" />
+            <abp-input asp-for="Project.SharePerInvest" />
+
+            <abp-row>
+                <abp-column size="_7">
+                    <abp-input asp-for="Project.TotalValuation" />
+                </abp-column>
+                <abp-column size="_5">
+                    <abp-select asp-for="Project.TotalValuationCurrencySymbol" asp-items="Model.Currencies"/>
+                </abp-column>
+            </abp-row>
+
         </abp-modal-body>
         <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
     </abp-modal>
-</abp-dynamic-form>
+</form>
 
 <script>
-            $(function(){
-                var status = $("#Project_Status").val();
-                if(status == "InReview" || status == "Declined"){
-                    $("#Project_Status").attr("readonly","readonly");
-                    $("#Project_Status option:not(:selected)").remove();
-                }else{
-                    $("option[value='Approved']").remove();
-                    $("option[value='InReview']").remove();
-                }
+        $(function(){
+            var status = $("#Project_Status").val();
+            if(status == "InReview" || status == "Declined"){
+                $("#Project_Status").attr("readonly","readonly");
+                $("#Project_Status option:not(:selected)").remove();
+            }else{
+                $("option[value='Approved']").remove();
+                $("option[value='InReview']").remove();
+            }
 
-                $("#Project_EntreprenurId").parent("div").hide();
-                $("#Project_Tags").attr("placeholder",`@L["YouCanAddNewTagWithEnterOrComma"]`);
-                var inputTags = document.querySelector("#Project_Tags");
-                var tagify = new Tagify(inputTags, {
-                  originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
-                });
-            })
+            $("#Project_EntreprenurId").parent("div").hide();
+            $("#Project_Tags").attr("placeholder",`@L["YouCanAddNewTagWithEnterOrComma"]`);
+            var inputTags = document.querySelector("#Project_Tags");
+            var tagify = new Tagify(inputTags, {
+                originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
+            });
+        })
 </script>
 

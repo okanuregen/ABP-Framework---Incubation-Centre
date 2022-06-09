@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 using Volo.Abp.Identity;
+using IsikUn.IncubationCentre.Currencies;
 
 namespace IsikUn.IncubationCentre.Web.Pages.Projects
 {
@@ -23,12 +24,16 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
 
         [BindProperty]
         public CreateUpdateProjectDto Project { get; set; }
+        public List<SelectListItem> Currencies { get; set; }
 
+
+        private readonly ICurrencyRepository _currencyRepo;
         private readonly IProjectAppService _service;
 
-        public EditModalModel(IProjectAppService service)
+        public EditModalModel(IProjectAppService service, ICurrencyRepository currencyRepo)
         {
             _service = service;
+            _currencyRepo = currencyRepo;
         }
 
         public virtual async Task OnGetAsync()
@@ -36,6 +41,14 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
             var dto = await _service.GetWithDetailAsync(Id);
             Project = ObjectMapper.Map<ProjectDto, CreateUpdateProjectDto>(dto);
             Project.EntreprenurId = dto.Entrepreneurs.FirstOrDefault().Id;
+            var currencies = await _currencyRepo.GetListAsync();
+            Currencies = currencies.Select(a =>
+                new SelectListItem
+                {
+                    Selected = a.IsDefault,
+                    Value = a.Symbol,
+                    Text = (a.Title + " - " + a.Symbol)
+                }).ToList();
         }
 
         public virtual async Task<IActionResult> OnPostAsync()
@@ -43,5 +56,6 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
             await _service.UpdateAsync(Id, Project);
             return NoContent();
         }
+
     }
 }

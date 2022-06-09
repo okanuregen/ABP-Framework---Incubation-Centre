@@ -3,8 +3,8 @@ $(function () {
     var l = abp.localization.getResource('IncubationCentre');
 
     var service = isikUn.incubationCentre.currencies.currency;
-    var createModal = new abp.ModalManager(abp.appPath + 'Currencies/Currency/CreateModal');
-    var editModal = new abp.ModalManager(abp.appPath + 'Currencies/Currency/EditModal');
+    var createModal = new abp.ModalManager(abp.appPath + 'Currencies/CreateModal');
+    var editModal = new abp.ModalManager(abp.appPath + 'Currencies/EditModal');
 
     var dataTable = $('#CurrencyTable').DataTable(abp.libs.datatables.normalizeConfiguration({
         processing: true,
@@ -22,16 +22,16 @@ $(function () {
                         [
                             {
                                 text: l('Edit'),
-                                visible: abp.auth.isGranted('IncubationCentre.Currency.Update'),
+                                visible: abp.auth.isGranted('IncubationCentre.Currencies.Edit'),
                                 action: function (data) {
                                     editModal.open({ id: data.record.id });
                                 }
                             },
                             {
                                 text: l('Delete'),
-                                visible: abp.auth.isGranted('IncubationCentre.Currency.Delete'),
+                                visible: abp.auth.isGranted('IncubationCentre.Currencies.Delete'),
                                 confirmMessage: function (data) {
-                                    return l('CurrencyDeletionConfirmationMessage', data.record.id);
+                                    return l('EntityDeletionConfirmationMessage', data.record.title);
                                 },
                                 action: function (data) {
                                     service.delete(data.record.id)

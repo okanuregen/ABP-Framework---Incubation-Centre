@@ -12,13 +12,11 @@
 @inject IAuthorizationService Authorization
 @{
     PageLayout.Content.Title = L["Currency"].Value;
-    PageLayout.Content.BreadCrumb.Add(L["Menu:Currency"].Value);
-    PageLayout.Content.MenuItemName = IncubationCentreMenus.Currency;
 }
 
 @section scripts
 {
-    <abp-script src="/Pages/Currencies/Currency/index.js" />
+    <abp-script src="/Pages/Currencies/index.js" />
 }
 
 

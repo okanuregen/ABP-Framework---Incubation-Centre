@@ -37,7 +37,7 @@ namespace IsikUn.IncubationCentre.Currencies
                            filter,
                            country, title, symbol,filterByIsDefault,isDefault
                            );
-            query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? "Name asc" : sorting);
+            query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? "Country asc" : sorting);
             return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancelationToken);
         }
 

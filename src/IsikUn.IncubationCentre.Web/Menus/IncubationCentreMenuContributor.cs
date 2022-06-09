@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using IsikUn.IncubationCentre.Localization;
 using IsikUn.IncubationCentre.Permissions;
@@ -19,6 +20,10 @@ public class IncubationCentreMenuContributor : IMenuContributor
 
     private async Task ConfigureMainMenuAsync(MenuConfigurationContext context)
     {
+        if(context == null)
+        {
+            await ConfigureMainMenuAsync(context);
+        }
         var l = context.GetLocalizer<IncubationCentreResource>();
 
         context.Menu.AddItem(
