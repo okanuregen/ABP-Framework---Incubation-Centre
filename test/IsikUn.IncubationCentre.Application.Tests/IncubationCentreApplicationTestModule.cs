@@ -1,5 +1,6 @@
 ﻿using Volo.Abp.Modularity;
 
+
 namespace IsikUn.IncubationCentre;
 
 [DependsOn(
@@ -8,5 +9,6 @@ namespace IsikUn.IncubationCentre;
     )]
 public class IncubationCentreApplicationTestModule : AbpModule
 {
-
+    
+   
 }
