@@ -4,6 +4,7 @@
 @using IsikUn.IncubationCentre.Web.Pages.SystemManagers
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
 @inject IStringLocalizer<IncubationCentreResource> L
 @inject IAuthorizationService AuthorizationService
 @model DashboardModel
@@ -321,3 +322,30 @@
 
     </abp-column>
 </abp-row>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" id="projectActionModalButton" data-bs-target="#projectActionFeedbackModal">
+</button>
+
+<!-- Modal -projectActionFeedbackModal- -->
+<div class="modal fade" id="projectActionFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="projectActionModalTitle"></h4>
+        <h5 class="modal-title">@L["SendFeedback"].Value</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="fa fa-times text-danger"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea rows="8" placeholder="@L["WannaSendFeedBack"].Value" id="projectActionModalFeedbackText"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary float-start float-left" data-bs-dismiss="modal">@L["Close"].Value</button>
+        <button type="button" class="btn btn-primary" id="projectActionModalSendButton">@L["Send"].Value</button>
+      </div>
+    </div>
+  </div>
+</div>

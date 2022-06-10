@@ -1,6 +1,10 @@
 var page = {
     defines: {
-        MentorAssignmentTable : null
+        MentorAssignmentTable: null
+    },
+    projectStatus: {
+        projectId: null,
+        isApprove : false
     }
 }
 $(function () {
@@ -8,8 +12,6 @@ $(function () {
     var l = abp.localization.getResource('IncubationCentre');
 
     var service = isikUn.incubationCentre.applications.application;
-    var createRequestModal = new abp.ModalManager(abp.appPath + 'Requests/CreateModal');
-
     var NewApplicationdataTable = $('#NewApplicationTable').DataTable(abp.libs.datatables.normalizeConfiguration({
         serverSide: false,
         paging: true,
@@ -142,13 +144,14 @@ $(function () {
         })
         .dataTable();
 
-    createRequestModal.onResult(function () {
-        location.reload();
-    });
 
+    var createRequestModal = new abp.ModalManager(abp.appPath + 'Requests/CreateModal');
     $('#NewRequestButton').click(function (e) {
         e.preventDefault();
         createRequestModal.open();
+    });
+    createRequestModal.onResult(function () {
+        location.reload();
     });
 
 
@@ -174,10 +177,15 @@ $(function () {
                                         return l('YouAreApprovingAProject', (data.record.name));
                                     },
                                     action: function (data) {
+                                        page.projectStatus.isApprove = true;
+                                        page.projectStatus.projectId = data.record.id;
+
                                         isikUn.incubationCentre.projects.project.approveProject(data.record.id)
                                             .then(function (data) {
                                                 abp.notify.info(l('SuccessfullyApproved'));
                                                 newProjectDataTable.ajax.reload();
+                                                $("#projectActionModalTitle").text(l("YouApproveTheProject"))
+                                                $("#projectActionModalButton").trigger("click");
                                             });
                                     }
                                 },
@@ -188,10 +196,15 @@ $(function () {
                                         return l('YouAreRejectingAProject', (record.name));
                                     },
                                     action: function (data) {
+                                        page.projectStatus.isApprove = false;
+                                        page.projectStatus.projectId = data.record.id;
+
                                         isikUn.incubationCentre.projects.project.rejectProject(data.record.id)
                                             .then(function (data) {
                                                 abp.notify.info(l('SuccessfullyDeclined'));
                                                 newProjectDataTable.ajax.reload();
+                                                $("#projectActionModalTitle").text(l("YouDeclinedTheProject"))
+                                                $("#projectActionModalButton").trigger("click");
                                             });
                                     }
                                 }
@@ -356,5 +369,19 @@ $(function () {
     page.defines.MentorAssignmentTable = MentorAssignmentsListTable;
     $('.nav-tabs a').on('shown.bs.tab', function (event) {
         $('#MentorAssignmentsListTable').DataTable().draw();
+    });
+
+    $("#projectActionModalSendButton").click(function () {
+        var feedbackText = $("#projectActionModalFeedbackText").val();
+        if (feedbackText == "") {
+            abp.notify.warn(l("InputEmpty"));
+            return;
+        }
+
+        isikUn.incubationCentre.requests.request.sendFeedbackToProjectOwners(data.record.id, page.projectStatus.isApprove, feedbackText)
+            .then(function () {
+                abp.notify.info(l('SuccessfullySendFeedback'));
+                location.reload();
+            });
     });
 });

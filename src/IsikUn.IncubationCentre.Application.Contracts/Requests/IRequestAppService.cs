@@ -19,5 +19,7 @@ namespace IsikUn.IncubationCentre.Requests
         Task<RequestDto> CreateAsync(CreateUpdateRequestDto input);
 
         Task<RequestDto> UpdateAsync(Guid id, CreateUpdateRequestDto input);
+
+        Task SendFeedbackToProjectOwnersAsync(Guid projectId, bool isApproved = false, string feedback = null);
     }
 }

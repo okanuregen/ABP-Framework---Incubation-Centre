@@ -260,7 +260,16 @@
     "MakeOtherCurrenyDefault": "Before Making Not The Default One This Currency, Make Another One Default",
     "IsDefault": "Default ?",
     "TotalValuationCurrencySymbol": "Currency",
-    "CurrencySymbol": "Currency"
-
+    "CurrencySymbol": "Currency",
+    "WannaSendFeedBack": "Do You Want To Send Feedback To Project Owners",
+    "SendFeedback": "Send Feedback",
+    "YouApproveTheProject": "You Approve The Project",
+    "YouDeclinedTheProject": "You Declined The Project",
+    "Close": "Close",
+    "InputEmpty": "Please Fill the Feedback Content To Send It",
+    "SuccessfullySendFeedback": "Feedback Was Sent Successfuly",
+    "ProjectApproved": "Your Project Was Approved",
+    "ProjectRejected": "Your Project Was Approved",
+    "RequestSentSuccesfully": "Request Sent Succesfully"
   }
 }

@@ -35,7 +35,6 @@ $(function () {
 
 
 
-
     if (window.location.pathname == '/Account/Manage') {
         debugger;
         if (window.location.search.includes('redirectType=ForceChangePassword')) {

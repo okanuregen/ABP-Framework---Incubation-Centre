@@ -8,16 +8,25 @@ using Volo.Abp;
 using System.Collections.Generic;
 using System.Linq;
 using IsikUn.IncubationCentre.Localization;
+using IsikUn.IncubationCentre.Projects;
+using Volo.Abp.Users;
+using IsikUn.IncubationCentre.People;
 
 namespace IsikUn.IncubationCentre.Requests
 {
     public class RequestAppService : ApplicationService, IRequestAppService
     {
         private readonly IRequestRepository _requestRepository;
+        private readonly IProjectRepository _projectRepository;
+        private readonly IPersonRepository _personRepository;
+        private readonly ICurrentUser _currentUser;
 
-        public RequestAppService(IRequestRepository requestRepository)
+        public RequestAppService(IRequestRepository requestRepository, IProjectRepository projectRepository, ICurrentUser currentUser, IPersonRepository personRepository)
         {
             this._requestRepository = requestRepository;
+            this._projectRepository = projectRepository;
+            this._personRepository = personRepository;
+            this._currentUser = currentUser;
             LocalizationResource = typeof(IncubationCentreResource);
         }
 
@@ -52,7 +61,7 @@ namespace IsikUn.IncubationCentre.Requests
         [Authorize(IncubationCentrePermissions.Requests.Default)]
         public async Task<PagedResultDto<RequestDto>> GetListAsync(GetRequestsInput input)
         {
-            var totalCount = await _requestRepository.GetCountAsync(input.filter, input.Title,input.Explanation,input.SenderUserName,input.ReceiverUserName);
+            var totalCount = await _requestRepository.GetCountAsync(input.filter, input.Title, input.Explanation, input.SenderUserName, input.ReceiverUserName);
             var items = await _requestRepository.GetListAsync(input.filter, input.Title, input.Explanation, input.SenderUserName, input.ReceiverUserName, input.SkipCount, input.MaxResultCount, input.Sorting);
 
             return new PagedResultDto<RequestDto>
@@ -60,6 +69,44 @@ namespace IsikUn.IncubationCentre.Requests
                 TotalCount = totalCount,
                 Items = ObjectMapper.Map<List<Request>, List<RequestDto>>(items)
             };
+        }
+
+        [Authorize(IncubationCentrePermissions.SystemManagers.Default)]
+        public async Task SendFeedbackToProjectOwnersAsync(Guid projectId, bool isApproved = false, string feedback = null)
+        {
+            var project = await _projectRepository.GetWithDetailAsync(projectId);
+            var sender = await _personRepository.GetWithDetailByIdentityUserIdAsync(_currentUser.Id.Value);
+            List<Request> requestes = new List<Request>();
+            if (project.Entrepreneurs != null && project.Entrepreneurs.Count() > 0)
+            {
+                project.Entrepreneurs.ToList().ForEach(a => requestes.Add(new Request
+                {
+                    SenderId = sender.Id,
+                    Title = isApproved ? L["ProjectApproved"] : L["ProjectRejected"],
+                    Explanation = feedback != null ? feedback : "",
+                    ReceiverId = a.Id,
+                    Sender = sender,
+                    Receiver = a
+                }));
+            }
+
+            if (project.Collaborators != null && project.Collaborators.Count() > 0)
+            {
+                project.Collaborators.ToList().ForEach(a => requestes.Add(new Request
+                {
+                    SenderId = sender.Id,
+                    Title = isApproved ? L["ProjectApproved"] : L["ProjectRejected"],
+                    Explanation = feedback != null ? feedback : "",
+                    ReceiverId = a.Id,
+                    Sender = sender,
+                    Receiver = a
+                }));
+            }
+            if (requestes.Any())
+            {
+                await _requestRepository.InsertManyAsync(requestes, true);
+            }
+
         }
 
         [Authorize(IncubationCentrePermissions.Requests.Edit)]

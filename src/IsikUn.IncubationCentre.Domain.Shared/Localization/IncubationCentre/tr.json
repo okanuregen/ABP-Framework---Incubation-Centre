@@ -260,6 +260,17 @@
     "MakeOtherCurrenyDefault": "Sistemde Bir Varsayılan Para Birimi Bulunmak Zorunda",
     "IsDefault": "Varsayılan Mı?",
     "TotalValuationCurrencySymbol": "Para Birimi",
-    "CurrencySymbol": "Para Birimi"
+    "CurrencySymbol": "Para Birimi",
+    "WannaSendFeedBack": "Proje Sahiplerine Geri Bildirim Göndermek İster Misiniz?",
+    "SendFeedback": "Geribildirim Gönder",
+    "YouApproveTheProject": "Projeyi Onayladınız",
+    "YouDeclinedTheProject": "Projeyi Onaylamadınız",
+    "Close": "Kapat",
+    "InputEmpty": "Lütfen Geribildirim İçeriğini Doldurunuz",
+    "SuccessfullySendFeedback": "Geribildirim Başarılı Bir Şekilde Gönderildi",
+    "ProjectApproved": "Projeniz Onaylandı",
+    "ProjectRejected": "Projeniz Reddildi",
+    "RequestSentSuccesfully": "İstek Başarı İle Gönderildi"
+
   }
 }

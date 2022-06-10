@@ -14,6 +14,7 @@
     <abp-modal>
         <abp-modal-header title="@L["EditProject"].Value"></abp-modal-header>
         <abp-modal-body>
+            <abp-input type="hidden" asp-for="Project.EntreprenurId"/>
             <abp-input asp-for="Project.Name" />
             <abp-input asp-for="Project.Tags" />
             <abp-input asp-for="Project.SharePerInvest" />
