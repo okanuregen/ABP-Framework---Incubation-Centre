@@ -68,6 +68,15 @@ namespace IsikUn.IncubationCentre.Projects
                     EntrepreneurId = input.EntreprenurId.Value
                 },true);
             }
+            if(input.CollaboratorIds != null && input.CollaboratorIds.Any())
+            {
+                var projectCollabs = input.CollaboratorIds.Select(a => new ProjectCollaborator
+                {
+                    ProjectId = project.Id,
+                    CollaboratorId = Guid.Parse(a)
+                });
+                await _projectCollaboratorRepository.InsertManyAsync(projectCollabs,autoSave: true);
+            }
             return ObjectMapper.Map<Project, ProjectDto>(project);
         }
 

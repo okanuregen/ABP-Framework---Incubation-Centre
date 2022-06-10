@@ -21,6 +21,9 @@ namespace IsikUn.IncubationCentre.Projects
         public virtual string TotalValuationCurrencySymbol { get; set; }
 
         public Guid? EntreprenurId { get; set; }
+
+        [DisplayName("Collaborators")]
+        public string[] CollaboratorIds { get; set; }
         public ProjectStatus Status { get; set; }
 
     }

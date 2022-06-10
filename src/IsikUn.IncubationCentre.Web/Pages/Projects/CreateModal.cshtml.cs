@@ -1,3 +1,4 @@
+using IsikUn.IncubationCentre.Collaborators;
 using IsikUn.IncubationCentre.Currencies;
 using IsikUn.IncubationCentre.Entrepreneurs;
 using IsikUn.IncubationCentre.People;
@@ -18,21 +19,24 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
     {
         [BindProperty]
         public CreateUpdateProjectDto Project { get; set; }
-
         public List<SelectListItem> Currencies { get; set; }
+        public List<SelectListItem> Collaborators { get; set; }
 
 
         private readonly IProjectAppService _projectAppService;
+        private readonly ICollaboratorRepository _collaboratorRepo;
         private readonly ICurrencyRepository _currencyRepo;
         private readonly IPersonRepository _personRepo;
         private readonly ICurrentUser _currentUser;
 
         public CreateModalModel(
             IProjectAppService projectAppService,
+            ICollaboratorRepository collaboratorRepo,
             ICurrencyRepository currencyRepo,
             IPersonRepository personRepo,
             ICurrentUser currentUser)
         {
+            this._collaboratorRepo = collaboratorRepo;
             this._currencyRepo = currencyRepo;
             this._projectAppService = projectAppService;
             this._personRepo = personRepo;
@@ -55,6 +59,13 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
                     Value = a.Symbol,
                     Text = (a.Title + " - " + a.Symbol)
                 }).ToList();
+
+            var collabs = await _collaboratorRepo.GetListAsync();
+            Collaborators = collabs.Select(a =>
+                new SelectListItem(
+                    string.Format("{0} {1} ({2})", a.IdentityUser.Name, a.IdentityUser.Surname, a.IdentityUser.UserName),
+                    a.Id.ToString()
+                )).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync()
