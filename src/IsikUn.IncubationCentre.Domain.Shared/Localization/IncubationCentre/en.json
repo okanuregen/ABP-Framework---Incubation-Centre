@@ -270,6 +270,7 @@
     "SuccessfullySendFeedback": "Feedback Was Sent Successfuly",
     "ProjectApproved": "Your Project Was Approved",
     "ProjectRejected": "Your Project Was Approved",
-    "RequestSentSuccesfully": "Request Sent Succesfully"
+    "RequestSentSuccesfully": "Request Sent Succesfully",
+    "CoFounderOfProjectsAlreadyHasOngoingProject": "At Least One of The Project Partners Already Has An Ongoing Project"
   }
 }

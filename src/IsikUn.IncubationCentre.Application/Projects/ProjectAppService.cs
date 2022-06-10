@@ -226,7 +226,19 @@ namespace IsikUn.IncubationCentre.Projects
                 throw new UserFriendlyException(L["ProjectNameAlreadyTaken"]);
             }
 
-            var project = await _projectRepository.GetAsync(id);
+            var project = await _projectRepository.GetWithDetailAsync(id);
+
+            if(input.Status == ProjectStatus.OnGoing)//check any of the co founders (collabs and entre if has ongoing project)
+            {
+                if(project.Collaborators.Count(a => a.CollaboratoringProjects.Count(b => b.Status == ProjectStatus.OnGoing && b.Id != id) > 0) > 0)
+                {
+                    throw new UserFriendlyException(L["CoFounderOfProjectsAlreadyHasOngoingProject"]);
+                }
+                if(project.Entrepreneurs.Count(a => a.MyProjects.Count(b=> b.Status == ProjectStatus.OnGoing && b.Id != id) > 0) > 0)
+                {
+                    throw new UserFriendlyException(L["CoFounderOfProjectsAlreadyHasOngoingProject"]);
+                }
+            }
             ObjectMapper.Map(input, project);
             project = await _projectRepository.UpdateAsync(project, autoSave: true);
 

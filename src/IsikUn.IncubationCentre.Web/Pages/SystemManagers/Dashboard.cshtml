@@ -42,8 +42,9 @@
         border-radius: 6px;
         -webkit-box-shadow: inset 0 0 6px #626262e8;
     }
-    .nav-link.active{
-        background-color:white !important;
+
+    .nav-link.active {
+        background-color: white !important;
     }
 </style>
 <abp-row>
@@ -306,7 +307,7 @@
                     </abp-card-body>
                 </abp-card>
             </abp-tab>
-            <abp-tab name="nav-mentorAssigns"  title='@L["MentorAssignments"].Value'>
+            <abp-tab name="nav-mentorAssigns" title='@L["MentorAssignments"].Value'>
                 <abp-card>
                     <abp-card-header>
                         <abp-card-title>
@@ -330,22 +331,25 @@
 
 <!-- Modal -projectActionFeedbackModal- -->
 <div class="modal fade" id="projectActionFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="projectActionModalTitle"></h4>
-        <h5 class="modal-title">@L["SendFeedback"].Value</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true"><i class="fa fa-times text-danger"></i></span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <textarea rows="8" placeholder="@L["WannaSendFeedBack"].Value" id="projectActionModalFeedbackText"></textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary float-start float-left" data-bs-dismiss="modal">@L["Close"].Value</button>
-        <button type="button" class="btn btn-primary" id="projectActionModalSendButton">@L["Send"].Value</button>
-      </div>
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <div>
+                        <h4 class="modal-title" id="projectActionModalTitle">Your Approved Project</h4>
+                    </div>
+                    <div>
+                        <h5 class="modal-title">@L["SendFeedback"].Value</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <textarea id="projectActionModalFeedbackText" rows="8" placeholder="'@L["WannaSendFeedBack"].Value'" style="border-color: #dbd4d4;border-radius: 4px;" class="w-100 p-2"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary float-start float-left" data-bs-dismiss="modal">@L["Close"].Value</button>
+                <button type="button" class="btn btn-primary" id="projectActionModalSendButton">@L["Send"].Value</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

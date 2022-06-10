@@ -15,6 +15,7 @@
         <abp-modal-header title="@L["EditProject"].Value"></abp-modal-header>
         <abp-modal-body>
             <abp-input type="hidden" asp-for="Project.EntreprenurId"/>
+            <abp-input type="hidden" asp-for="Id"/>
             <abp-input asp-for="Project.Name" />
             <abp-input asp-for="Project.Tags" />
             <abp-input asp-for="Project.SharePerInvest" />
@@ -27,7 +28,7 @@
                     <abp-select asp-for="Project.TotalValuationCurrencySymbol" asp-items="Model.Currencies"/>
                 </abp-column>
             </abp-row>
-
+            <abp-select asp-for="@Model.Project.Status"/>
         </abp-modal-body>
         <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
     </abp-modal>
@@ -42,6 +43,7 @@
             }else{
                 $("option[value='Approved']").remove();
                 $("option[value='InReview']").remove();
+                $("option[value='Declined']").remove();
             }
 
             $("#Project_EntreprenurId").parent("div").hide();

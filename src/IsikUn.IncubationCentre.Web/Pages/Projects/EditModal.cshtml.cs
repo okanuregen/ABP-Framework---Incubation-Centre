@@ -1,4 +1,4 @@
-using IsikUn.IncubationCentre.Projects;
+﻿using IsikUn.IncubationCentre.Projects;
 using IsikUn.IncubationCentre.PeopleSkills;
 using IsikUn.IncubationCentre.Skills;
 using Microsoft.AspNetCore.Mvc;
@@ -42,13 +42,25 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
             Project = ObjectMapper.Map<ProjectDto, CreateUpdateProjectDto>(dto);
             Project.EntreprenurId = dto.Entrepreneurs.FirstOrDefault().Id;
             var currencies = await _currencyRepo.GetListAsync();
-            Currencies = currencies.Select(a =>
-                new SelectListItem
+            if (currencies == null || currencies.Count() > 0)
+            {
+                Currencies = new List<SelectListItem>();
+                Currencies.Add(new SelectListItem
                 {
-                    Selected = a.IsDefault,
-                    Value = a.Symbol,
-                    Text = (a.Title + " - " + a.Symbol)
-                }).ToList();
+                    Text = L["TurkishLira"].Value + " - " + "₺",
+                    Value = "₺"
+                });
+            }
+            else
+            {
+                Currencies = currencies.Select(a =>
+                    new SelectListItem
+                    {
+                        Selected = a.IsDefault,
+                        Value = a.Symbol,
+                        Text = (a.Title + " - " + a.Symbol)
+                    }).ToList();
+            }
         }
 
         public virtual async Task<IActionResult> OnPostAsync()

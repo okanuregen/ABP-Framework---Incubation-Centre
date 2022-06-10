@@ -1,4 +1,4 @@
-using IsikUn.IncubationCentre.Collaborators;
+﻿using IsikUn.IncubationCentre.Collaborators;
 using IsikUn.IncubationCentre.Currencies;
 using IsikUn.IncubationCentre.Entrepreneurs;
 using IsikUn.IncubationCentre.People;
@@ -52,6 +52,17 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
                 Project.EntreprenurId = person.Id;
             }
             var currencies = await _currencyRepo.GetListAsync();
+            if(currencies == null || currencies.Count() > 0)
+            {
+                Currencies = new List<SelectListItem>();
+                Currencies.Add(new SelectListItem
+                {
+                    Text = L["TurkishLira"].Value + " - " + "₺",
+                    Value = "₺"
+                });
+            }
+            else
+            {
             Currencies = currencies.Select(a =>
                 new SelectListItem
                 {
@@ -59,6 +70,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
                     Value = a.Symbol,
                     Text = (a.Title + " - " + a.Symbol)
                 }).ToList();
+            }
 
             var collabs = await _collaboratorRepo.GetListAsync();
             Collaborators = collabs.Select(a =>

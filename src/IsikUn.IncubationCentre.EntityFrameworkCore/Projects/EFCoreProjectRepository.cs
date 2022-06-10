@@ -128,9 +128,13 @@ namespace IsikUn.IncubationCentre.Mentors
             var dbSet = (await GetDbSetAsync())
                 .Where(a => a.Id == id)
                 .Include(c => c.Entrepreneurs).ThenInclude(a => a.IdentityUser)
+                .Include(c => c.Entrepreneurs).ThenInclude(a => a.MyProjects)
                 .Include(c => c.Collaborators).ThenInclude(a => a.IdentityUser)
+                .Include(c => c.Collaborators).ThenInclude(a => a.CollaboratoringProjects)
                 .Include(c => c.Investors).ThenInclude(a => a.IdentityUser)
+                .Include(c => c.Investors).ThenInclude(a => a.InvestedProjects)
                 .Include(c => c.Mentors).ThenInclude(a => a.IdentityUser)
+                .Include(c => c.Mentors).ThenInclude(a => a.MentoringProjects)
                 .Include(c => c.Milestones)
                 .Include(a => a.Founders).ThenInclude(a => a.IdentityUser);
             var rs = await dbSet.FirstOrDefaultAsync(cancellationToken);

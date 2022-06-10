@@ -270,7 +270,9 @@
     "SuccessfullySendFeedback": "Geribildirim Başarılı Bir Şekilde Gönderildi",
     "ProjectApproved": "Projeniz Onaylandı",
     "ProjectRejected": "Projeniz Reddildi",
-    "RequestSentSuccesfully": "İstek Başarı İle Gönderildi"
+    "RequestSentSuccesfully": "İstek Başarı İle Gönderildi",
+    "CoFounderOfProjectsAlreadyHasOngoingProject": "Proje Ortaklarından En Az Birinin Zaten Devam Eden Projesi Bulunmaktadır"
+
 
   }
 }

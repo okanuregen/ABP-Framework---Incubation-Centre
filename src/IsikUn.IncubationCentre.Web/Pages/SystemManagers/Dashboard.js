@@ -378,10 +378,12 @@ $(function () {
             return;
         }
 
-        isikUn.incubationCentre.requests.request.sendFeedbackToProjectOwners(data.record.id, page.projectStatus.isApprove, feedbackText)
+        isikUn.incubationCentre.requests.request.sendFeedbackToProjectOwners(page.projectStatus.projectId, page.projectStatus.isApprove, feedbackText)
             .then(function () {
                 abp.notify.info(l('SuccessfullySendFeedback'));
-                location.reload();
+                setTimeout(() => {
+                    location.reload();
+                }, 1200);
             });
     });
 });
