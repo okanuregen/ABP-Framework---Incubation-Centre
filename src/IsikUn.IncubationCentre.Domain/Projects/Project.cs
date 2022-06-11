@@ -35,21 +35,13 @@ namespace IsikUn.IncubationCentre.Projects
         public ProjectStatus Status { get; set; }
         public List<Document> Documents{ get; set; }
         public List<Milestone> Milestones{ get; set; }
-        [JsonIgnore]
         public ICollection<Person> Founders { get; set; }
-        [JsonIgnore]
         public List<ProjectFounder> ProjectsFounders { get; set; }
-        [JsonIgnore]
         public ICollection<Investor> Investors { get; set; }
-        [JsonIgnore]
         public List<ProjectInvestor> ProjectsInvestors { get; set; }
-        [JsonIgnore]
         public ICollection<Mentor> Mentors { get; set; }
-        [JsonIgnore]
         public List<ProjectMentor> ProjectsMentors { get; set; }
-        [JsonIgnore]
         public ICollection<Collaborator> Collaborators { get; set; }
-        [JsonIgnore]
         public List<ProjectCollaborator> ProjectsCollaborators { get; set; }
         public ICollection<Entrepreneur> Entrepreneurs { get; set; }
         public List<ProjectEntrepreneur> ProjectsEntrepreneurs { get; set; }

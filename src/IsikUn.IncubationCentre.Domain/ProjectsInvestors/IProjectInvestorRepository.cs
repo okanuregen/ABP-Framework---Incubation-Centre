@@ -32,5 +32,7 @@ namespace IsikUn.IncubationCentre.ProjectsInvestors
              Guid[] ProjectIds = null,
              CancellationToken cancelationToken = default
             );
+
+        Task<List<ProjectInvestor>> GetAllWithDetailAsync();
     }
 }

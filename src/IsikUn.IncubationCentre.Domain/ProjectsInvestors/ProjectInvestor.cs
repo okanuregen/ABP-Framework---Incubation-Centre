@@ -17,5 +17,6 @@ namespace IsikUn.IncubationCentre.ProjectsInvestors
         public Guid InvestorId { get; set; }
         public Project Project { get; set; }
         public Investor Investor { get; set; }
+        public double Share { get; set; }
     }
 }

@@ -1,0 +1,381 @@
+﻿@page
+@using IsikUn.IncubationCentre.Localization
+@using IsikUn.IncubationCentre.Permissions
+@using IsikUn.IncubationCentre.Web.Pages.Projects
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Grid
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model DetailModel
+@inject IStringLocalizer<IncubationCentreResource> L
+@{
+}
+<style>
+    .infoCardBody .border-bottom {
+        border: none !important;
+        margin-bottom: 17px;
+    }
+</style>
+<abp-row>
+    <abp-column size="_12">
+        <abp-card>
+            <abp-card-header>
+                <abp-card-title>
+                    @L["ProgressOfProject"].Value
+                    <i class="fa fa-info-circle ms-2" style="font-size: 14px;" data-toggle="tooltip" data-placement="top" title="@L["ProjectProgressCalculation"].Value"></i>
+                </abp-card-title>
+            </abp-card-header>
+            <abp-card-body>
+                @if (Model.Project != null)
+                {
+                    if (Model.Project.Milestones != null && Model.Project.Milestones.Count() > 0)
+                    {
+                        <abp-progress-bar type="Success" min-value="0" max-value="100" value="@Model.Project.Milestones.Count(a => a.isCompleted) * 100 /Model.Project.Milestones.Count()" animation="true" strip="true"> @Model.Project.Milestones.Count(a => a.isCompleted) * 100 /Model.Project.Milestones.Count() </abp-progress-bar>
+                    }
+                    else
+                    {
+                        <abp-progress-bar type="Success" min-value="0" max-value="100" value="3" animation="true" strip="true">0%</abp-progress-bar>
+                    }
+                }
+                else
+                {
+                    <div class="text-center mb-2">
+                        <span class="alert alert-info text-center rounded px-7">
+                            @L["NoFoundProject"].Value
+                        </span>
+                    </div>
+                }
+            </abp-card-body>
+        </abp-card>
+    </abp-column>
+
+    <abp-column size="_12">
+        <abp-card>
+            <abp-card-header>
+                <abp-card-title>
+                    @L["GeneralInformations"].Value
+                    @if (Model.IsAllowedEdit)
+                    {
+                        <i class="fa fa-edit float-end" id="editMyInfo" style="cursor:pointer;"></i>
+                    }
+                </abp-card-title>
+            </abp-card-header>
+            <abp-card-body class="infoCardBody">
+                <abp-row>
+                    <abp-column size="_6" class="pe-4 border-end">
+                        <abp-row class="border-bottom">
+                            <abp-column size="_6"><b>@L["ProjectName"].Value:</b></abp-column>
+                            <abp-column size="_6" class="text-end">@(!string.IsNullOrEmpty(Model.Project.Name) ? Model.Project.Name : "-")</abp-column>
+                        </abp-row>
+                        <abp-row class="border-bottom">
+                            <abp-column size="_6"><b>@L["CreationDate"].Value:</b></abp-column>
+                            <abp-column size="_6" class="text-end" data-long-name="true" data-long-name-size="18">@(Model.Project.CreationTime.ToString("dd.MM.yyyy HH:MM"))</abp-column>
+                        </abp-row>
+                        <abp-row class="border-bottom">
+                            <abp-column size="_6"><b>@L["EstimatedEndDate"].Value:</b></abp-column>
+                            <abp-column size="_6" class="text-end" data-long-name="true" data-long-name-size="18">
+                                @(Model.Project.Milestones != null && Model.Project.Milestones.Any() ? Model.Project.Milestones.OrderByDescending(a => a.EndDate).FirstOrDefault().EndDate.ToString("dd.MM.yyyy HH:MM") : "-")
+                            </abp-column>
+                        </abp-row>
+                        <abp-row class="border-bottom">
+                            <abp-column size="_6"><b>@L["Status"].Value:</b></abp-column>
+                            <abp-column size="_6" class="text-end" data-long-name="true" data-long-name-size="18">@(L[Model.Project.Status.ToString()].Value)</abp-column>
+                        </abp-row>
+                        <abp-row class="border-bottom">
+                            <abp-column size="_6"><b>@L["Milestones"].Value:</b></abp-column>
+                            <abp-column size="_6" class="text-end">@(Model.Project.Milestones != null ? (Model.Project.Milestones.Count(a => a.isCompleted) + " / " + Model.Project.Milestones.Count()) : "0/0")</abp-column>
+                        </abp-row>
+                        <abp-row class="border-bottom">
+                            <abp-column size="_6"><b>@L["InvesmnetReady"].Value:</b></abp-column>
+                            <abp-column size="_6" class="text-end">@Html.Raw((Model.Project.InvesmentReady ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-times text-danger'></i>"))</abp-column>
+                        </abp-row>
+                    </abp-column>
+                    <abp-column size="_6" class="ps-4">
+                        <abp-row class="border-bottom">
+                            <abp-column size="_6"><b>@L["Entreprenur"].Value:</b></abp-column>
+                            <abp-column size="_6" class="text-end">@(Model.EntreprenurNameSurname)</abp-column>
+                        </abp-row>
+                        <abp-row class="border-bottom">
+                            <abp-column size="_6"><b>@L["Collaborators"].Value:</b></abp-column>
+                            <abp-column size="_6" class="text-end">@(Model.Project.Collaborators != null ? Model.Project.Collaborators.Count() : "0")</abp-column>
+                        </abp-row>
+                        <abp-row class="border-bottom">
+                            <abp-column size="_6"><b>@L["Investors"].Value:</b></abp-column>
+                            <abp-column size="_6" class="text-end">@(Model.Project.Investors != null ? Model.Project.Investors.Count() : "0")</abp-column>
+                        </abp-row>
+                        <abp-row class="border-bottom">
+                            <abp-column size="_6"><b>@L["Mentors"].Value:</b></abp-column>
+                            <abp-column size="_6" class="text-end">@(Model.Project.Mentors != null ? Model.Project.Mentors.Count() : "0")</abp-column>
+                        </abp-row>
+                        <abp-row class="border-bottom">
+                            <abp-column size="_6"><b>@L["OpenForInvesment"].Value:</b></abp-column>
+                            <abp-column size="_6" class="text-end">@Html.Raw((Model.Project.OpenForInvesment ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-times text-danger'></i>"))</abp-column>
+                        </abp-row>
+                        <abp-row class="border-bottom">
+                            <abp-column size="_6"><b>@L["SharePerInvesment"].Value:</b></abp-column>
+                            <abp-column size="_6" class="text-end">@(Model.Project.SharePerInvest)</abp-column>
+                        </abp-row>
+                    </abp-column>
+                </abp-row>
+            </abp-card-body>
+        </abp-card>
+    </abp-column>
+
+    <abp-column size="_12">
+        <abp-row>
+            <abp-column size='_5'>
+                <abp-card>
+                    <abp-card-header>
+                        <abp-card-title>
+                            @L["PercentageOfShareholders"].Value
+                        </abp-card-title>
+                    </abp-card-header>
+                    <abp-card-body>
+                        <div class="chart chart-sm">
+                            <canvas id="chartjs-pie-invesments"></canvas>
+                        </div>
+                    </abp-card-body>
+                </abp-card>
+            </abp-column>
+            <abp-column size='_7'>
+                <abp-card style="height:94%;">
+                    <abp-card-header>
+                        <abp-card-title>
+                            @L["ListOfAssociatedPeople"].Value
+                        </abp-card-title>
+                    </abp-card-header>
+                    <abp-card-body>
+                        <abp-row>
+                            <abp-column size="_6">
+                                <table style="width:100%">
+                                    <tbody class="pe-2">
+                                        <tr>
+                                            <th>@L["Name"].Value</th>
+                                            <th>@L["Role"].Value</th>
+                                        </tr>
+                                        @foreach (var person in Model.Project.Collaborators)
+                                        {
+                                            <tr>
+                                                @if (person.IdentityUser != null &&
+                                               !string.IsNullOrEmpty(person.IdentityUser.Name) &&
+                                               !string.IsNullOrEmpty(person.IdentityUser.Surname)
+                                               )
+                                                {
+                                                    <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",person.IdentityUser.Name, person.IdentityUser.Surname)</td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="py-2">-</td>
+                                                }
+                                                <td class="py-2">@L["Collaborator"]</td>
+                                            </tr>
+                                        }
+                                        @foreach (var person in Model.Project.Mentors)
+                                        {
+                                            <tr>
+                                                @if (person.IdentityUser != null &&
+                                               !string.IsNullOrEmpty(person.IdentityUser.Name) &&
+                                               !string.IsNullOrEmpty(person.IdentityUser.Surname)
+                                               )
+                                                {
+                                                    <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",person.IdentityUser.Name, person.IdentityUser.Surname)</td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="py-2">-</td>
+                                                }
+                                                <td class="py-2">@L["Mentor"]</td>
+                                            </tr>
+                                        }
+                                        @foreach (var person in Model.Project.Investors)
+                                        {
+                                            <tr>
+                                                @if (person.IdentityUser != null &&
+                                               !string.IsNullOrEmpty(person.IdentityUser.Name) &&
+                                               !string.IsNullOrEmpty(person.IdentityUser.Surname)
+                                               )
+                                                {
+                                                    <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",person.IdentityUser.Name, person.IdentityUser.Surname)</td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="py-2">-</td>
+                                                }
+                                                <td class="py-2">@L["Investor"]</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </abp-column>
+                            <abp-column size="_6" class="text-center">
+                                <div>
+                                    <abp-card-title>
+                                        @L["TotalProjectEvaluation"].Value
+                                    </abp-card-title>
+                                    <h4>
+                                        @Model.Project.TotalValuation  @Model.Project.TotalValuationCurrencySymbol
+                                    </h4>
+                                </div>
+                                <div>
+                                    <abp-card-title>
+                                        @L["ProjectTags"].Value
+                                    </abp-card-title>
+                                    <div>
+                                        @foreach (var tag in Model.Project.Tags.Split(","))
+                                        {
+                                            <span class="badge badge-info">@tag</span>
+                                        }
+                                    </div>
+                                </div>
+                            </abp-column>
+                        </abp-row>
+                    </abp-card-body>
+                </abp-card>
+            </abp-column>
+        </abp-row>
+    </abp-column>
+
+    <abp-column size="_12">
+        <abp-card>
+            <abp-card-header>
+                <abp-card-title>
+                    @L["Milestones"].Value
+                    @if (Model.IsAllowedEdit)
+                    {
+                        <i class="fa fa-edit float-end" id="editMyInfo" style="cursor:pointer;"></i>
+                    }
+                </abp-card-title>
+            </abp-card-header>
+            <abp-card-body>
+                <abp-table striped-rows="true" id="MilestonesTable"></abp-table>
+            </abp-card-body>
+        </abp-card>
+    </abp-column>
+</abp-row>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+            var l = l || abp.localization.getResource('IncubationCentre');
+
+            // Pie chart for Invesmtents
+            debugger;
+            var InvesmentChartLabels = @Json.Serialize(Model.InvestorNames);
+            var InvesmentChartData = @Json.Serialize(Model.InvestorShares);
+
+            new Chart(document.getElementById("chartjs-pie-invesments"), {
+                type: "pie",
+                data: {
+                    labels: InvesmentChartLabels,
+                    datasets: [{
+                        data: InvesmentChartData,
+                        backgroundColor: [
+                            window.theme.primary,
+                            window.theme.warning,
+                            window.theme.danger,
+                            "#dee2e6"
+                        ],
+                        borderColor: "transparent"
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    }
+                }
+            });
+
+
+             var dataTableMilestone = $('#MilestonesTable').DataTable(
+                abp.libs.datatables.normalizeConfiguration({
+                    serverSide: false,
+                    paging: true,
+                    scrollY: '302px',
+                    order: [[1, "asc"]],
+                    searching: true,
+                    scrollX: true,
+                    ajax: abp.libs.datatables.createAjax(
+                        isikUn.incubationCentre.milestones.milestone.getList),
+                    columnDefs: [
+                        {
+                            title: l('Actions'),
+                            rowAction: {
+                                items:
+                                    [
+                                        {
+                                            text: l('Edit'),
+                                            visible:
+                                                abp.auth.isGranted('IncubationCentre.Milestones.Edit'),
+                                            action: function (data) {
+                                                editModal.open({ id: data.record.id });
+                                            }
+                                        },
+                                        {
+                                            text: l('Delete'),
+                                            visible:
+                                                abp.auth.isGranted('IncubationCentre.Milestones.Delete'),
+                                            confirmMessage: function (data) {
+                                                return l(
+                                                    'EntityDeletionConfirmationMessage',
+                                                    data.record.name
+                                                );
+                                            },
+                                            action: function (data) {
+                                                isikUn.incubationCentre.projects.project
+                                                    .delete(data.record.id)
+                                                    .then(function () {
+                                                        abp.notify.info(
+                                                            l('SuccessfullyDeleted')
+                                                        );
+                                                        dataTableMilestone.ajax.reload();
+                                                    });
+                                            }
+                                        }
+                                    ]
+                            }
+                        },
+                        {
+                            title: l('ProjectName'),
+                            data: "project.name"
+                        },
+                        {
+                            title: l('Title'),
+                            data: "title"
+                        },
+                        {
+                            title: l('StartDate'),
+                            data: "startDate",
+                            render: function (data) {
+                                try{
+                                    var date = new Date(data).toLocaleDateString();
+                                    return date != "Invalid Date" ? date : "-";
+                                } catch {
+                                    return "-";
+                                }
+                            }
+                        },
+                        {
+                            title: l('EndDate'),
+                            data: "endDate",
+                            render: function (data) {
+                                try{
+                                    var date = new Date(data).toLocaleDateString();
+                                    return date != "Invalid Date" ? date : "-";
+                                } catch {
+                                    return "-";
+                                }
+                            }
+                        },
+                        {
+                            title: l('isCompleted'),
+                            data: "isCompleted",
+                            render: function (data) {
+                                return data ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-times text-danger'></i>";
+                            }
+                        }
+                    ]
+                }));
+
+        });
+</script>

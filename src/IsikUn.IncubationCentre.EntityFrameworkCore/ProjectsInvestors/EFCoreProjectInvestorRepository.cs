@@ -53,6 +53,13 @@ namespace IsikUn.IncubationCentre.ProjectsInvestors
                     .WhereIf(InvestorIds != null && InvestorIds.Any(), e => InvestorIds.Contains(e.InvestorId))
                     .WhereIf(ProjectIds != null && ProjectIds.Any(), e => ProjectIds.Contains(e.ProjectId));
         }
+
+        public async Task<List<ProjectInvestor>> GetAllWithDetailAsync()
+        {
+            return (await GetDbSetAsync())
+              .Include(c => c.Investor).ThenInclude(a => a.IdentityUser)
+              .Include(c => c.Project).ToList();
+        }
     }
 }
 
