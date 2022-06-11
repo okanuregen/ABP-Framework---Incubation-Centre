@@ -27,8 +27,11 @@ namespace IsikUn.IncubationCentre.Web.Pages.Milestones
 
         public void OnGet()
         {
-            Milestone = new CreateUpdateMilestoneDto();
-            Milestone.ProjectId = ProjectId;
+            Milestone = new CreateUpdateMilestoneDto { 
+                ProjectId = ProjectId,
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddDays(7)
+            };
         }
 
         public async Task<IActionResult> OnPostAsync()

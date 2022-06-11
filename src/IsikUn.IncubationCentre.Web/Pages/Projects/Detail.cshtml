@@ -30,7 +30,7 @@
                 {
                     if (Model.Project.Milestones != null && Model.Project.Milestones.Count() > 0)
                     {
-                        <abp-progress-bar type="Success" min-value="0" max-value="100" value="@Model.Project.Milestones.Count(a => a.isCompleted) * 100 /Model.Project.Milestones.Count()" animation="true" strip="true"> @(Model.Project.Milestones.Count(a => a.isCompleted) * 100 /Model.Project.Milestones.Count()) % </abp-progress-bar>
+                        <abp-progress-bar type="Success" min-value="0" max-value="100" value="@Model.Project.Milestones.Count(a => a.isCompleted) == 0 ? 5 : @Model.Project.Milestones.Count(a => a.isCompleted) * 100 /Model.Project.Milestones.Count()" animation="true" strip="true"> @(Model.Project.Milestones.Count(a => a.isCompleted) * 100 /Model.Project.Milestones.Count()) % </abp-progress-bar>
                     }
                     else
                     {
@@ -123,8 +123,8 @@
 
     <abp-column size="_12">
         <abp-row>
-            <abp-column size='_5'>
-                <abp-card>
+            <abp-column class='@(Model.IsAllowedEdit ? "" : "d-none")' size='@(Model.IsAllowedEdit ? ColumnSize._5 : ColumnSize.Undefined)'>
+                <abp-card style="height:343px;">
                     <abp-card-header>
                         <abp-card-title>
                             @L["PercentageOfShareholders"].Value
@@ -137,8 +137,8 @@
                     </abp-card-body>
                 </abp-card>
             </abp-column>
-            <abp-column size='_7'>
-                <abp-card style="height:94%;">
+            <abp-column size='@(Model.IsAllowedEdit ? ColumnSize._7 : ColumnSize._12)'>
+                <abp-card style="height:343px;">
                     <abp-card-header>
                         <abp-card-title>
                             @L["ListOfAssociatedPeople"].Value
@@ -150,7 +150,7 @@
                                 <table style="width:100%">
                                     <tbody class="pe-2">
                                         <tr>
-                                            <th>@L["Name"].Value</th>
+                                            <th style="width:70%;">@L["Name"].Value</th>
                                             <th>@L["Role"].Value</th>
                                         </tr>
                                         @foreach (var person in Model.Project.Collaborators)
@@ -216,7 +216,7 @@
                                         @Model.Project.TotalValuation  @Model.Project.TotalValuationCurrencySymbol
                                     </h4>
                                 </div>
-                                <div>
+                                <div class="mt-5">
                                     <abp-card-title>
                                         @L["ProjectTags"].Value
                                     </abp-card-title>
@@ -226,6 +226,26 @@
                                             <span class="badge badge-info">@tag</span>
                                         }
                                     </div>
+                                </div>
+                                <div class="project-buttons" style="position:absolute;bottom: 15px;right: 15px;">
+                                    @if (Model.IsAllowedEdit)
+                                    {
+                                        <div class="form-check form-switch d-inline-block">
+                                            <label> </label>
+                                            <input style="height:18px;width:39px;" data-toggle="tooltip" title="@L["IsOpenForInvesment"]" class="form-check-input" type="checkbox" role="switch" id="IsOpenForInvesmentButton" checked />
+                                        </div>
+                                        <div class="d-inline-block">
+                                            <button class="btn btn-info" id="addCollaboratorButton">@L["AddCollaborator"]</button>
+                                        </div>
+                                    }
+                                    @if (Model.IsInvestor)
+                                    {
+                                        <button class="btn btn-info" id="investButton">@L["Invest"]</button>
+                                    }
+                                    @if (Model.CanMentoring)
+                                    {
+                                        <button class="btn btn-info" id="toBeMentorButton">@L["RequestToBeMentor"]</button>
+                                    }
                                 </div>
                             </abp-column>
                         </abp-row>
@@ -264,7 +284,6 @@
             var l = l || abp.localization.getResource('IncubationCentre');
 
             // Pie chart for Invesmtents
-            debugger;
             var InvesmentChartLabels = @Json.Serialize(Model.InvestorNames);
             var InvesmentChartData = @Json.Serialize(Model.InvestorShares);
 
@@ -291,7 +310,7 @@
                 }
             });
 
-
+            var milestoneEditModal = new abp.ModalManager(abp.appPath + 'Milestones/EditModal');
              var dataTableMilestone = $('#MilestonesTable').DataTable(
                 abp.libs.datatables.normalizeConfiguration({
                     serverSide: false,
@@ -301,7 +320,7 @@
                     searching: true,
                     scrollX: true,
                     ajax: abp.libs.datatables.createAjax(
-                        isikUn.incubationCentre.milestones.milestone.getList, { projectId: '@Model.Id', Sorting: 'isCompleted endDate'}),
+                        isikUn.incubationCentre.milestones.milestone.getList, { projectId: '@Model.Id', sorting: 'endDate'}),
                     columnDefs: [
                         {
                             title: l('Actions'),
@@ -313,7 +332,7 @@
                                             visible:
                                                 abp.auth.isGranted('IncubationCentre.Milestones.Edit'),
                                             action: function (data) {
-                                                editModal.open({ id: data.record.id });
+                                                milestoneEditModal.open({ id: data.record.id });
                                             }
                                         },
                                         {

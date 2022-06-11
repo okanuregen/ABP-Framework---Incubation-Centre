@@ -29,7 +29,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Milestones
         public async void OnGet()
         {
            var milestone = await _milestoneAppService.GetAsync(Id);
-            Milestone = ObjectMapper.Map<MilestoneDto, CreateUpdateMilestoneDto>(milestone);
+           Milestone = ObjectMapper.Map<MilestoneDto, CreateUpdateMilestoneDto>(milestone);
         }
 
         public async Task<IActionResult> OnPostAsync()

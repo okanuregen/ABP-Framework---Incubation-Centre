@@ -20,3 +20,14 @@
         <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
     </abp-modal>
 </abp-dynamic-form>
+
+<script>
+    $(function(){
+        $('[type="datetime-local"]').attr("type","date");
+        $('[type="date"]').each(function(i,e){
+            $(e).val($(e).attr("value").split("T")[0])
+        });
+        $("#Milestone_isCompleted").parent("div").hide();
+        $("#Milestone_ProjectId").parent("div").hide();
+    });
+</script>

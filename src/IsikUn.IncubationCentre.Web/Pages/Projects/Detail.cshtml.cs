@@ -31,6 +31,8 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
         public Project Project { get; set; }
         public bool IsAllowedEdit { get; set; }
         public bool IsAllowedSeeInvestment { get; set; }
+        public bool IsInvestor { get; set; }
+        public bool CanMentoring { get; set; }
  
         public List<string> InvestorNames = new List<string>();
         
@@ -55,7 +57,8 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
             Project = await _projectRepo.GetWithDetailAsync(Id);
             IsAllowedEdit = Project.Entrepreneurs != null ? Project.Entrepreneurs.Any(a => a.IdentityUserId == _currentUser.Id) : false;
             IsAllowedEdit |= Project.Collaborators != null ? Project.Collaborators.Any(a => a.IdentityUserId == _currentUser.Id) : false;
-
+            IsInvestor = _currentUser.IsInRole("Investor");
+            CanMentoring = _currentUser.IsInRole("Mentor") && (Project.Mentors != null ? Project.Mentors.Count(a => a.IdentityUserId == _currentUser.Id) == 0 : true);
             try
             {
                 EntreprenurNameSurname = Project.Entrepreneurs.FirstOrDefault().IdentityUser.Name + " " + Project.Entrepreneurs.FirstOrDefault().IdentityUser.Surname;
