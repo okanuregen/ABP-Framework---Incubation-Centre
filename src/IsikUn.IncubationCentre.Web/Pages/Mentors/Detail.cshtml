@@ -1,0 +1,301 @@
+﻿@page
+@using IsikUn.IncubationCentre.Localization
+@using IsikUn.IncubationCentre.Permissions
+@using IsikUn.IncubationCentre.Web.Pages.Mentors
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<IncubationCentreResource> L
+@inject IAuthorizationService AuthorizationService
+@model DetailModel
+@{
+    //Model.CurrentProject = new IsikUn.IncubationCentre.Projects.Project();
+}
+@section scripts
+    {
+    <abp-script src="/Pages/Mentors/Detail.js" />
+}
+    <script>
+        var int = setInterval(function() {
+            if (typeof (abp) != undefined && typeof (page) != undefined) {
+                var l = l || abp.localization.getResource('IncubationCentre');
+                var editProjectModal = new abp.ModalManager(abp.appPath + 'Projects/EditModal');
+
+
+                var dataTableProject = $('#ProjectsTable').DataTable(
+                    abp.libs.datatables.normalizeConfiguration({
+                        serverSide: false,
+                        paging: true,
+                        scrollY: '302px',
+                        order: [[1, "asc"]],
+                        searching: true,
+                        scrollX: true,
+                        ajax: abp.libs.datatables.createAjax(
+                            isikUn.incubationCentre.mentors.mentor.getProjectList,
+                            { id: '@Model.id' }
+                        ),
+                        columnDefs: [
+                            {
+                                title: l('Actions'),
+                                rowAction: {
+                                    items:
+                                        [
+                                            {
+                                                text: l('Detail'),
+                                                visible:
+                                                    abp.auth.isGranted('IncubationCentre.Projects'),
+                                                action: function(data) {
+                                                    location.href = "/Projects/Detail?id=" + data.record.id;
+                                                }
+                                            },
+                                            {
+                                                text: l('Edit'),
+                                                visible:
+                                                    abp.auth.isGranted('IncubationCentre.Projects.Edit') && ("@Model.IsMyPage" == "True"),
+                                                action: function(data) {
+                                                    editProjectModal.open({ id: data.record.id });
+                                                }
+                                            },
+                                            {
+                                                text: l('Delete'),
+                                                visible:
+                                                    abp.auth.isGranted('IncubationCentre.Projects.Delete') && ("@Model.IsMyPage" == "True"),
+                                                confirmMessage: function(data) {
+                                                    return l(
+                                                        'EntityDeletionConfirmationMessage',
+                                                        data.record.name
+                                                    );
+                                                },
+                                                action: function(data) {
+                                                    isikUn.incubationCentre.projects.project
+                                                        .delete(data.record.id)
+                                                        .then(function() {
+                                                            abp.notify.info(
+                                                                l('SuccessfullyDeleted')
+                                                            );
+                                                            dataTableProject.ajax.reload();
+                                                        });
+                                                }
+                                            }
+                                        ]
+                                }
+                            },
+                            {
+                                title: l('Name'),
+                                data: "name"
+                            },
+                            {
+                                title: l('Status'),
+                                data: "status",
+                                render: function(data) {
+                                    return l("Enum:ProjectStatus_" + data);
+                                }
+                            },
+                            {
+                                title: l('Tags'),
+                                data: "tags",
+                                render: function(data) {
+                                    if (data == null || data == "") return "-";
+                                    var text = "";
+                                    data.split(",").forEach(function(tag) {
+                                        text += `<span class="badge badge-info me-2">${tag}</span>`
+                                    });
+                                    return text == "" ? "-" : text;
+                                }
+                            },
+                            {
+                                title: l('CompletionDate'),
+                                data: "completionDate",
+                                render: function(data) {
+                                    if (data == null) return "-";
+                                    try {
+                                        var date = new Date(data).toLocaleDateString();
+                                        return date != "Invalid Date" ? date : "-";
+                                    } catch {
+                                        return "-";
+                                    }
+                                }
+                            }
+                        ]
+                    }));
+
+                editProjectModal.onResult(function() {
+                    dataTableProject.ajax.reload();
+                });
+
+                clearInterval(int);
+            }
+        }, 500)
+    </script>
+    <style>
+        .info-area .border-bottom {
+            padding-top: 10px;
+        }
+
+        [data-role="setTab"] {
+            cursor: pointer;
+        }
+
+        body ::-webkit-scrollbar {
+            width: 9px;
+        }
+
+        body ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+            border-radius: 6px;
+        }
+
+        body ::-webkit-scrollbar-thumb {
+            border-radius: 6px;
+            -webkit-box-shadow: inset 0 0 6px #626262e8;
+        }
+    </style>
+    <abp-row class="pb-4">
+        <abp-column size="_4">
+            <abp-row>
+                <abp-column size="_12">
+                    <abp-card>
+                        <abp-card-header>
+                            <abp-card-title>
+                                @L["GeneralInformations"].Value
+                                @if (Model.IsMyPage)
+                            {
+                                <i class="fa fa-edit float-end" id="editMyInfo" style="cursor:pointer;"></i>
+                            }
+                        </abp-card-title>
+                    </abp-card-header>
+                    <abp-card-body class="text-capitalize">
+                        <div class="icon-area text-center mb-4">
+                            <div class="border rounded p-1  mx-auto float-center" style="width: 129px;border-radius: 71px !important;">
+                                <img src="/img/user-icon.png" width="120">
+                            </div>
+                        </div>
+                        <div class="info-area">
+
+                            @if (Model.Mentor != null)
+                            {
+                                <div>
+                                    <abp-row class="border-bottom">
+                                        <abp-column size="_6"><b>@L["UserName"].Value:</b></abp-column>
+                                        <abp-column size="_6" class="text-end">
+                                            <span data-long-name="true" data-long-name-size="24">
+                                                @(!string.IsNullOrEmpty(Model.Mentor.IdentityUser.UserName) ? Model.Mentor.IdentityUser.UserName : "-")
+                                            </span>
+                                        </abp-column>
+                                    </abp-row>
+                                    <abp-row class="border-bottom">
+                                        <abp-column size="_6"><b>@L["Name"].Value:</b></abp-column>
+                                        <abp-column size="_6" class="text-end">
+                                            <span data-long-name="true" data-long-name-size="24">
+                                                @(!string.IsNullOrEmpty(Model.Mentor.IdentityUser.Name) ? Model.Mentor.IdentityUser.Name : "-")
+                                            </span>
+                                        </abp-column>
+                                    </abp-row>
+                                    <abp-row class="border-bottom">
+                                        <abp-column size="_6"><b>@L["Surname"].Value:</b></abp-column>
+                                        <abp-column size="_6" class="text-end">
+                                            <span data-long-name="true" data-long-name-size="24">
+                                                @(!string.IsNullOrEmpty(Model.Mentor.IdentityUser.Surname) ? Model.Mentor.IdentityUser.Surname : "-")
+                                            </span>
+                                        </abp-column>
+                                    </abp-row>
+                                    <abp-row class="border-bottom">
+                                        <abp-column size="_6"><b>@L["Unvan"].Value:</b></abp-column>
+                                        <abp-column size="_6" class="text-end" data-long-name="true" data-long-name-size="24">@L["Mentor"].Value</abp-column>
+                                    </abp-row>
+                                    <abp-row class="border-bottom">
+                                        <abp-column size="_6"><b>@L["MemberSince"].Value:</b></abp-column>
+                                        <abp-column size="_6" class="text-end" data-long-name="true" data-long-name-size="24">@(Model.Mentor.CreationTime.ToString("dd/MM/yyyy HH:MM"))</abp-column>
+                                    </abp-row>
+                                    <abp-row class="border-bottom">
+                                        <abp-column size="_6"><b>@L["Projects"].Value:</b></abp-column>
+                                        <abp-column size="_6" class="text-end">@(Model.Projects != null ? Model.Projects.Count() : "0")</abp-column>
+                                    </abp-row>
+                                    <abp-row class="border-bottom">
+                                        <abp-column size="_4"><b>@L["Skills"].Value:</b></abp-column>
+                                        @if (Model.Mentor.Skills != null)
+                                        {
+                                            var htmlText = "";
+                                            var skills =
+                                            Model.Mentor.Skills.GroupBy(a => a.Category)
+                                            .Select(skill => new { Category = skill.Key, AllSkills = string.Join(", ", skill.Select(b => b.Name)) });
+                                            foreach (var skill in skills)
+                                            {
+                                                htmlText += string.Format("<span class='badge badge-info ms-1'>{0} : {1}</span>", skill.Category, skill.AllSkills);
+                                            }
+                                            <abp-column size="_8" class="text-end pb-1"> @(htmlText  == "" ? "-" : Html.Raw(htmlText)) </abp-column>
+                                        }
+                                        else
+                                        {
+                                            <abp-column size="_8" class="text-end">-</abp-column>
+                                        }
+                                    </abp-row>
+
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-center pt-4">
+                                    <div class="mb-3 h2">
+                                        @L["NoFoundUser"].Value
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </abp-card-body>
+                </abp-card>
+            </abp-column>
+            <abp-column size="_12">
+                <abp-list-group>
+                    <abp-list-group-item active="true" data-role="setTab" data-target="ProjectsTab">@L["Projects"].Value</abp-list-group-item>
+                    <abp-list-group-item data-role="setTab" data-target="AboutTab">@L["About"].Value</abp-list-group-item>
+                </abp-list-group>
+            </abp-column>
+        </abp-row>
+    </abp-column>
+    <abp-column size="_8">
+        <abp-row>
+            <abp-column size="_12">
+
+                <abp-card data-role="tab" id="ProjectsTab">
+                    <abp-card-header>
+                        <abp-card-title>
+                            @L["Projects"].Value
+                        </abp-card-title>
+                    </abp-card-header>
+                    <abp-card-body>
+                        <abp-table striped-rows="true" id="ProjectsTable"></abp-table>
+                    </abp-card-body>
+                </abp-card>
+
+                <abp-card data-role="tab" id="AboutTab" style="display:none;">
+                    <abp-card-header>
+                        <abp-card-title>
+                            @L["About"].Value
+                        </abp-card-title>
+                    </abp-card-header>
+                    <abp-card-body>
+                        <abp-row>
+                            <abp-column size-md="_6" size="_6" size-lg="_6" size-xl="_6" size-sm="_12">
+                                <abp-card-title>
+                                    @L["About"].Value
+                                </abp-card-title>
+                                <div class="text-justify pe-2" style="height: 389px; overflow-y:auto;">
+                                    @Model.Mentor.About
+                                </div>
+                            </abp-column>
+                            <abp-column size-md="_6" size="_6" size-lg="_6" size-xl="_6" size-sm="_12">
+                                <abp-card-title>
+                                    @L["Experience"].Value
+                                </abp-card-title>
+                                <div class="text-justify pe-2" style="height: 389px; overflow-y:auto;">
+                                    @Model.Mentor.Experience
+                                </div>
+                            </abp-column>
+                        </abp-row>
+                    </abp-card-body>
+                </abp-card>
+            </abp-column>
+        </abp-row>
+    </abp-column>
+
+</abp-row>
