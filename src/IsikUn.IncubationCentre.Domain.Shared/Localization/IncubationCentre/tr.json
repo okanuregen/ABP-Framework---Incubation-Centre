@@ -271,8 +271,10 @@
     "ProjectApproved": "Projeniz Onaylandı",
     "ProjectRejected": "Projeniz Reddildi",
     "RequestSentSuccesfully": "İstek Başarı İle Gönderildi",
-    "CoFounderOfProjectsAlreadyHasOngoingProject": "Proje Ortaklarından En Az Birinin Zaten Devam Eden Projesi Bulunmaktadır"
-
+    "CoFounderOfProjectsAlreadyHasOngoingProject": "Proje Ortaklarından En Az Birinin Zaten Devam Eden Projesi Bulunmaktadır",
+    "ProjectName": "Proje Adı",
+    "Deadline": "Teslim Tarihi",
+    "My Projects": "Projelerim"
 
   }
 }

@@ -22,14 +22,14 @@ $(function () {
                         [
                             {
                                 text: l('Edit'),
-                                visible: abp.auth.isGranted('IncubationCentre.Event.Update'),
+                                visible: abp.auth.isGranted('IncubationCentre.Events.Edit'),
                                 action: function (data) {
                                     editModal.open({ id: data.record.id });
                                 }
                             },
                             {
                                 text: l('Delete'),
-                                visible: abp.auth.isGranted('IncubationCentre.Event.Delete'),
+                                visible: abp.auth.isGranted('IncubationCentre.Events.Delete'),
                                 confirmMessage: function (data) {
                                     return l('EventDeletionConfirmationMessage', data.record.id);
                                 },
