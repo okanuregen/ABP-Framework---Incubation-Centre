@@ -33,6 +33,14 @@ $(function () {
                                     }
                                 },
                                 {
+                                    text: l('Detail'),
+                                    visible:
+                                        abp.auth.isGranted('IncubationCentre.Projects'),
+                                    action: function (data) {
+                                        location.href = "/Projects/Detail?=id=" + data.record.id;
+                                    }
+                                },
+                                {
                                     text: l('Delete'),
                                     visible:
                                         abp.auth.isGranted('IncubationCentre.Projects.Delete'),
