@@ -244,7 +244,7 @@
                                                         @for (var i = 0; i < Model.SentRequests.Count(); i++)
                                                         {
                                                             <tr>
-                                                                <td class="py-2" data-long-name="true" data-long-name-size="18">@(!string.IsNullOrEmpty(Model.SentRequests[i].Title) ? Model.SentRequests[i].Title : "-")</td>
+                                                                <td class="py-2" data-long-name="true" data-long-name-size="18" data-target="open-reuquest-detail" data-id="@Model.SentRequests[i].Id">@(!string.IsNullOrEmpty(Model.SentRequests[i].Title) ? Model.SentRequests[i].Title : "-")</td>
                                                                 @if (Model.SentRequests[i].Receiver != null &&
                                                                Model.SentRequests[i].Receiver.IdentityUser != null &&
                                                                !string.IsNullOrEmpty(Model.SentRequests[i].Receiver.IdentityUser.Name) &&

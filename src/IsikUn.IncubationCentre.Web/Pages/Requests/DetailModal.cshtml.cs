@@ -18,7 +18,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Requests
         [DisplayName("Sender")]
         public string SenderName { get; set; }
         
-        [DisplayName("Sender")]
+        [DisplayName("Receiver")]
         public string ReceiverName { get; set; }
 
         [DisplayName("Title")]

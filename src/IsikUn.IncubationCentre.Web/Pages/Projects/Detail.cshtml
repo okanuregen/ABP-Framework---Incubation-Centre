@@ -238,13 +238,18 @@
     <abp-column size="_12">
         <abp-card>
             <abp-card-header>
-                <abp-card-title>
-                    @L["Milestones"].Value
+                <abp-column size-md="_6">
+                    <abp-card-title>@L["Milestones"]</abp-card-title>
+                </abp-column>
+                <abp-column size-md="_6" class="text-end">
                     @if (Model.IsAllowedEdit)
                     {
-                        <i class="fa fa-edit float-end" id="editMyInfo" style="cursor:pointer;"></i>
+                        <abp-button id="NewMilestoneButton"
+                                text="@L["NewMilestone"].Value"
+                                icon="plus"
+                                button-type="Primary" />
                     }
-                </abp-card-title>
+                </abp-column>
             </abp-card-header>
             <abp-card-body>
                 <abp-table striped-rows="true" id="MilestonesTable"></abp-table>
