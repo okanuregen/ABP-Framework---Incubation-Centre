@@ -2,6 +2,7 @@
 using IsikUn.IncubationCentre.People;
 using IsikUn.IncubationCentre.PeopleSkills;
 using IsikUn.IncubationCentre.Permissions;
+using IsikUn.IncubationCentre.Projects;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
@@ -96,6 +97,18 @@ namespace IsikUn.IncubationCentre.Mentors
             mentor = await _mentorRepository.GetWithDetailAsync(id);
             return ObjectMapper.Map<Mentor, MentorDto>(mentor);
 
+        }
+
+        [Authorize(IncubationCentrePermissions.Mentors.Default)]
+        public async Task<PagedResultDto<ProjectDto>> GetProjectListAsync(GetMentorsInput input)
+        {
+            var mentor = await _mentorRepository.GetWithDetailAsync(input.id.Value);
+            List<Project> projects = mentor.MentoringProjects != null ? mentor.MentoringProjects.ToList() : null;
+            return new PagedResultDto<ProjectDto>
+            {
+                TotalCount = mentor.MentoringProjects != null ? mentor.MentoringProjects.Count : 0,
+                Items = ObjectMapper.Map<List<Project>, List<ProjectDto>>(projects)
+            };
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IsikUn.IncubationCentre.Projects;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
@@ -19,5 +20,6 @@ namespace IsikUn.IncubationCentre.Mentors
         Task<MentorDto> CreateAsync(CreateUpdateMentorDto input);
 
         Task<MentorDto> UpdateAsync(Guid id, CreateUpdateMentorDto input);
+        Task<PagedResultDto<ProjectDto>> GetProjectListAsync(GetMentorsInput input);
     }
 }
