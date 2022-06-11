@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IsikUn.IncubationCentre.Milestones;
+using IsikUn.IncubationCentre.Projects;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
@@ -19,5 +21,7 @@ namespace IsikUn.IncubationCentre.Collaborators
         Task<CollaboratorDto> CreateAsync(CreateUpdateCollaboratorDto input);
 
         Task<CollaboratorDto> UpdateAsync(Guid id, CreateUpdateCollaboratorDto input);
+        Task<PagedResultDto<ProjectDto>> GetProjectListAsync(GetCollaboratorsInput input);
+        Task<PagedResultDto<MilestoneDto>> GetMilestoneListAsync(GetCollaboratorsInput input);
     }
 }

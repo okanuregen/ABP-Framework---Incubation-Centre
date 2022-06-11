@@ -1,7 +1,9 @@
 ﻿using IsikUn.IncubationCentre.Localization;
+using IsikUn.IncubationCentre.Milestones;
 using IsikUn.IncubationCentre.People;
 using IsikUn.IncubationCentre.PeopleSkills;
 using IsikUn.IncubationCentre.Permissions;
+using IsikUn.IncubationCentre.Projects;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
@@ -96,6 +98,45 @@ namespace IsikUn.IncubationCentre.Collaborators
             collaborator = await _collaboratorRepository.GetWithDetailAsync(id);
             return ObjectMapper.Map<Collaborator, CollaboratorDto>(collaborator);
 
+        }
+
+        [Authorize(IncubationCentrePermissions.Collaborators.Default)]
+        public async Task<PagedResultDto<ProjectDto>> GetProjectListAsync(GetCollaboratorsInput input)
+        {
+            var collaborator = await _collaboratorRepository.GetWithDetailAsync(input.id.Value);
+            List<Project> projects = collaborator.CollaboratoringProjects != null ? collaborator.CollaboratoringProjects.ToList() : null;
+            return new PagedResultDto<ProjectDto>
+            {
+                TotalCount = collaborator.CollaboratoringProjects != null ? collaborator.CollaboratoringProjects.Count : 0,
+                Items = ObjectMapper.Map<List<Project>, List<ProjectDto>>(projects)
+            };
+        }
+
+
+        [Authorize(IncubationCentrePermissions.Collaborators.Default)]
+        public async Task<PagedResultDto<MilestoneDto>> GetMilestoneListAsync(GetCollaboratorsInput input)
+        {
+            var collaborator = await _collaboratorRepository.GetWithDetailAsync(input.id.Value);
+            List<Project> projects = collaborator.CollaboratoringProjects != null ? collaborator.CollaboratoringProjects.ToList() : null;
+            if (projects == null)
+            {
+                return new PagedResultDto<MilestoneDto>
+                {
+                    TotalCount = 0,
+                    Items = new List<MilestoneDto>()
+                };
+            }
+            List<Milestone> milestones = new List<Milestone>();
+            projects.ForEach(a => a.Milestones.ForEach(b => {
+                b.Project = a;
+                milestones.Add(b);
+            }));
+
+            return new PagedResultDto<MilestoneDto>
+            {
+                TotalCount = milestones.Count(),
+                Items = ObjectMapper.Map<List<Milestone>, List<MilestoneDto>>(milestones.OrderBy(a => a.Project.Name).ToList())
+            };
         }
     }
 }
