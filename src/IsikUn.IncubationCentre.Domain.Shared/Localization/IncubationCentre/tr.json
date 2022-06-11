@@ -280,7 +280,9 @@
     "CartMessage3": "Işık Üniversitesi Kuluçka Merkezi yanınızda! Merkezimizde tüm kullanıcılarımız için iki dil seçeneği bulunmaktadır! Sizin için Türkçe ve İngilizce dil desteğimiz var! Merkezimizi tercih ettiğiniz dilde görüntüleyebilirsiniz!",
     "CartMessage4": "Sistemimiz sadece sizin için tasarlandı! Kullanıcı dostu arayüzümüzle projeler oluşturmak, projeler ve mentorlar arasında gezinmek çocuk oyuncağı! Hadi, şimdi bize katılın ve bu yaratıcı çalışma alanını keşfetmeye başlayın!",
     "AllReadyForInvestmentProjects": "Hepsi Yatırıma Hazır Projeler",
-    "MyInvestedInProjects": "Yatırım Yaptığım Projeler"
+    "MyInvestedInProjects": "Yatırım Yaptığım Projeler",
+    "NoProjectFound": "Devam Eden Herhangi Bir Projeniz Yok :(",
+    "JoinProject": "Bir Projeye Katıl"
 
   }
 }

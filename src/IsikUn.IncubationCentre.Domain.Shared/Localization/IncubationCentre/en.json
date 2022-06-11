@@ -280,6 +280,8 @@
     "CartMessage1": "Işık University Incubation Center would love to help to bring your ideas to life! With our team of highly skilled mentors who are field-specialized, creating a business from scratch has never been so easy!",
     "CartMessage2": "With our many different ongoing projects, we have the opportunity to see different ideas in the market with you. With our incredible team of mentors, collabrators and investors, we can reach out many different fields.",
     "CartMessage3": "Işık University Incubation Center will be there for you! Our center has two language options for all of our users! We have Turkish and English language support for you! You can display screens on preferred language anytime, anywhere!",
-    "CartMessage4": "Our system is designed just for you! With our user-friendly intertface, creating projects and users, surfing through projects and mentors is as easy as pie! Come, join us now and start exploring this creative workplace!"
+    "CartMessage4": "Our system is designed just for you! With our user-friendly intertface, creating projects and users, surfing through projects and mentors is as easy as pie! Come, join us now and start exploring this creative workplace!",
+    "NoProjectFound": "You Are Not A Part Of Any Ongoing Project :(",
+    "JoinProject" :  "Join a project"
   }
 }
