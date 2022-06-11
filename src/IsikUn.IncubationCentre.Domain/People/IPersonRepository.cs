@@ -35,6 +35,8 @@ namespace IsikUn.IncubationCentre.People
          );
         Task<Person> GetWithDetailByIdentityUserIdAsync(Guid IdentityUserId, CancellationToken cancelationToken = default);
 
+        Task<Person> GetWithDetailByIdAsync(Guid id, CancellationToken cancelationToken = default);
+
         Task<long> GetCountAsync(
              string filter = null,
              string userName = null,

@@ -43,6 +43,14 @@ $(function () {
         }
     }
 
+    //REUEST DETAIL MODAL 
+    
+    $('[data-target="open-reuquest-detail"]').click(function () {
+        var detailRequestModal = new abp.ModalManager(abp.appPath + 'Requests/DetailModal');
+        var id = $(this).data("id");
+        detailRequestModal.open({ id: id });
+    })
+
 
 
 

@@ -1,0 +1,27 @@
+@page
+@using IsikUn.IncubationCentre.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal;
+@inject IHtmlLocalizer<IncubationCentreResource> L
+@model IsikUn.IncubationCentre.Web.Pages.Requests.DetailModalModel
+@{
+    Layout = null;
+}
+<form asp-page="/Requests/EditModal">
+    <abp-modal id="requestDetailModal">
+        <abp-modal-header title="@L["DetailRequest"].Value"></abp-modal-header>
+        <abp-modal-body>
+            <abp-input asp-for="SenderName" />
+            <abp-input asp-for="ReceiverName" />
+            <abp-input asp-for="Title" />
+            <div class="mb-3">
+                <label class="form-label" for="Explanation">@L["Explanation"].Value</label><textarea disabled readonly type="text" rows="6" id="Explanation" name="Explanation" value="@Model.Explanation" class="form-control "></textarea><span class="text-danger field-validation-valid" data-valmsg-for="Explanation" data-valmsg-replace="true"></span>
+            </div>
+        </abp-modal-body>
+        <abp-modal-footer buttons="@(AbpModalButtons.Close)"></abp-modal-footer>
+    </abp-modal>
+</form>
+
+<script>
+    $("#requestDetailModal input").attr("disabled","disabled");
+</script>

@@ -2,3 +2,8 @@
 .dataTable_footer {
     margin-top: 1rem !important;
 }
+
+[data-target="open-reuquest-detail"] {
+    color: blue;
+    cursor: pointer;
+}
