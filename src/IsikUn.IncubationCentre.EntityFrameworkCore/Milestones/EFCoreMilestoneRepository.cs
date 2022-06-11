@@ -24,7 +24,7 @@ namespace IsikUn.IncubationCentre.Milestones
              string title = null,
              string successcriteria = null,
              bool filterByisCompleted = false,
-             bool isCompleted = false,
+             bool? isCompleted = null,
              string projectId = null,
              int skipCount = 0,
              int maxResultCount = int.MaxValue,
@@ -43,7 +43,7 @@ namespace IsikUn.IncubationCentre.Milestones
              string title = null,
              string successcriteria = null,
              bool filterByisCompleted = false,
-             bool isCompleted = false,
+             bool? isCompleted = null,
              string projectId = null,
              CancellationToken cancelationToken = default
             )
@@ -61,7 +61,7 @@ namespace IsikUn.IncubationCentre.Milestones
              string title = null,
              string successcriteria = null,
              bool filterByisCompleted = false,
-             bool isCompleted = false,
+             bool? isCompleted = null,
              string projectId = null
             )
         {
@@ -71,7 +71,7 @@ namespace IsikUn.IncubationCentre.Milestones
                     .WhereIf(!string.IsNullOrWhiteSpace(title), e => e.Title.Contains(title))
                     .WhereIf(!string.IsNullOrWhiteSpace(successcriteria), e => e.SuccessCriteria.Contains(successcriteria))
                     .WhereIf(!string.IsNullOrWhiteSpace(projectId), e => e.ProjectId.ToString() == projectId)
-                    .WhereIf(filterByisCompleted, e => e.isCompleted == isCompleted);
+                    .WhereIf(filterByisCompleted && isCompleted.HasValue, e => e.isCompleted == isCompleted);
         }
     }
 }

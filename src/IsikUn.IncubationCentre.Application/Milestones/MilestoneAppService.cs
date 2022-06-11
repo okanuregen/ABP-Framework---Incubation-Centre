@@ -58,8 +58,8 @@ namespace IsikUn.IncubationCentre.Milestones
         [Authorize(IncubationCentrePermissions.Milestones.Default)]
         public async Task<PagedResultDto<MilestoneDto>> GetListAsync(GetMilestonesInput input)
         {
-            var totalCount = await _milestoneRepository.GetCountAsync(input.filter, input.Title,input.SuccessCriteria,false,input.isCompleted,input.ProjectId.ToString());
-            var items = await _milestoneRepository.GetListAsync(input.filter, input.Title,input.SuccessCriteria,false,input.isCompleted,input.ProjectId.ToString(), input.SkipCount, input.MaxResultCount, input.Sorting);
+            var totalCount = await _milestoneRepository.GetCountAsync(input.filter, input.Title,input.SuccessCriteria,input.filterByIsComleted,input.isCompleted,input.ProjectId.ToString());
+            var items = await _milestoneRepository.GetListAsync(input.filter, input.Title,input.SuccessCriteria, input.filterByIsComleted, input.isCompleted,input.ProjectId.ToString(), input.SkipCount, input.MaxResultCount, input.Sorting);
 
             return new PagedResultDto<MilestoneDto>
             {

@@ -37,7 +37,7 @@ $(function () {
                                     visible:
                                         abp.auth.isGranted('IncubationCentre.Projects'),
                                     action: function (data) {
-                                        location.href = "/Projects/Detail?=id=" + data.record.id;
+                                        location.href = "/Projects/Detail?id=" + data.record.id;
                                     }
                                 },
                                 {

@@ -63,7 +63,7 @@
                 {
                     if (Model.CurrentProject.Milestones != null && Model.CurrentProject.Milestones.Count() > 0)
                     {
-                        <abp-progress-bar type="Success" min-value="0" max-value="100" value="@Model.CurrentProject.Milestones.Count(a => a.isCompleted) * 100 /Model.CurrentProject.Milestones.Count()" animation="true" strip="true"> @Model.CurrentProject.Milestones.Count(a => a.isCompleted) * 100 /Model.CurrentProject.Milestones.Count() </abp-progress-bar>
+                        <abp-progress-bar type="Success" min-value="0" max-value="100" value="(@Model.CurrentProject.Milestones.Count(a => a.isCompleted) * 100 / Model.CurrentProject.Milestones.Count())" animation="true" strip="true"> @(Model.CurrentProject.Milestones.Count(a => a.isCompleted) * 100 /Model.CurrentProject.Milestones.Count()) % </abp-progress-bar>
                     }
                     else
                     {

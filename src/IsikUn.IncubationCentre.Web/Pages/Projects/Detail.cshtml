@@ -30,7 +30,7 @@
                 {
                     if (Model.Project.Milestones != null && Model.Project.Milestones.Count() > 0)
                     {
-                        <abp-progress-bar type="Success" min-value="0" max-value="100" value="@Model.Project.Milestones.Count(a => a.isCompleted) * 100 /Model.Project.Milestones.Count()" animation="true" strip="true"> @Model.Project.Milestones.Count(a => a.isCompleted) * 100 /Model.Project.Milestones.Count() </abp-progress-bar>
+                        <abp-progress-bar type="Success" min-value="0" max-value="100" value="@Model.Project.Milestones.Count(a => a.isCompleted) * 100 /Model.Project.Milestones.Count()" animation="true" strip="true"> @(Model.Project.Milestones.Count(a => a.isCompleted) * 100 /Model.Project.Milestones.Count()) % </abp-progress-bar>
                     }
                     else
                     {
@@ -241,7 +241,7 @@
                 <abp-column size-md="_6">
                     <abp-card-title>@L["Milestones"]</abp-card-title>
                 </abp-column>
-                <abp-column size-md="_6" class="text-end">
+                <abp-column size-md="_6" class="float-end text-end">
                     @if (Model.IsAllowedEdit)
                     {
                         <abp-button id="NewMilestoneButton"
@@ -301,7 +301,7 @@
                     searching: true,
                     scrollX: true,
                     ajax: abp.libs.datatables.createAjax(
-                        isikUn.incubationCentre.milestones.milestone.getList),
+                        isikUn.incubationCentre.milestones.milestone.getList, { projectId: '@Model.Id', Sorting: 'isCompleted endDate'}),
                     columnDefs: [
                         {
                             title: l('Actions'),
@@ -341,10 +341,6 @@
                             }
                         },
                         {
-                            title: l('ProjectName'),
-                            data: "project.name"
-                        },
-                        {
                             title: l('Title'),
                             data: "title"
                         },
@@ -382,5 +378,13 @@
                     ]
                 }));
 
+            var milestoneCreateModal = new abp.ModalManager(abp.appPath + 'Milestones/CreateModal');
+            $("#NewMilestoneButton").click(function(){
+                  milestoneCreateModal.open({ projectId: '@Model.Project.Id' });
+            });
+
+             milestoneCreateModal.onResult(function () {
+                dataTableMilestone.ajax.reload();
+            });
         });
 </script>

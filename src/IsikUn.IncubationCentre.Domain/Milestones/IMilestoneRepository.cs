@@ -12,7 +12,7 @@ namespace IsikUn.IncubationCentre.Milestones
              string title = null,
              string successcriteria = null,
              bool filterByisCompleted = false,
-             bool isCompleted = false,
+             bool? isCompleted = null,
              string projectId = null,
              int skipCount = 0,
              int maxResultCount = int.MaxValue,
@@ -25,7 +25,7 @@ namespace IsikUn.IncubationCentre.Milestones
              string title = null,
              string successcriteria = null,
              bool filterByisCompleted = false,
-             bool isCompleted = false,
+             bool? isCompleted = null,
              string projectId = null,
              CancellationToken cancelationToken = default
             );
