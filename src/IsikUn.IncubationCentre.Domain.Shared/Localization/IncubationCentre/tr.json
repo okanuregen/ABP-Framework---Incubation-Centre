@@ -282,7 +282,14 @@
     "AllReadyForInvestmentProjects": "Hepsi Yatırıma Hazır Projeler",
     "MyInvestedInProjects": "Yatırım Yaptığım Projeler",
     "NoProjectFound": "Devam Eden Herhangi Bir Projeniz Yok :(",
-    "JoinProject": "Bir Projeye Katıl"
-
+    "JoinProject": "Bir Projeye Katıl",
+    "Email": "Email",
+    "ProgressOfProject": "Projenin İlerleme Seviyesi",
+    "EstimatedEndDate": "Projenin Tahmini Bitiş Tarihi",
+    "SharePerInvesment": "Yatırım Başına Pay",
+    "PercentageOfShareholders": "Hissedarların Yüzdesi",
+    "ListOfAssociatedPeople": "İlişkili Kişilerin Listesi",
+    "TotalProjectValue": "Toplam Proje Değeri",
+    "ProjectTags": "Projenin Etiketleri"
   }
 }

@@ -41,7 +41,7 @@
                 {
                     <div class="text-center mb-2">
                         <span class="alert alert-info text-center rounded px-7">
-                            @L["NoFoundProject"].Value
+                            @L["NoProjectFound"].Value
                         </span>
                     </div>
                 }
@@ -86,13 +86,13 @@
                             <abp-column size="_6" class="text-end">@(Model.Project.Milestones != null ? (Model.Project.Milestones.Count(a => a.isCompleted) + " / " + Model.Project.Milestones.Count()) : "0/0")</abp-column>
                         </abp-row>
                         <abp-row class="border-bottom">
-                            <abp-column size="_6"><b>@L["InvesmnetReady"].Value:</b></abp-column>
+                            <abp-column size="_6"><b>@L["InvesmentReady"].Value:</b></abp-column>
                             <abp-column size="_6" class="text-end">@Html.Raw((Model.Project.InvesmentReady ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-times text-danger'></i>"))</abp-column>
                         </abp-row>
                     </abp-column>
                     <abp-column size="_6" class="ps-4">
                         <abp-row class="border-bottom">
-                            <abp-column size="_6"><b>@L["Entreprenur"].Value:</b></abp-column>
+                            <abp-column size="_6"><b>@L["Entrepreneur"].Value:</b></abp-column>
                             <abp-column size="_6" class="text-end">@(Model.EntreprenurNameSurname)</abp-column>
                         </abp-row>
                         <abp-row class="border-bottom">
@@ -210,7 +210,7 @@
                             <abp-column size="_6" class="text-center">
                                 <div>
                                     <abp-card-title>
-                                        @L["TotalProjectEvaluation"].Value
+                                        @L["TotalProjectValue"].Value
                                     </abp-card-title>
                                     <h4>
                                         @Model.Project.TotalValuation  @Model.Project.TotalValuationCurrencySymbol
