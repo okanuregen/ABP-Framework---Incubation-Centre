@@ -274,7 +274,9 @@
     "CoFounderOfProjectsAlreadyHasOngoingProject": "Proje Ortaklarından En Az Birinin Zaten Devam Eden Projesi Bulunmaktadır",
     "ProjectName": "Proje Adı",
     "Deadline": "Teslim Tarihi",
-    "My Projects": "Projelerim"
+    "My Projects": "Projelerim",
+    "AllReadyForInvestmentProjects": "Hepsi Yatırıma Hazır Projeler",
+    "MyInvestedInProjects": "Yatırım Yaptığım Projeler"
 
   }
 }
