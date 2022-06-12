@@ -284,6 +284,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         var l = abp.localization.getResource('IncubationCentre');
         var myProjects = @(Json.Serialize(Model.CurrentUser.ProjectsEntrepreneurs != null ? Model.CurrentUser.ProjectsEntrepreneurs.Select(a => a.Id) : new string[] {"00000000-0000-0000-0000-000000000000"}));
+        myProjects = myProjects.length == 0 ? ["00000000-0000-0000-0000-000000000000"] : myProjects;
         var dataEventsTable = $('#EventsTable').DataTable(abp.libs.datatables.normalizeConfiguration({
             processing: true,
             serverSide: true,
