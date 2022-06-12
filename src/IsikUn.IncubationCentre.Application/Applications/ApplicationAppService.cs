@@ -71,7 +71,7 @@ namespace IsikUn.IncubationCentre.Applications
 
         public async Task<ApplicationDto> CreateAsync(CreateUpdateApplicationDto input)
         {
-            var sameMailExist = await _applicationRepository.FindAsync(a => a.SenderMail == input.SenderMail);
+            var sameMailExist = await _applicationRepository.FindAsync(a => a.SenderMail == input.SenderMail && a.ApplicationStatus != ApplicationStatus.Declined);
             if(sameMailExist != null)
             {
                 throw new UserFriendlyException(L["SameMailExistOnDifferentApplication"]);

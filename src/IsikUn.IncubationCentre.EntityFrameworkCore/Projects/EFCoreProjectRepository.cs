@@ -23,7 +23,7 @@ namespace IsikUn.IncubationCentre.Mentors
         {
         }
 
-        public async Task<List<Project>> GetListAsync(ProjectStatus status, bool filterByStatus = false, string filter = null, string name = null, string tags = null, bool filterByinvesmentReady = false, bool invesmentReady = false, bool filterByopenForInvesment = false, bool openForInvesment = false, List<Guid> founderIds = null, List<Guid> investorIds = null, List<Guid> mentorIds = null, List<Guid> collaboratorIds = null, Guid[] entrepreneurIds = null, bool filterByNoMentor = false,
+        public async Task<List<Project>> GetListAsync(ProjectStatus status, Guid[] projectIds = null, bool filterByStatus = false, string filter = null, string name = null, string tags = null, bool filterByinvesmentReady = false, bool invesmentReady = false, bool filterByopenForInvesment = false, bool openForInvesment = false, List<Guid> founderIds = null, List<Guid> investorIds = null, List<Guid> mentorIds = null, List<Guid> collaboratorIds = null, Guid[] entrepreneurIds = null, bool filterByNoMentor = false,
            bool NoMentor = false, string sorting = null, int skipCount = 0, int maxResultCount = int.MaxValue, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
@@ -34,6 +34,7 @@ namespace IsikUn.IncubationCentre.Mentors
                           .Include(a => a.Collaborators).ThenInclude(b => b.IdentityUser)
                           .Include(a => a.Entrepreneurs).ThenInclude(b => b.IdentityUser),
            status,
+           projectIds,
            filterByStatus,
            filter,
            name,
@@ -54,7 +55,7 @@ namespace IsikUn.IncubationCentre.Mentors
             return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancelationToken);
         }
 
-        public async Task<long> GetCountAsync(ProjectStatus status, bool filterByStatus = false, string filter = null, string name = null, string tags = null, bool filterByinvesmentReady = false, bool invesmentReady = false, bool filterByopenForInvesment = false, bool openForInvesment = false, List<Guid> founderIds = null, List<Guid> investorIds = null, List<Guid> mentorIds = null, List<Guid> collaboratorIds = null, Guid[] entrepreneurIds = null, bool filterByNoMentor = false,
+        public async Task<long> GetCountAsync(ProjectStatus status, Guid[] projectIds = null, bool filterByStatus = false, string filter = null, string name = null, string tags = null, bool filterByinvesmentReady = false, bool invesmentReady = false, bool filterByopenForInvesment = false, bool openForInvesment = false, List<Guid> founderIds = null, List<Guid> investorIds = null, List<Guid> mentorIds = null, List<Guid> collaboratorIds = null, Guid[] entrepreneurIds = null, bool filterByNoMentor = false,
            bool NoMentor = false, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
@@ -65,6 +66,7 @@ namespace IsikUn.IncubationCentre.Mentors
                           .Include(a => a.Collaborators)
                           .Include(a => a.Entrepreneurs),
                        status,
+                       projectIds,
                        filterByStatus,
                        filter,
                        name,
@@ -87,6 +89,7 @@ namespace IsikUn.IncubationCentre.Mentors
         protected virtual IQueryable<Project> ApplyFilter(
           IQueryable<Project> query,
            ProjectStatus status,
+           Guid[] projectIds = null,
            bool filterByStatus = false,
            string filter = null,
            string name = null,
@@ -110,6 +113,7 @@ namespace IsikUn.IncubationCentre.Mentors
                         (e.Tags != null ? e.Tags.Contains(filter) : false) ||
                         (e.Id.ToString().Contains(filter))
                         )
+                    .WhereIf(projectIds != null, e => projectIds.Contains(e.Id))
                     .WhereIf(filterByStatus, e => e.Status == status)
                     .WhereIf(!string.IsNullOrWhiteSpace(name), e => e.Name.Contains(name))
                     .WhereIf(!string.IsNullOrWhiteSpace(tags), e => e.Name.Contains(tags))

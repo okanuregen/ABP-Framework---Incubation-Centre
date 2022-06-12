@@ -14,6 +14,7 @@ namespace IsikUn.IncubationCentre.Projects
     {
         public string Filter { get; set; }
         public string Name { get; set; }
+        public Guid[] projectIds { get; set; }
         public DateTime? CompletionDate { get; set; }
         /// <summary>
         /// comma seperated string

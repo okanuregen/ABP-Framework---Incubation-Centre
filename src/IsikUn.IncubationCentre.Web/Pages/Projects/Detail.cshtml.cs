@@ -38,6 +38,8 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
         public List<double> InvestorShares = new List<double>();
         public string EntreprenurNameSurname { get; set; }
 
+        public bool isUserInProject { get; set; }
+
 
 
         private readonly IProjectRepository _projectRepo;
@@ -83,6 +85,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
             InvestorShares.Add(100 - InvestorShares.Sum());
 
             IsAllowedSeeInvestment = _currentUser.IsInRole("admin") || _currentUser.IsInRole("SystemManager") || IsAllowedEdit || (Project.Mentors != null ? Project.Mentors.Any(a => a.IdentityUserId == _currentUser.Id) : false) || (Project.Investors != null ? Project.Investors.Any(a => a.IdentityUserId == _currentUser.Id) : false);
+            isUserInProject = IsAllowedEdit || (Project.Mentors != null ? Project.Mentors.Any(a => a.IdentityUserId == _currentUser.Id) : false) || (Project.Investors != null ? Project.Investors.Any(a => a.IdentityUserId == _currentUser.Id) : false);
 
         }
 
