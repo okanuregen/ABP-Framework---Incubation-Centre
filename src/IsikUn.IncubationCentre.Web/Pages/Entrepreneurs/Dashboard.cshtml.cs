@@ -48,8 +48,8 @@ namespace IsikUn.IncubationCentre.Web.Pages.Entrepreneurs
         {
             var person = await _personRepo.GetWithDetailByIdentityUserIdAsync(_currentUser.GetId());
             CurrentUser = await _entreprenurRepo.GetWithDetailAsync(person.Id);
-            SentRequests = person.SentRequests;
-            ReceivedRequests = person.ReceivedRequests;
+            SentRequests = person.SentRequests != null && person.SentRequests.Any() ? person.SentRequests.OrderByDescending(a => a.CreationTime).ToList() : person.SentRequests;
+            ReceivedRequests = person.ReceivedRequests != null && person.ReceivedRequests.Any() ? person.ReceivedRequests.OrderByDescending(a => a.CreationTime).ToList() : person.ReceivedRequests;
             Tasks = person.Tasks;
             CurrentProject = CurrentUser.MyProjects != null && CurrentUser.MyProjects.Any() ? CurrentUser.MyProjects.ToList().Where(a => a.Status == ProjectStatus.OnGoing).FirstOrDefault() : null;
         }
