@@ -12,55 +12,55 @@
     //Model.CurrentProject = new IsikUn.IncubationCentre.Projects.Project();
 }
 @section scripts
-{
-<abp-script src="/Pages/Entrepreneurs/Dashboard.js" />
+    {
+    <abp-script src="/Pages/Entrepreneurs/Dashboard.js" />
 }
 
-<style>
-    .info-area .border-bottom {
-        padding-top: 10px;
-    }
+    <style>
+        .info-area .border-bottom {
+            padding-top: 10px;
+        }
 
-    .ourTable thead, .ourTable tbody {
-        display: block;
-    }
+        .ourTable thead, .ourTable tbody {
+            display: block;
+        }
 
-    .ourTable tbody {
-        height: 242px;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
+        .ourTable tbody {
+            height: 242px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
 
-    body ::-webkit-scrollbar {
-        width: 9px;
-    }
+        body ::-webkit-scrollbar {
+            width: 9px;
+        }
 
-    body ::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
-        border-radius: 6px;
-    }
+        body ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+            border-radius: 6px;
+        }
 
-    body ::-webkit-scrollbar-thumb {
-        border-radius: 6px;
-        -webkit-box-shadow: inset 0 0 6px #626262e8;
-    }
+        body ::-webkit-scrollbar-thumb {
+            border-radius: 6px;
+            -webkit-box-shadow: inset 0 0 6px #626262e8;
+        }
 
-    .badge-testColor {
-        background-color: #f9ddff;
-    }
+        .badge-testColor {
+            background-color: #f9ddff;
+        }
 
-</style>
-<abp-row>
-    <abp-column size="_12">
-        <abp-card>
-            <abp-card-header>
-                <abp-card-title>
-                    @L["ProgressOfProject"].Value
-                    <i class="fa fa-info-circle ms-2" style="font-size: 14px;" data-toggle="tooltip" data-placement="top" title="@L["ProjectProgressCalculation"].Value"></i>
-                </abp-card-title>
-            </abp-card-header>
-            <abp-card-body>
-                @if (Model.CurrentProject != null)
+    </style>
+    <abp-row>
+        <abp-column size="_12">
+            <abp-card>
+                <abp-card-header>
+                    <abp-card-title>
+                        @L["ProgressOfProject"].Value
+                        <i class="fa fa-info-circle ms-2" style="font-size: 14px;" data-toggle="tooltip" data-placement="top" title="@L["ProjectProgressCalculation"].Value"></i>
+                    </abp-card-title>
+                </abp-card-header>
+                <abp-card-body>
+                    @if (Model.CurrentProject != null)
                 {
                     if (Model.CurrentProject.Milestones != null && Model.CurrentProject.Milestones.Count() > 0)
                     {
@@ -281,8 +281,9 @@
 
 
 <script type="text/javascript">
-    $(function () {
-        var myProjects =  @(Json.Serialize(Model.CurrentUser.ProjectsEntrepreneurs != null ? Model.CurrentUser.ProjectsEntrepreneurs.Select(a => a.Id) : new string[] {" "}));
+    document.addEventListener("DOMContentLoaded", function() {
+        var l = abp.localization.getResource('IncubationCentre');
+        var myProjects = @(Json.Serialize(Model.CurrentUser.ProjectsEntrepreneurs != null ? Model.CurrentUser.ProjectsEntrepreneurs.Select(a => a.Id) : new string[] {"00000000-0000-0000-0000-000000000000"}));
         var dataEventsTable = $('#EventsTable').DataTable(abp.libs.datatables.normalizeConfiguration({
             processing: true,
             serverSide: true,
@@ -291,7 +292,7 @@
             autoWidth: false,
             scrollCollapse: true,
             order: [[0, "asc"]],
-            ajax: abp.libs.datatables.createAjax(isikUn.incubationCentre.events.event.getList, {projectIds :  myProjects}),
+            ajax: abp.libs.datatables.createAjax(isikUn.incubationCentre.events.event.getList, { projectIds: myProjects }),
             columnDefs: [
                 {
                     title: l('Title'),
@@ -300,7 +301,7 @@
                 {
                     title: l('Date'),
                     data: "eventDate",
-                    render: function (data) {
+                    render: function(data) {
                         if (data == null) return "-";
                         try {
                             var date = new Date(data).toLocaleDateString();
@@ -317,7 +318,7 @@
                 {
                     title: l('Project'),
                     data: "project",
-                    render: function (data) {
+                    render: function(data) {
                         if (data == null) return "-";
                         if (data.name == null) return "-";
                         return data.name;
@@ -327,7 +328,7 @@
         }));
 
 
-        $('#NewEventButton').click(function (e) {
+        $('#NewEventButton').click(function(e) {
             e.preventDefault();
             createEventModal.open();
         });
