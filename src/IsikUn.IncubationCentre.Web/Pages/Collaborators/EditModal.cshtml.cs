@@ -26,30 +26,22 @@ namespace IsikUn.IncubationCentre.Web.Pages.Collaborators
 
 
         public List<SelectListItem> Skills { get; set; }
-        public List<SelectListItem> Users { get; set; }
-
 
 
         private readonly ICollaboratorAppService _collaboratorAppService;
         private readonly ICollaboratorRepository _collaboratorRepository;
         private readonly ISkillAppService _skillAppService;
-        private readonly IIdentityUserRepository _identityUserRepository;
-        private readonly IIdentityRoleRepository _identityRoleRepository;
         private readonly IPersonSkillRepository _personSkillRepository;
 
         public EditModalModel(
             ICollaboratorAppService collaboratorAppService,
             ICollaboratorRepository collaboratorRepository,
             ISkillAppService skillAppService,
-            IIdentityUserRepository identityUserRepository,
-            IIdentityRoleRepository identityRoleRepository,
             IPersonSkillRepository personSkillRepository)
         {
             this._collaboratorAppService = collaboratorAppService;
             this._collaboratorRepository = collaboratorRepository;
             this._skillAppService = skillAppService;
-            this._identityUserRepository = identityUserRepository;
-            this._identityRoleRepository = identityRoleRepository;
             this._personSkillRepository = personSkillRepository;
         }
 
@@ -63,7 +55,8 @@ namespace IsikUn.IncubationCentre.Web.Pages.Collaborators
                 Experience = collaborator.Experience,
                 isActivated = collaborator.isActivated,
                 IdentityUserId = collaborator.IdentityUserId.Value,
-                SkillIds = collaborator.Skills.Select(a => a.Id).ToList()
+                SkillIds = collaborator.Skills.Select(a => a.Id).ToList(),
+                CreationTime = collaborator.CreationTime
             };
 
             var skills = await _skillAppService.GetAllItemsAsync();
@@ -71,25 +64,6 @@ namespace IsikUn.IncubationCentre.Web.Pages.Collaborators
                 .Select(x => new SelectListItem(x.Name, x.Id.ToString(), Collaborator.SkillIds.Contains(x.Id)))
                 .ToList();
 
-            var collaboratorRole = (await _identityRoleRepository.GetListAsync(filter: "Collaborator")).FirstOrDefault();
-            if (collaboratorRole != null)
-            {
-                var users = await _identityUserRepository.GetListAsync();
-                Users = users.Where(a => (_identityUserRepository.GetRolesAsync(a.Id).Result).Select(b => b.Id).Contains(collaboratorRole.Id))
-                        .Select(x => new SelectListItem(string.Format("{0} ({1} {2})", x.UserName, x.Name, x.Surname), x.Id.ToString(), x.Id == Collaborator.IdentityUserId))
-                        .ToList();
-            }
-            else
-            {
-                Users = new List<SelectListItem>
-                {
-                    new SelectListItem
-                    {
-                        Text = L["NoUserFoundWithThisRole",L["Collaborator"]],
-                        Value = ""
-                    }
-                };
-            }
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -139,19 +113,11 @@ namespace IsikUn.IncubationCentre.Web.Pages.Collaborators
         [DisplayName("Skills")]
         public override List<Guid> SkillIds { get; set; }
 
-        [Required]
-        [SelectItems(nameof(EditModalModel.Users))]
-        [DisplayName("User")]
-        public override Guid IdentityUserId { get; set; }
-
         [TextArea(Rows = 4)]
         public override string Experience { get => base.Experience; set => base.Experience = value; }
 
         [TextArea(Rows = 4)]
         public override string About { get => base.About; set => base.About = value; }
-
-        [DisplayName("isActive")]
-        public override bool isActivated { get => base.isActivated; set => base.isActivated = value; }
     }
 
 }

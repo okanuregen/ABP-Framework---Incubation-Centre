@@ -140,7 +140,7 @@ namespace IsikUn.IncubationCentre.Applications
                 LockoutEnabled = false,
                 Name = application.SenderName,
                 Surname = application.SenderSurname,
-                Password = "123456Aa.",
+                Password = CreatePassword(),
                 RoleNames = roles
             };
             var newUser = await _identityUserAppService.CreateAsync(identityUser);
@@ -243,6 +243,27 @@ namespace IsikUn.IncubationCentre.Applications
             ObjectMapper.Map(input, application);
             application = await _applicationRepository.UpdateAsync(application, autoSave: true);
             return ObjectMapper.Map<Application, ApplicationDto>(application);
+        }
+
+        public string CreatePassword()
+        {
+            int length = 10;
+            const string valid = "abcdefghijklmnopqrstuvwxyz";
+            const string cValid = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string nValid = "1234567890";
+
+            StringBuilder res = new StringBuilder();
+            Random rnd = new Random();
+            for(int i = 0; i < length-1; i++)
+            {
+                if(i == length / 2)
+                {
+                    res.Append(".");
+                    continue;
+                }
+                res.Append(i % 3 == 0 ? valid[rnd.Next(valid.Length - 1)] : (i % 3 == 1 ? cValid[rnd.Next(cValid.Length - 1)] : nValid[rnd.Next(nValid.Length - 1)]));
+            }
+            return res.ToString();
         }
     }
 }

@@ -12,123 +12,140 @@
 }
 @section scripts
     {
-    <abp-script src="/Pages/Investors/Detail.js" />
+<abp-script src="/Pages/Investors/Detail.js" />
 }
-    <script>
-        var int = setInterval(function() {
-            if (typeof (abp) != undefined && typeof (page) != undefined) {
-                var l = l || abp.localization.getResource('IncubationCentre');
-                var editProjectModal = new abp.ModalManager(abp.appPath + 'Projects/EditModal');
-
-
-                var dataTableProject = $('#ProjectsTable').DataTable(
-                    abp.libs.datatables.normalizeConfiguration({
-                        serverSide: false,
-                        paging: true,
-                        scrollY: '302px',
-                        order: [[1, "asc"]],
-                        searching: true,
-                        scrollX: true,
-                        ajax: abp.libs.datatables.createAjax(
-                            isikUn.incubationCentre.investors.investor.getProjectList,
-                            { id: '@Model.id' }
-                        ),
-                        columnDefs: [
-                            {
-                                title: l('Actions'),
-                                rowAction: {
-                                    items:
-                                        [
-                                            {
-                                                text: l('Detail'),
-                                                visible:
-                                                    abp.auth.isGranted('IncubationCentre.Projects'),
-                                                action: function(data) {
-                                                    location.href = "/Projects/Detail?id=" + data.record.id;
-                                                }
+<script>
+    var int = setInterval(function() {
+        if (typeof (abp) != undefined && typeof (page) != undefined) {
+            debugger;
+            var l = abp.localization.getResource('IncubationCentre');
+            var dataTable = $('#InvestedProjects').DataTable(
+                abp.libs.datatables.normalizeConfiguration({
+                    serverSide: true,
+                    paging: true,
+                    order: [[1, "asc"]],
+                    searching: true,
+                    scrollX: true,
+                    ajax: abp.libs.datatables.createAjax(
+                        isikUn.incubationCentre.projects.project.getListByInvestor,
+                        function() {
+                            return {
+                                "id" : "@Model.id"
+                            }
+                        }
+                    ),
+                    columnDefs: [
+                        { // TODO this the part that needs to be changed
+                            title: l('Actions'),
+                            rowAction: {
+                                items:
+                                    [
+                                        {
+                                            text: l('Detail'),
+                                            visible:
+                                                abp.auth.isGranted('IncubationCentre.Projects'),
+                                            action: function (data) {
+                                                location.href = "/Projects/Detail?id="+data.record.id;
                                             }
-
-                                        ]
-                                }
-                            },
-                            {
-                                title: l('Name'),
-                                data: "name"
-                            },
-                            {
-                                title: l('Status'),
-                                data: "status",
-                                render: function(data) {
-                                    return l("Enum:ProjectStatus_" + data);
-                                }
-                            },
-                            {
-                                title: l('Tags'),
-                                data: "tags",
-                                render: function(data) {
-                                    if (data == null || data == "") return "-";
-                                    var text = "";
-                                    data.split(",").forEach(function(tag) {
-                                        text += `<span class="badge badge-info me-2">${tag}</span>`
-                                    });
-                                    return text == "" ? "-" : text;
-                                }
-                            },
-                            {
-                                title: l('CompletionDate'),
-                                data: "completionDate",
-                                render: function(data) {
-                                    if (data == null) return "-";
-                                    try {
-                                        var date = new Date(data).toLocaleDateString();
-                                        return date != "Invalid Date" ? date : "-";
-                                    } catch {
-                                        return "-";
-                                    }
+                                        }
+                                    ]
+                            }
+                        },
+                        {
+                            title: l('Name'),
+                            data: "name"
+                        },
+                        {
+                            title: l('Status'),
+                            data: "status",
+                            render: function (data) {
+                                return l("Enum:ProjectStatus_" + data);
+                            }
+                        },
+                        {
+                            title: l('CompletionDate'),
+                            data: "completionDate",
+                            render: function (data) {
+                                if (data == null) return "-";
+                                try {
+                                    var date = new Date(data).toLocaleDateString();
+                                    return date != "Invalid Date" ? date : "-";
+                                } catch {
+                                    return "-";
                                 }
                             }
-                        ]
-                    }));
-
-                editProjectModal.onResult(function() {
-                    dataTableProject.ajax.reload();
-                });
-
-
-            }, 500)
-    </script>
-    <style>
-        .info-area .border-bottom {
-            padding-top: 10px;
+                        },
+                        {
+                            title: l('Tags'),
+                            data: "tags",
+                            render: function (data) {
+                                if (data == null) return "-";
+                                var text = "";
+                                data.split(",").forEach(function (tag) {
+                                    text += `<span class="badge badge-info me-2">${tag}</span>`
+                                });
+                                return text == "" ? "-" : text;
+                            }
+                        },
+                        {
+                            title: l('SharePerInvest'),
+                            data: "sharePerInvest",
+                            render: function (data) {
+                                return data + " %";
+                            }
+                        },
+                        {
+                            title: l('InvesmentReady'),
+                            data: "invesmentReady",
+                            render: function (data) {
+                                return data ? `<span class="badge badge-success p-2">${l('Yes')}</span>` : `<span class="badge badge-danger p-2">${l('No')}</span>`
+                            }
+                        },
+                        {
+                            title: l('OpenForInvesment'),
+                            data: "openForInvesment",
+                            render: function (data) {
+                                return data ? `<span class="badge badge-success p-2">${l('Yes')}</span>` : `<span class="badge badge-danger p-2">${l('No')}</span>`
+                            }
+                        }
+                    ]
+            }));
+            clearInterval(int);
         }
+    }, 500);
+</script>
+<style>
+    .info-area .border-bottom {
+        padding-top: 10px;
+    }
 
-        [data-role="setTab"] {
-            cursor: pointer;
-        }
+    [data-role="setTab"] {
+        cursor: pointer;
+    }
 
-        body ::-webkit-scrollbar {
-            width: 9px;
-        }
+    body ::-webkit-scrollbar {
+        width: 9px;
+    }
 
-        body ::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
-            border-radius: 6px;
-        }
+    body ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+        border-radius: 6px;
+    }
 
-        body ::-webkit-scrollbar-thumb {
-            border-radius: 6px;
-            -webkit-box-shadow: inset 0 0 6px #626262e8;
-        }
-    </style>
-    <abp-row class="pb-4">
-        <abp-column size="_4">
-            <abp-row>
-                <abp-column size="_12">
-                    <abp-card>
-                        <abp-card-header>
-                            <abp-card-title>
-                                @L["GeneralInformations"].Value
-                                @if (Model.IsMyPage)
+    body ::-webkit-scrollbar-thumb {
+        border-radius: 6px;
+        -webkit-box-shadow: inset 0 0 6px #626262e8;
+    }
+</style>
+<abp-row class="pb-4">
+    <abp-column size="_4">
+        <abp-row>
+            <abp-column size="_12">
+                <abp-card>
+                    <abp-card-header>
+                        <abp-card-title>
+                            @L["GeneralInformations"].Value
+                            @if (Model.IsMyPage)
                             {
                                 <i class="fa fa-edit float-end" id="editMyInfo" style="cursor:pointer;"></i>
                             }
@@ -176,7 +193,7 @@
                                     <abp-row class="border-bottom">
                                         <abp-column size="_6"><b>@L["Email"].Value:</b></abp-column>
                                         <abp-column size="_6" class="text-end">
-                                            <span data-long-name="true" data-long-name-size="24">
+                                            <span data-long-name="true" data-long-name-size="24" style="text-transform:none;">
                                                 @(!string.IsNullOrEmpty(Model.Investor.IdentityUser.Email) ? Model.Investor.IdentityUser.Email : "-")
                                             </span>
                                         </abp-column>
@@ -239,11 +256,11 @@
                 <abp-card data-role="tab" id="ProjectsTab">
                     <abp-card-header>
                         <abp-card-title>
-                            @L["Projects"].Value
+                            @L["InvestedProjects"].Value
                         </abp-card-title>
                     </abp-card-header>
                     <abp-card-body>
-                        <abp-table striped-rows="true" id="ProjectsTable"></abp-table>
+                        <abp-table striped-rows="true" id="InvestedProjects"></abp-table>
                     </abp-card-body>
                 </abp-card>
 

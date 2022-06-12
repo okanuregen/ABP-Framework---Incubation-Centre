@@ -63,7 +63,8 @@ namespace IsikUn.IncubationCentre.Web.Pages.SystemManagers
                 Experience = systemManager.Experience,
                 isActivated = systemManager.isActivated,
                 IdentityUserId = systemManager.IdentityUserId.Value,
-                SkillIds = systemManager.Skills.Select(a => a.Id).ToList()
+                SkillIds = systemManager.Skills.Select(a => a.Id).ToList(),
+                CreationTime = systemManager.CreationTime
             };
 
             var skills = await _skillAppService.GetAllItemsAsync();

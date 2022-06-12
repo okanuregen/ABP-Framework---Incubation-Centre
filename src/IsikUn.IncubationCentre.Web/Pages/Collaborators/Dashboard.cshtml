@@ -50,11 +50,11 @@
 
 </style>
 <abp-row>
-    <abp-column size="_12">
+     <abp-column size="_12">
         <abp-card>
             <abp-card-header>
                 <abp-card-title>
-                    @L["ProgressOfCurrentProject"].Value
+                    @L["ProgressOfProject"].Value
                     <i class="fa fa-info-circle ms-2" style="font-size: 14px;" data-toggle="tooltip" data-placement="top" title="@L["ProjectProgressCalculation"].Value"></i>
                 </abp-card-title>
             </abp-card-header>
@@ -63,7 +63,7 @@
                 {
                     if (Model.CurrentProject.Milestones != null && Model.CurrentProject.Milestones.Count() > 0)
                     {
-                        <abp-progress-bar type="Success" min-value="0" max-value="100" value="@Model.CurrentProject.Milestones.Count(a => a.isCompleted) * 100 /Model.CurrentProject.Milestones.Count()" animation="true" strip="true"> @Model.CurrentProject.Milestones.Count(a => a.isCompleted) * 100 /Model.CurrentProject.Milestones.Count() </abp-progress-bar>
+                        <abp-progress-bar type="Success" min-value="0" max-value="100" value="@Model.CurrentProject.Milestones.Count(a => a.isCompleted) == 0 ? 5 : @Model.CurrentProject.Milestones.Count(a => a.isCompleted) * 100 /Model.CurrentProject.Milestones.Count()" animation="true" strip="true"> @(Model.CurrentProject.Milestones.Count(a => a.isCompleted) * 100 /Model.CurrentProject.Milestones.Count()) % </abp-progress-bar>
                     }
                     else
                     {
@@ -74,7 +74,7 @@
                 {
                     <div class="text-center mb-2">
                         <span class="alert alert-info text-center rounded px-7">
-                            @L["NoFoundOnGoingProject"].Value
+                            @L["NoProjectFound"].Value
                         </span>
                     </div>
                 }

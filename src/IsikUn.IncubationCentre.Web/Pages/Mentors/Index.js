@@ -18,6 +18,14 @@ $(function () {
                         items:
                             [
                                 {
+                                    text: l('Detail'),
+                                    visible:
+                                        abp.auth.isGranted('IncubationCentre.Mentors'),
+                                    action: function (data) {
+                                        location.href = "/Mentors/Detail?id=" + data.record.id;
+                                    }
+                                },
+                                {
                                     text: l('Edit'),
                                     visible:
                                         abp.auth.isGranted('IncubationCentre.Mentors.Edit'),

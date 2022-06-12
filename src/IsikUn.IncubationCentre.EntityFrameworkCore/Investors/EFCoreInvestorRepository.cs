@@ -103,6 +103,7 @@ namespace IsikUn.IncubationCentre.Investors
         {
             var dbSet = (await GetDbSetAsync())
                 .Include(c => c.Skills)
+                .Include(c => c.InvestedProjects).ThenInclude(b => b.Milestones)
                 .Include(a => a.IdentityUser);
             var rs = await dbSet.Where(a => a.Id == id).FirstOrDefaultAsync(cancellationToken);
             return rs;

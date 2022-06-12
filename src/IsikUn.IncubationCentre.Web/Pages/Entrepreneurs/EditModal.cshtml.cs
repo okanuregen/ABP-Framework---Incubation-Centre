@@ -63,7 +63,8 @@ namespace IsikUn.IncubationCentre.Web.Pages.Entrepreneurs
                 Experience = entrepreneur.Experience,
                 isActivated = entrepreneur.isActivated,
                 IdentityUserId = entrepreneur.IdentityUserId.Value,
-                SkillIds = entrepreneur.Skills.Select(a => a.Id).ToList()
+                SkillIds = entrepreneur.Skills.Select(a => a.Id).ToList(),
+                CreationTime = entrepreneur.CreationTime
             };
 
             var skills = await _skillAppService.GetAllItemsAsync();

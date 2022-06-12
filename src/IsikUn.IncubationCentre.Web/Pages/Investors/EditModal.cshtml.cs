@@ -26,30 +26,23 @@ namespace IsikUn.IncubationCentre.Web.Pages.Investors
 
 
         public List<SelectListItem> Skills { get; set; }
-        public List<SelectListItem> Users { get; set; }
 
 
 
         private readonly IInvestorAppService _investorAppService;
         private readonly IInvestorRepository _investorRepository;
         private readonly ISkillAppService _skillAppService;
-        private readonly IIdentityUserRepository _identityUserRepository;
-        private readonly IIdentityRoleRepository _identityRoleRepository;
         private readonly IPersonSkillRepository _personSkillRepository;
 
         public EditModalModel(
             IInvestorAppService investorAppService,
             IInvestorRepository investorRepository,
             ISkillAppService skillAppService,
-            IIdentityUserRepository identityUserRepository,
-            IIdentityRoleRepository identityRoleRepository,
             IPersonSkillRepository personSkillRepository)
         {
             this._investorAppService = investorAppService;
             this._investorRepository = investorRepository;
             this._skillAppService = skillAppService;
-            this._identityUserRepository = identityUserRepository;
-            this._identityRoleRepository = identityRoleRepository;
             this._personSkillRepository = personSkillRepository;
         }
 
@@ -63,7 +56,9 @@ namespace IsikUn.IncubationCentre.Web.Pages.Investors
                 Experience = investor.Experience,
                 isActivated = investor.isActivated,
                 IdentityUserId = investor.IdentityUserId.Value,
-                SkillIds = investor.Skills.Select(a => a.Id).ToList()
+                SkillIds = investor.Skills.Select(a => a.Id).ToList(),
+                CreationTime = investor.CreationTime
+
             };
 
             var skills = await _skillAppService.GetAllItemsAsync();
@@ -71,25 +66,6 @@ namespace IsikUn.IncubationCentre.Web.Pages.Investors
                 .Select(x => new SelectListItem(x.Name, x.Id.ToString(), Investor.SkillIds.Contains(x.Id)))
                 .ToList();
 
-            var investorRole = (await _identityRoleRepository.GetListAsync(filter: "Investor")).FirstOrDefault();
-            if (investorRole != null)
-            {
-                var users = await _identityUserRepository.GetListAsync();
-                Users = users.Where(a => (_identityUserRepository.GetRolesAsync(a.Id).Result).Select(b => b.Id).Contains(investorRole.Id))
-                        .Select(x => new SelectListItem(string.Format("{0} ({1} {2})", x.UserName, x.Name, x.Surname), x.Id.ToString(), x.Id == Investor.IdentityUserId))
-                        .ToList();
-            }
-            else
-            {
-                Users = new List<SelectListItem>
-                {
-                    new SelectListItem
-                    {
-                        Text = L["NoUserFoundWithThisRole",L["Investor"]],
-                        Value = ""
-                    }
-                };
-            }
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -139,19 +115,13 @@ namespace IsikUn.IncubationCentre.Web.Pages.Investors
         [DisplayName("Skills")]
         public override List<Guid> SkillIds { get; set; }
 
-        [Required]
-        [SelectItems(nameof(EditModalModel.Users))]
-        [DisplayName("User")]
-        public override Guid IdentityUserId { get; set; }
-
         [TextArea(Rows = 4)]
         public override string Experience { get => base.Experience; set => base.Experience = value; }
 
         [TextArea(Rows = 4)]
         public override string About { get => base.About; set => base.About = value; }
 
-        [DisplayName("isActive")]
-        public override bool isActivated { get => base.isActivated; set => base.isActivated = value; }
+    
     }
 
 }

@@ -6,7 +6,7 @@ $(function () {
 
     $('#JoinProjectButton').click(function (e) {
         e.preventDefault();
-        location.href = "/Projects?status=Ongoing";
+        location.href = "/Projects";
     });
 
     $('#NewRequestButton').click(function (e) {
