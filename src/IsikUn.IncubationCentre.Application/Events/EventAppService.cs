@@ -8,22 +8,30 @@ using Volo.Abp;
 using System.Collections.Generic;
 using System.Linq;
 using IsikUn.IncubationCentre.Localization;
+using IsikUn.IncubationCentre.People;
 
 namespace IsikUn.IncubationCentre.Events
 {
     public class EventAppService : ApplicationService, IEventAppService
     {
         private readonly IEventRepository _eventRepository;
+        private readonly IPersonRepository _personRepository;
 
-        public EventAppService(IEventRepository eventRepository)
+        public EventAppService(IEventRepository eventRepository, IPersonRepository personRepository)
         {
             this._eventRepository = eventRepository;
+            this._personRepository = personRepository;
+            this._personRepository = personRepository;
             LocalizationResource = typeof(IncubationCentreResource);
         }
 
         [Authorize(IncubationCentrePermissions.Events.Create)]
         public async Task<EventDto> CreateAsync(CreateUpdateEventDto input)
         {
+            if(input.EventDate <= DateTime.Now)
+            {
+                throw new UserFriendlyException(L["DateCannotBePast"]);
+            }
             var projectHasTheEvent = await _eventRepository.FindAsync(a => a.ProjectId == input.ProjectId && a.Title == input.Title);
             if (projectHasTheEvent != null)
             {
@@ -31,6 +39,8 @@ namespace IsikUn.IncubationCentre.Events
             }
 
             var Event = ObjectMapper.Map<CreateUpdateEventDto, Event>(input);
+            var creatorPerson = await _personRepository.GetWithDetailByIdentityUserIdAsync(CurrentUser.Id.Value);
+            Event.CreatorPersonId = creatorPerson.Id;
             Event = await _eventRepository.InsertAsync(Event, autoSave: true);
             return ObjectMapper.Map<Event, EventDto>(Event);
         }
@@ -71,6 +81,11 @@ namespace IsikUn.IncubationCentre.Events
         [Authorize(IncubationCentrePermissions.Events.Edit)]
         public async Task<EventDto> UpdateAsync(Guid id, CreateUpdateEventDto input)
         {
+            if (input.EventDate <= DateTime.Now)
+            {
+                throw new UserFriendlyException(L["DateCannotBePast"]);
+            }
+
             var ProjectHasTheEvent = await _eventRepository.FindAsync(a => a.ProjectId == input.ProjectId && a.Title == input.Title && a.Id != id);
             if (ProjectHasTheEvent != null)
             {

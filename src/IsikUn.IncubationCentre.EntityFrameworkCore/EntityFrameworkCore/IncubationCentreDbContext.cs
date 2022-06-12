@@ -308,12 +308,15 @@ public class IncubationCentreDbContext :
         builder.Entity<Event>(b =>
         {
             b.ToTable(IncubationCentreConsts.DbTablePrefix + "Events", IncubationCentreConsts.DbSchema);
-            b.ConfigureByConvention(); 
-                
+            b.ConfigureByConvention();
+
+
+            b.HasOne(c => c.CreatorPerson)
+               .WithMany(e => e.CreatedEvents)
+               .OnDelete(DeleteBehavior.NoAction);
 
             /* Configure more properties here */
         });
-
 
         builder.Entity<Currency>(b =>
         {

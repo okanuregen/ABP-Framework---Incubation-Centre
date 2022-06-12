@@ -290,6 +290,7 @@
     "PercentageOfShareholders": "Hissedarların Yüzdesi",
     "ListOfAssociatedPeople": "İlişkili Kişilerin Listesi",
     "TotalProjectValue": "Toplam Proje Değeri",
-    "ProjectTags": "Projenin Etiketleri"
+    "ProjectTags": "Projenin Etiketleri",
+    "DateCannotBePast": "Tarih Bugünden Önce Olamaz"
   }
 }

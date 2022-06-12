@@ -23,7 +23,7 @@ namespace IsikUn.IncubationCentre.Events
         {
             var query = ApplyFilter(
                                 (await GetQueryableAsync())
-                                    .Include(a => a.Creator)
+                                    .Include(a => a.CreatorPerson)
                                     .Include(b => b.Project)
                                 ,filter,title,description,projectName,creatorUserName);
             return await query.LongCountAsync(GetCancellationToken(cancelationToken));
@@ -33,7 +33,7 @@ namespace IsikUn.IncubationCentre.Events
         {
             var query = ApplyFilter(
                             (await GetQueryableAsync())
-                                .Include(a => a.Creator)
+                                .Include(a => a.CreatorPerson)
                                 .Include(b => b.Project)
                             , filter, title, description, projectName, creatorUserName);
             query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? "Title asc" : sorting);
@@ -53,13 +53,13 @@ namespace IsikUn.IncubationCentre.Events
                     .WhereIf(!string.IsNullOrWhiteSpace(filter),
                             e => e.Title.Contains(filter) ||
                             e.Description.Contains(filter) ||
-                            (e.Creator != null && e.Creator.IdentityUser != null && e.Creator.IdentityUser.UserName != null ? e.Creator.IdentityUser.UserName.Contains(filter) : false) ||
+                            (e.CreatorPerson != null && e.CreatorPerson.IdentityUser != null && e.CreatorPerson.IdentityUser.UserName != null ? e.CreatorPerson.IdentityUser.UserName.Contains(filter) : false) ||
                             (e.Project != null && e.Project.Name != null ? e.Project.Name.Contains(filter) : false)
                         )
                     .WhereIf(!string.IsNullOrWhiteSpace(title), e => e.Title.Contains(title))
                     .WhereIf(!string.IsNullOrWhiteSpace(description), e => e.Description.Contains(description))
-                    .WhereIf(!string.IsNullOrWhiteSpace(projectName), e => e.Project != null && e.Project.Name != null ? e.Project.Name.Contains(projectName) : false)
-                    .WhereIf(!string.IsNullOrWhiteSpace(creatorUserName), e => e.Creator != null && e.Creator.IdentityUser != null && e.Creator.IdentityUser.UserName != null ? e.Creator.IdentityUser.UserName.Contains(creatorUserName) : false);
+                    .WhereIf(!string.IsNullOrWhiteSpace(projectName), e => e.Project != null && e.Project.Name != null ? e.Project.Name == projectName : false)
+                    .WhereIf(!string.IsNullOrWhiteSpace(creatorUserName), e => e.CreatorPerson != null && e.CreatorPerson.IdentityUser != null && e.CreatorPerson.IdentityUser.UserName != null ? e.CreatorPerson.IdentityUser.UserName.Contains(creatorUserName) : false);
         }
     }
 }

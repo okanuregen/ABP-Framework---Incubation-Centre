@@ -43,7 +43,7 @@ $(function () {
                                 text: l('Edit'),
                                 visible: function (data) {
                                     debugger;
-                                    return data.record.creatorId == abp.currentUser.id
+                                    return data.creatorPerson.identityUserId == abp.currentUser.id
                                 },
                                 action: function (data) {
                                     editEventModal.open({ id: data.record.id });
@@ -53,7 +53,7 @@ $(function () {
                                 text: l('Delete'),
                                 visible: function (data) {
                                     debugger;
-                                    return data.record.creatorId == abp.currentUser.id
+                                    return data.creatorPerson.identityUserId == abp.currentUser.id
                                 },
                                 confirmMessage: function (data) {
                                     return l('EntityDeletionConfirmationMessage', data.record.title);
@@ -75,7 +75,16 @@ $(function () {
             },
             {
                 title: l('Date'),
-                data: "eventDate"
+                data: "eventDate",
+                render: function (data) {
+                    if (data == null) return "-";
+                    try {
+                        var date = new Date(data).toLocaleDateString();
+                        return date != "Invalid Date" ? date : "-";
+                    } catch {
+                        return "-";
+                    }
+                }
             },
             {
                 title: l('Description'),

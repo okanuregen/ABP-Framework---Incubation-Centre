@@ -30,14 +30,14 @@ namespace IsikUn.IncubationCentre.Web.Pages.Events
             this._projectService = projectService;
         }
 
-        public async void OnGet()
+        public async Task OnGet()
         {
 
-            var allProjects = await _projectService.GetListAsync(new GetProjectsInput());
+            var allProjects = await _projectRepo.GetListAsync(ProjectStatus.Started);
 
-            if (allProjects.TotalCount > 0)
+            if (allProjects != null && allProjects.Count()> 0)
             {
-                var personProjects = allProjects.Items.ToList().Where(a =>
+                var personProjects = allProjects.Where(a =>
                     (a.Mentors != null ? a.Mentors.Select(b => b.IdentityUserId).Contains(CurrentUser.Id.Value) : false) ||
                     (a.Investors != null ? a.Investors.Select(b => b.IdentityUserId).Contains(CurrentUser.Id.Value) : false) ||
                     (a.Entrepreneurs != null ? a.Entrepreneurs.Select(b => b.IdentityUserId).Contains(CurrentUser.Id.Value) : false) ||

@@ -16,7 +16,8 @@ namespace IsikUn.IncubationCentre.Events
         public string Description { get; set; }
         public Guid ProjectId { get; set; }
         public Project Project { get; set; }
-        public Person Creator { get; set; }
+        public Person CreatorPerson { get; set; }
+        public Guid CreatorPersonId { get; set; }
 
     }
 }

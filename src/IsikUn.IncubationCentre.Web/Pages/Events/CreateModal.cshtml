@@ -17,11 +17,10 @@
             <abp-select asp-for="Event.ProjectId" asp-items="Model.Projects"/>
             <abp-input asp-for="Event.Title" />
             <abp-input asp-for="Event.EventDate" />
-            <abp-input asp-for="Event.Description" />
 
             <div class="mb-3">
                 <label class="form-label" for="Event_Description">@L["Description"].Value</label>
-                <input type="text" id="Event_Description" name="Event.Description" value="" class="form-control ">
+                <textarea rows="4" type="text" id="Event_Description" name="Event.Description" value="" class="form-control "></textarea>
                 <span class="text-danger field-validation-valid" data-valmsg-for="Event.Description" data-valmsg-replace="true"></span>
             </div>
 

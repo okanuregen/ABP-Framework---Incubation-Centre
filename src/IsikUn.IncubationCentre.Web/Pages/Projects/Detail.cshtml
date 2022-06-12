@@ -30,20 +30,20 @@
                 {
                     if (Model.Project.Milestones != null && Model.Project.Milestones.Count() > 0)
                     {
-                        <abp-progress-bar type="Success" min-value="0" max-value="100" value="@Model.Project.Milestones.Count(a => a.isCompleted) == 0 ? 5 : @Model.Project.Milestones.Count(a => a.isCompleted) * 100 /Model.Project.Milestones.Count()" animation="true" strip="true"> @(Model.Project.Milestones.Count(a => a.isCompleted) * 100 /Model.Project.Milestones.Count()) % </abp-progress-bar>
+                                <abp-progress-bar type="Success" min-value="0" max-value="100" value="@Model.Project.Milestones.Count(a => a.isCompleted) == 0 ? 5 : @Model.Project.Milestones.Count(a => a.isCompleted) * 100 /Model.Project.Milestones.Count()" animation="true" strip="true"> @(Model.Project.Milestones.Count(a => a.isCompleted) * 100 /Model.Project.Milestones.Count()) % </abp-progress-bar>
                     }
                     else
                     {
-                        <abp-progress-bar type="Success" min-value="0" max-value="100" value="3" animation="true" strip="true">0%</abp-progress-bar>
+                                <abp-progress-bar type="Success" min-value="0" max-value="100" value="3" animation="true" strip="true">0%</abp-progress-bar>
                     }
                 }
                 else
                 {
-                    <div class="text-center mb-2">
-                        <span class="alert alert-info text-center rounded px-7">
+                        <div class="text-center mb-2">
+                            <span class="alert alert-info text-center rounded px-7">
                             @L["NoProjectFound"].Value
-                        </span>
-                    </div>
+                            </span>
+                        </div>
                 }
             </abp-card-body>
         </abp-card>
@@ -56,7 +56,7 @@
                     @L["GeneralInformations"].Value
                     @if (Model.IsAllowedEdit)
                     {
-                        <i class="fa fa-edit float-end" id="editMyInfo" style="cursor:pointer;"></i>
+                            <i class="fa fa-edit float-end" id="editMyInfo" style="cursor:pointer;"></i>
                     }
                 </abp-card-title>
             </abp-card-header>
@@ -144,7 +144,7 @@
                             @L["ListOfAssociatedPeople"].Value
                             @if (Model.IsInvestor)
                             {
-                                <button class="btn btn-info float-end px-4" id="investButton">@L["Invest"]</button>
+                                    <button class="btn btn-info float-end px-4" id="investButton">@L["Invest"]</button>
                             }
                         </abp-card-title>
                     </abp-card-header>
@@ -159,54 +159,54 @@
                                         </tr>
                                         @foreach (var person in Model.Project.Collaborators)
                                         {
-                                            <tr>
+                                                <tr>
                                                 @if (person.IdentityUser != null &&
-                                               !string.IsNullOrEmpty(person.IdentityUser.Name) &&
-                                               !string.IsNullOrEmpty(person.IdentityUser.Surname)
-                                               )
+                                              !string.IsNullOrEmpty(person.IdentityUser.Name) &&
+                                              !string.IsNullOrEmpty(person.IdentityUser.Surname)
+                                              )
                                                 {
-                                                    <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",person.IdentityUser.Name, person.IdentityUser.Surname)</td>
+                                                            <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",person.IdentityUser.Name, person.IdentityUser.Surname)</td>
                                                 }
                                                 else
                                                 {
-                                                    <td class="py-2">-</td>
+                                                            <td class="py-2">-</td>
                                                 }
-                                                <td class="py-2">@L["Collaborator"]</td>
-                                            </tr>
+                                                    <td class="py-2">@L["Collaborator"]</td>
+                                                </tr>
                                         }
                                         @foreach (var person in Model.Project.Mentors)
                                         {
-                                            <tr>
+                                                <tr>
                                                 @if (person.IdentityUser != null &&
-                                               !string.IsNullOrEmpty(person.IdentityUser.Name) &&
-                                               !string.IsNullOrEmpty(person.IdentityUser.Surname)
-                                               )
+                                              !string.IsNullOrEmpty(person.IdentityUser.Name) &&
+                                              !string.IsNullOrEmpty(person.IdentityUser.Surname)
+                                              )
                                                 {
-                                                    <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",person.IdentityUser.Name, person.IdentityUser.Surname)</td>
+                                                            <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",person.IdentityUser.Name, person.IdentityUser.Surname)</td>
                                                 }
                                                 else
                                                 {
-                                                    <td class="py-2">-</td>
+                                                            <td class="py-2">-</td>
                                                 }
-                                                <td class="py-2">@L["Mentor"]</td>
-                                            </tr>
+                                                    <td class="py-2">@L["Mentor"]</td>
+                                                </tr>
                                         }
                                         @foreach (var person in Model.Project.Investors)
                                         {
-                                            <tr>
+                                                <tr>
                                                 @if (person.IdentityUser != null &&
-                                               !string.IsNullOrEmpty(person.IdentityUser.Name) &&
-                                               !string.IsNullOrEmpty(person.IdentityUser.Surname)
-                                               )
+                                              !string.IsNullOrEmpty(person.IdentityUser.Name) &&
+                                              !string.IsNullOrEmpty(person.IdentityUser.Surname)
+                                              )
                                                 {
-                                                    <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",person.IdentityUser.Name, person.IdentityUser.Surname)</td>
+                                                            <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",person.IdentityUser.Name, person.IdentityUser.Surname)</td>
                                                 }
                                                 else
                                                 {
-                                                    <td class="py-2">-</td>
+                                                            <td class="py-2">-</td>
                                                 }
-                                                <td class="py-2">@L["Investor"]</td>
-                                            </tr>
+                                                    <td class="py-2">@L["Investor"]</td>
+                                                </tr>
                                         }
                                     </tbody>
                                 </table>
@@ -227,7 +227,7 @@
                                     <div>
                                         @foreach (var tag in Model.Project.Tags.Split(","))
                                         {
-                                            <span class="badge badge-info">@tag</span>
+                                                <span class="badge badge-info">@tag</span>
                                         }
                                     </div>
                                 </div>
@@ -248,7 +248,7 @@
                 <abp-column size-md="_6" class="float-end text-end">
                     @if (Model.IsAllowedEdit)
                     {
-                        <abp-button id="NewMilestoneButton"
+                            <abp-button id="NewMilestoneButton"
                                 text="@L["NewMilestone"].Value"
                                 icon="plus"
                                 button-type="Primary" />
@@ -260,7 +260,7 @@
             </abp-card-body>
         </abp-card>
     </abp-column>
-    
+
     <abp-column size="_12">
         <abp-card>
             <abp-card-header>
@@ -270,7 +270,7 @@
                 <abp-column size-md="_6" class="float-end text-end">
                     @if (Model.isUserInProject)
                     {
-                        <abp-button id="NewEventButton"
+                            <abp-button id="NewEventButton"
                                 text="@L["NewEvent"].Value"
                                 icon="plus"
                                 button-type="Primary" />
@@ -442,6 +442,104 @@
                         }
                     );
 
-                })
-            });
+                });
+
+
+
+                var createEventModal = new abp.ModalManager(abp.appPath + 'Events/CreateModal');
+                var editEventModal = new abp.ModalManager(abp.appPath + 'Events/EditModal');
+
+                var eventsTable = $('#ProjectEventsTable').DataTable(abp.libs.datatables.normalizeConfiguration({
+                    processing: true,
+                    serverSide: true,
+                    paging: true,
+                    searching: false,
+                    autoWidth: false,
+                    scrollCollapse: true,
+                    order: [[0, "asc"]],
+                    ajax: abp.libs.datatables.createAjax(isikUn.incubationCentre.events.event.getList,{ projectName : '@Model.Project.Name'}),
+                    columnDefs: [
+                        {
+                            rowAction: {
+                                items:
+                                    [ // TODO : create new event button goes here
+
+                                        {
+                                            text: l('Edit'),
+                                            visible: function (data) {
+                                                debugger;
+                                                return data.creatorPerson.identityUserId == abp.currentUser.id
+                                            },
+                                            action: function (data) {
+                                                editEventModal.open({ id: data.record.id });
+                                            }
+                                        },
+                                        {
+                                            text: l('Delete'),
+                                            visible: function (data) {
+                                                debugger;
+                                                return data.creatorPerson.identityUserId == abp.currentUser.id
+                                            },
+                                            confirmMessage: function (data) {
+                                                return l('EntityDeletionConfirmationMessage', data.record.title);
+                                            },
+                                            action: function (data) {
+                                                isikUn.incubationCentre.events.event.delete(data.record.id)
+                                                    .then(function () {
+                                                        abp.notify.info(l('SuccessfullyDeleted'));
+                                                        dataTable.ajax.reload();
+                                                    });
+                                            }
+                                        }
+                                    ]
+                            }
+                        },
+                        {
+                            title: l('Title'),
+                            data: "title"
+                        },
+                        {
+                            title: l('Date'),
+                            data: "eventDate",
+                            render: function (data) {
+                                if (data == null) return "-";
+                                try {
+                                    var date = new Date(data).toLocaleDateString();
+                                    return date != "Invalid Date" ? date : "-";
+                                } catch {
+                                    return "-";
+                                }
+                            }
+                        },
+                        {
+                            title: l('Description'),
+                            data: "description"
+                        },
+                        {
+                            title: l('ProjectName'),
+                            data: "project",
+                            render: function (data) {
+                                if (data == null) return "-";
+                                if (data.name == null) return "-";
+                                return data.name;
+                            }
+
+                        },
+
+                    ]
+                }));
+
+                $('#NewEventButton').click(function (e) {
+                    e.preventDefault();
+                    createEventModal.open();
+                });
+
+                createEventModal.onResult(function () {
+                    eventsTable.ajax.reload();
+                });
+
+                editEventModal.onResult(function () {
+                    eventsTable.ajax.reload();
+                });
+        });
 </script>

@@ -290,6 +290,7 @@
     "PercentageOfShareholders": "Percentage Of The Shareholders",
     "ListOfAssociatedPeople": "List of Associated People",
     "TotalProjectValue": "Total Project Value",
-    "ProjectTags": "Tags of The Project"
+    "ProjectTags": "Tags of The Project",
+    "DateCannotBePast": "You cannot choose a date in the past!"
   }
 }
