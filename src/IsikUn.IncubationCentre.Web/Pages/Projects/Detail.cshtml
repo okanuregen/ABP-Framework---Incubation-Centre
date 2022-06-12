@@ -260,6 +260,28 @@
             </abp-card-body>
         </abp-card>
     </abp-column>
+    
+    <abp-column size="_12">
+        <abp-card>
+            <abp-card-header>
+                <abp-column size-md="_6">
+                    <abp-card-title>@L["Events"]</abp-card-title>
+                </abp-column>
+                <abp-column size-md="_6" class="float-end text-end">
+                    @if (Model.isUserInProject)
+                    {
+                        <abp-button id="NewEventButton"
+                                text="@L["NewEvent"].Value"
+                                icon="plus"
+                                button-type="Primary" />
+                    }
+                </abp-column>
+            </abp-card-header>
+            <abp-card-body>
+                <abp-table striped-rows="true" id="ProjectEventsTable"></abp-table>
+            </abp-card-body>
+        </abp-card>
+    </abp-column>
 </abp-row>
 
 

@@ -10,7 +10,7 @@
 @{
 }
 @section scripts
-    {
+ {
 <abp-script src="/Pages/Investors/Dashboard.js" />
 }
 
@@ -48,193 +48,253 @@
     }
 
 </style>
+
 <abp-row>
     <abp-column size="_12">
-        <abp-row>
-            <abp-card>
-                <abp-card-header>
-                    <abp-card-title class="d-inline-block">
-                        @L["Requests"].Value
-                    </abp-card-title>
-                    <abp-button id="NewRequestButton"
-                                text="@L["NewRequest"].Value"
-                                icon="plus"
-                                class="float-end"
-                                button-type="Primary" />
+        <abp-card>
+            <abp-card-header>
+                <abp-card-title class="d-inline-block">
+                    @L["Requests"].Value
+                </abp-card-title>
+                <abp-button id="NewRequestButton"
+                            text="@L["NewRequest"].Value"
+                            icon="plus"
+                            class="float-end"
+                            button-type="Primary" />
 
-                </abp-card-header>
+            </abp-card-header>
+            <abp-card-body>
+                <abp-row id="RequestsArea">
+                    <abp-column size-sm="_12" size-md="_6" size-lg="_6" size-xl="_6">
+                        <abp-card-title class="border-bottom me-2">
+                            @L["Recived"].Value
+                        </abp-card-title>
+                        <div>
+                            @if (Model.ReceivedRequests != null && Model.ReceivedRequests.Count() > 0)
+                            {
+                                <table style="width:100%">
+                                    <tbody class="pe-2">
 
-                <abp-card-body>
-                    <abp-row  id="RequestsArea">
-                        <abp-column size-sm="_12" size-md="_6" size-lg="_6" size-xl="_6">
-                            <abp-card-title class="border-bottom me-2">
-                                @L["Recived"].Value
-                            </abp-card-title>
-                            <div>
-                                @if (Model.ReceivedRequests != null && Model.ReceivedRequests.Count() > 0)
-                                {
-                                    <table style="width:100%">
-                                        <tbody class="pe-2">
-
-                                            <tr>
-                                                <th style="width:41%">@L["Title"].Value</th>
-                                                <th style="width:31%">@L["Sender"].Value</th>
-                                                <th style="width:28%">@L["Date"].Value</th>
-                                                <th style="width:28%">@L["Explanation"].Value</th>
-                                            </tr>
-                                            @for (var i = 0; i < Model.ReceivedRequests.Count(); i++)
-                                            {
-                                                <tr>
-                                                    <td class="py-2" data-long-name="true" data-long-name-size="18" data-target="open-reuquest-detail" data-id="@Model.ReceivedRequests[i].Id"> @(!string.IsNullOrEmpty(Model.ReceivedRequests[i].Title) ? Model.ReceivedRequests[i].Title : "-")</td>
-                                                    @if (Model.ReceivedRequests[i].Sender != null &&
-                                                   Model.ReceivedRequests[i].Sender.IdentityUser != null &&
-                                                   !string.IsNullOrEmpty(Model.ReceivedRequests[i].Sender.IdentityUser.Name) &&
-                                                   !string.IsNullOrEmpty(Model.ReceivedRequests[i].Sender.IdentityUser.Surname)
-                                                   )
-                                                    {
-                                                        <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",Model.ReceivedRequests[i].Sender.IdentityUser.Name, Model.ReceivedRequests[i].Sender.IdentityUser.Surname)</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td class="py-2">-</td>
-                                                    }
-                                                    <td class="py-2">@(Model.ReceivedRequests[i].CreationTime.ToString("dd/MM/yyyy HH:MM"))</td>
-                                                    <td class="py-2" data-long-name="true" data-long-name-size="18"> @(!string.IsNullOrEmpty(Model.ReceivedRequests[i].Explanation) ? Model.ReceivedRequests[i].Explanation : "-")</td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                }
-                                else
-                                {
-                                    <div class="text-center my-5">
-                                        <span class="alert alert-info">@L["NoFoundRecivedRequests"]</span>
-                                    </div>
-                                }
-                            </div>
-
-                        </abp-column>
-                        <abp-column size-sm="_12" size-md="_6" size-lg="_6" size-xl="_6">
-                            <abp-card-title class="border-bottom me-2">
-                                @L["Sent"].Value
-                            </abp-card-title>
-                            <div>
-                                @if (Model.SentRequests != null && Model.SentRequests.Count() > 0)
-                                {
-                                    <table style="width:100%">
-                                        <tbody class="pe-2">
-
-                                            <tr>
-                                                <th style="width:41%">@L["Title"].Value</th>
-                                                <th style="width:31%">@L["Receiver"].Value</th>
-                                                <th style="width:28%">@L["Date"].Value</th>
-                                                <th style="width:28%">@L["Explanation"].Value</th>
-                                            </tr>
-                                            @for (var i = 0; i < Model.SentRequests.Count(); i++)
-                                            {
-                                                <tr>
-                                                    <td class="py-2" data-long-name="true" data-long-name-size="18" data-target="open-reuquest-detail" data-id="@Model.SentRequests[i].Id"> @(!string.IsNullOrEmpty(Model.SentRequests[i].Title) ? Model.SentRequests[i].Title : "-")</td>
-                                                    @if (Model.SentRequests[i].Receiver != null &&
-                                                   Model.SentRequests[i].Receiver.IdentityUser != null &&
-                                                   !string.IsNullOrEmpty(Model.SentRequests[i].Receiver.IdentityUser.Name) &&
-                                                   !string.IsNullOrEmpty(Model.SentRequests[i].Receiver.IdentityUser.Surname)
-                                                   )
-                                                    {
-                                                        <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",Model.SentRequests[i].Receiver.IdentityUser.Name, Model.SentRequests[i].Receiver.IdentityUser.Surname)</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td class="py-2">-</td>
-                                                    }
-                                                    <td class="py-2">@(Model.SentRequests[i].CreationTime.ToString("dd/MM/yyyy HH:MM"))</td>
-                                                    <td class="py-2" data-long-name="true" data-long-name-size="18"> @(!string.IsNullOrEmpty(Model.SentRequests[i].Explanation) ? Model.SentRequests[i].Explanation : "-")</td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                }
-                                else
-                                {
-                                    <div class="text-center my-5">
-                                        <span class="alert alert-info">@L["NoFoundSentRequests"]</span>
-                                    </div>
-                                }
-                            </div>
-                        </abp-column>
-                    </abp-row>
-
-                    <abp-row>
-                        <abp-column size="_12">
-                            <abp-card>
-                                <abp-card-header>
-                                    <abp-card-title>
-                                        @L["MyInvestedInProjects"].Value
-                                    </abp-card-title>
-                                </abp-card-header>
-
-                                <abp-card-body>
-                                    <div>
-                                        @if (Model.Projects != null && Model.Projects.Count() > 0)
+                                        <tr>
+                                            <th style="width:41%">@L["Title"].Value</th>
+                                            <th style="width:31%">@L["Sender"].Value</th>
+                                            <th style="width:28%">@L["Date"].Value</th>
+                                            <th style="width:28%">@L["Explanation"].Value</th>
+                                        </tr>
+                                        @for (var i = 0; i < Model.ReceivedRequests.Count(); i++)
                                         {
-                                            <table style="width:100%">
-                                                <tbody class="pe-2">
-                                                    <tr>
-                                                        <th style="width:25%">@L["ProjectName"].Value</th>
-                                                        <th style="width:25%">@L["Entrepreneur"].Value</th>
-                                                        <th style="width:25%">@L["Tags"].Value</th>
-                                                        <th style="width:25%">@L["CreationDate"].Value</th>
-                                                    </tr>
-                                                    @for (var i = 0; i < Model.Projects.Count(); i++)
-                                                    {
-                                                        <tr>
-                                                            <td class="py-2" data-long-name="true" data-long-name-size="18">@(Model.Projects[i].Name)</td>
-                                                            <td class="py-2" data-long-name="true" data-long-name-size="18">@(Model.Projects[i].Founders)</td>
-                                                            <td class="py-2" data-long-name="true" data-long-name-size="18">@(Model.Projects[i].Tags)</td>
-                                                            <td class="py-2">@(Model.Projects[i].CreationTime.ToString("dd/MM/yyyy HH:MM"))</td>
-                                                        </tr>
-                                                    }
-                                                </tbody>
-                                            </table>
+                                            <tr>
+                                                <td class="py-2" data-long-name="true" data-long-name-size="18" data-target="open-reuquest-detail" data-id="@Model.ReceivedRequests[i].Id"> @(!string.IsNullOrEmpty(Model.ReceivedRequests[i].Title) ? Model.ReceivedRequests[i].Title : "-")</td>
+                                                @if (Model.ReceivedRequests[i].Sender != null &&
+                                               Model.ReceivedRequests[i].Sender.IdentityUser != null &&
+                                               !string.IsNullOrEmpty(Model.ReceivedRequests[i].Sender.IdentityUser.Name) &&
+                                               !string.IsNullOrEmpty(Model.ReceivedRequests[i].Sender.IdentityUser.Surname)
+                                               )
+                                                {
+                                                    <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",Model.ReceivedRequests[i].Sender.IdentityUser.Name, Model.ReceivedRequests[i].Sender.IdentityUser.Surname)</td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="py-2">-</td>
+                                                }
+                                                <td class="py-2">@(Model.ReceivedRequests[i].CreationTime.ToString("dd/MM/yyyy HH:MM"))</td>
+                                                <td class="py-2" data-long-name="true" data-long-name-size="18"> @(!string.IsNullOrEmpty(Model.ReceivedRequests[i].Explanation) ? Model.ReceivedRequests[i].Explanation : "-")</td>
+                                            </tr>
                                         }
-                                        else
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <div class="text-center my-5">
+                                    <span class="alert alert-info">@L["NoFoundRecivedRequests"]</span>
+                                </div>
+                            }
+                        </div>
+
+                    </abp-column>
+                    <abp-column size-sm="_12" size-md="_6" size-lg="_6" size-xl="_6">
+                        <abp-card-title class="border-bottom me-2">
+                            @L["Sent"].Value
+                        </abp-card-title>
+                        <div>
+                            @if (Model.SentRequests != null && Model.SentRequests.Count() > 0)
+                            {
+                                <table style="width:100%">
+                                    <tbody class="pe-2">
+
+                                        <tr>
+                                            <th style="width:41%">@L["Title"].Value</th>
+                                            <th style="width:31%">@L["Receiver"].Value</th>
+                                            <th style="width:28%">@L["Date"].Value</th>
+                                            <th style="width:28%">@L["Explanation"].Value</th>
+                                        </tr>
+                                        @for (var i = 0; i < Model.SentRequests.Count(); i++)
                                         {
-                                            <div class="text-center my-5">
-                                                <span class="alert alert-info">@L["NoFoundProject"]</span>
-                                            </div>
+                                            <tr>
+                                                <td class="py-2" data-long-name="true" data-long-name-size="18" data-target="open-reuquest-detail" data-id="@Model.SentRequests[i].Id"> @(!string.IsNullOrEmpty(Model.SentRequests[i].Title) ? Model.SentRequests[i].Title : "-")</td>
+                                                @if (Model.SentRequests[i].Receiver != null &&
+                                               Model.SentRequests[i].Receiver.IdentityUser != null &&
+                                               !string.IsNullOrEmpty(Model.SentRequests[i].Receiver.IdentityUser.Name) &&
+                                               !string.IsNullOrEmpty(Model.SentRequests[i].Receiver.IdentityUser.Surname)
+                                               )
+                                                {
+                                                    <td class="py-2" data-long-name="true" data-long-name-size="12">@string.Format("{0} {1}",Model.SentRequests[i].Receiver.IdentityUser.Name, Model.SentRequests[i].Receiver.IdentityUser.Surname)</td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="py-2">-</td>
+                                                }
+                                                <td class="py-2">@(Model.SentRequests[i].CreationTime.ToString("dd/MM/yyyy HH:MM"))</td>
+                                                <td class="py-2" data-long-name="true" data-long-name-size="18"> @(!string.IsNullOrEmpty(Model.SentRequests[i].Explanation) ? Model.SentRequests[i].Explanation : "-")</td>
+                                            </tr>
                                         }
-                                    </div>
-                                </abp-card-body>
-                            </abp-card>
-                        </abp-column>
-                    </abp-row>
-                    <abp-row>
-                        <abp-column size="_12">
-                            <abp-card>
-                                <abp-card-header>
-                                    <abp-card-title>
-                                        @L["Events"].Value
-                                    </abp-card-title>
-                                    <abp-button id="NewEventButton"
-                                                text="@L["NewEvent"].Value"
-                                                icon="plus"
-                                                class="float-end"
-                                                button-type="Primary" />
-                                </abp-card-header>
-                                <abp-card-body>
-
-                                    <div>
-                                        <abp-table striped-rows="true" id="EventsTable"></abp-table>
-                                    </div>
-
-                                </abp-card-body>
-                            </abp-card>
-                        </abp-column>
-                    </abp-row>
-
-
-                </abp-card-body>
-
-            </abp-card>
-        </abp-row>
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <div class="text-center my-5">
+                                    <span class="alert alert-info">@L["NoFoundSentRequests"]</span>
+                                </div>
+                            }
+                        </div>
+                    </abp-column>
+                </abp-row>
+            </abp-card-body>
+        </abp-card>
     </abp-column>
+
+    <abp-column size="_12">
+        <abp-card>
+            <abp-card-header>
+                <abp-card-title>
+                    @L["MyInvestedInProjects"].Value
+                </abp-card-title>
+            </abp-card-header>
+
+            <abp-card-body>
+                <abp-table striped-rows="true" id="InvestedProjects"></abp-table>
+            </abp-card-body>
+        </abp-card>
+    </abp-column>
+
+    <abp-column size="_12">
+        <abp-card>
+            <abp-card-header>
+                <abp-card-title>
+                    @L["Events"].Value
+                </abp-card-title>
+                <abp-button id="NewEventButton"
+                            text="@L["NewEvent"].Value"
+                            icon="plus"
+                            class="float-end"
+                            button-type="Primary" />
+            </abp-card-header>
+            <abp-card-body>
+                <div>
+                    <abp-table striped-rows="true" id="EventsTable"></abp-table>
+                </div>
+            </abp-card-body>
+        </abp-card>
+    </abp-column>
+
 </abp-row>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        debugger;
+        var l = abp.localization.getResource('IncubationCentre');
+        var dataTable = $('#InvestedProjects').DataTable(
+            abp.libs.datatables.normalizeConfiguration({
+                serverSide: true,
+                paging: true,
+                order: [[1, "asc"]],
+                searching: true,
+                scrollX: true,
+                ajax: abp.libs.datatables.createAjax(
+                    isikUn.incubationCentre.projects.project.getListByInvestor,
+                    function() {
+                        return {
+                            "id" : "7e049fd6-9c0d-fbd4-9014-3a0466c56269"
+                        }
+                    }
+                ),
+                columnDefs: [
+                    { // TODO this the part that needs to be changed
+                        title: l('Actions'),
+                        rowAction: {
+                            items:
+                                [
+                                    {
+                                        text: l('Detail'),
+                                        visible:
+                                            abp.auth.isGranted('IncubationCentre.Projects'),
+                                        action: function (data) {
+                                            location.href = "/Projects/Detail?id="+data.record.id;
+                                        }
+                                    }
+                                ]
+                        }
+                    },
+                    {
+                        title: l('Name'),
+                        data: "name"
+                    },
+                    {
+                        title: l('Status'),
+                        data: "status",
+                        render: function (data) {
+                            return l("Enum:ProjectStatus_" + data);
+                        }
+                    },
+                    {
+                        title: l('CompletionDate'),
+                        data: "completionDate",
+                        render: function (data) {
+                            if (data == null) return "-";
+                            try {
+                                var date = new Date(data).toLocaleDateString();
+                                return date != "Invalid Date" ? date : "-";
+                            } catch {
+                                return "-";
+                            }
+                        }
+                    },
+                    {
+                        title: l('Tags'),
+                        data: "tags",
+                        render: function (data) {
+                            if (data == null) return "-";
+                            var text = "";
+                            data.split(",").forEach(function (tag) {
+                                text += `<span class="badge badge-info me-2">${tag}</span>`
+                            });
+                            return text == "" ? "-" : text;
+                        }
+                    },
+                    {
+                        title: l('SharePerInvest'),
+                        data: "sharePerInvest",
+                        render: function (data) {
+                            return data + " %";
+                        }
+                    },
+                    {
+                        title: l('InvesmentReady'),
+                        data: "invesmentReady",
+                        render: function (data) {
+                            return data ? `<span class="badge badge-success p-2">${l('Yes')}</span>` : `<span class="badge badge-danger p-2">${l('No')}</span>`
+                        }
+                    },
+                    {
+                        title: l('OpenForInvesment'),
+                        data: "openForInvesment",
+                        render: function (data) {
+                            return data ? `<span class="badge badge-success p-2">${l('Yes')}</span>` : `<span class="badge badge-danger p-2">${l('No')}</span>`
+                        }
+                    }
+                ]
+        }));
+    });
+</script>

@@ -1,3 +1,4 @@
+using IsikUn.IncubationCentre.Investors;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,5 +26,7 @@ namespace IsikUn.IncubationCentre.Projects
         Task Invest(Guid projectId);
 
         Task<ProjectDto> AssignMentorAsync(Guid id, Guid mentorId);
+
+        Task<PagedResultDto<ProjectDto>> GetListByInvestorAsync(GetInvestorsInput investor, string sorting = null, int skipCount = 0, int maxResultCount = int.MaxValue);
     }
 }

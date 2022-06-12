@@ -214,6 +214,7 @@ namespace IsikUn.IncubationCentre.Projects
         {
             var totalCount = await _projectRepository.GetCountAsync(
                 input.Status,
+                input.projectIds,
                 input.FiterByStatus,
                 input.Filter,
                 input.Name,
@@ -231,6 +232,7 @@ namespace IsikUn.IncubationCentre.Projects
                 input.NoMentor);
             var items = await _projectRepository.GetListAsync(
                 input.Status,
+                input.projectIds,
                 input.FiterByStatus,
                 input.Filter,
                 input.Name,
@@ -306,5 +308,29 @@ namespace IsikUn.IncubationCentre.Projects
 
             return ObjectMapper.Map<Project, ProjectDto>(project);
         }
+
+        [Authorize(IncubationCentrePermissions.Projects.Default)]
+        public async Task<PagedResultDto<ProjectDto>> GetListByInvestorAsync(GetInvestorsInput investor, string sorting = null, int skipCount =0, int maxResultCount = int.MaxValue) 
+        {
+            var investProject = await _projectInvestorRepository.GetListAsync(InvestorId: investor.id);
+            if(investProject == null || !investProject.Any())
+            {
+                return new PagedResultDto<ProjectDto>
+                {
+                    TotalCount = 0,
+                    Items = null
+                };
+            }
+
+            return await GetListAsync(new GetProjectsInput
+            {
+                projectIds = investProject.Select(a => a.ProjectId).ToArray(),
+                Sorting = sorting,
+                SkipCount = skipCount,
+                MaxResultCount=maxResultCount
+            });
+          
+        }
+
     }
 }

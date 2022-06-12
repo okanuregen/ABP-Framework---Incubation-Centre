@@ -1,18 +1,40 @@
 @page
-@using Microsoft.AspNetCore.Mvc.Localization
-@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal;
 @using IsikUn.IncubationCentre.Localization
-@inject IHtmlLocalizer<IncubationCentreResource> L
-@model IsikUn.IncubationCentre.Web.Pages.Events.CreateModalModel
+@using IsikUn.IncubationCentre.Permissions
+@using IsikUn.IncubationCentre.Web.Pages.Events
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model CreateModalModel
+@inject IStringLocalizer<IncubationCentreResource> L
 @{
     Layout = null;
 }
-<abp-dynamic-form abp-model="Event" data-ajaxForm="true" asp-page="CreateModal">
+<form asp-page="/Events/CreateModal">
     <abp-modal>
-        <abp-modal-header title="@L["CreateEvent"].Value"></abp-modal-header>
+        <abp-modal-header title="@L["NewEvent"].Value"></abp-modal-header>
         <abp-modal-body>
-            <abp-form-content />
+            <abp-select asp-for="Event.ProjectId" asp-items="Model.Projects"/>
+            <abp-input asp-for="Event.Title" />
+            <abp-input asp-for="Event.EventDate" />
+            <abp-input asp-for="Event.Description" />
+
+            <div class="mb-3">
+                <label class="form-label" for="Event_Description">@L["Description"].Value</label>
+                <input type="text" id="Event_Description" name="Event.Description" value="" class="form-control ">
+                <span class="text-danger field-validation-valid" data-valmsg-for="Event.Description" data-valmsg-replace="true"></span>
+            </div>
+
         </abp-modal-body>
         <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
     </abp-modal>
-</abp-dynamic-form>
+</form>
+
+<script>
+    $(function(){
+        $('[type="datetime-local"]').attr("type","date");
+        $('[type="date"]').each(function(i,e){
+            $(e).val($(e).attr("value").split("T")[0])
+        });
+    });
+</script>

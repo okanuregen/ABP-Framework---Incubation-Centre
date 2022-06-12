@@ -19,6 +19,7 @@ namespace IsikUn.IncubationCentre.Projects
     {
         Task<List<Project>> GetListAsync(
              ProjectStatus status,
+             Guid[] projectIds = null,
              bool filterByStatus = false,
              string filter = null,
              string name = null,
@@ -42,6 +43,7 @@ namespace IsikUn.IncubationCentre.Projects
 
         Task<long> GetCountAsync(
              ProjectStatus status,
+             Guid[] projectIds = null,
              bool filterByStatus = false,
              string filter = null,
              string name = null,

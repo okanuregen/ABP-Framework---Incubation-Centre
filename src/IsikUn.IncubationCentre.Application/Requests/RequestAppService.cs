@@ -11,6 +11,7 @@ using IsikUn.IncubationCentre.Localization;
 using IsikUn.IncubationCentre.Projects;
 using Volo.Abp.Users;
 using IsikUn.IncubationCentre.People;
+using Volo.Abp.Emailing;
 
 namespace IsikUn.IncubationCentre.Requests
 {
