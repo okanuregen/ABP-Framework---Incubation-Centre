@@ -9,47 +9,56 @@ $(function () {
         processing: true,
         serverSide: true,
         paging: true,
-        searching: false,
+        searching: true,
         autoWidth: false,
         scrollCollapse: true,
         order: [[0, "asc"]],
         ajax: abp.libs.datatables.createAjax(isikUn.incubationCentre.events.event.getList),
         columnDefs: [
-            {
-                rowAction: {
-                    items:
-                        [
-                            {
-                                text: l('Edit'),
-                                visible: abp.auth.isGranted('IncubationCentre.Events.Edit'),
-                                action: function (data) {
-                                    editModal.open({ id: data.record.id });
-                                }
-                            },
-                            {
-                                text: l('Delete'),
-                                visible: abp.auth.isGranted('IncubationCentre.Events.Delete'),
-                                confirmMessage: function (data) {
-                                    return l('EventDeletionConfirmationMessage', data.record.id);
-                                },
-                                action: function (data) {
-                                    service.delete(data.record.id)
-                                        .then(function () {
-                                            abp.notify.info(l('SuccessfullyDeleted'));
-                                            dataEventsTable.ajax.reload();
-                                        });
-                                }
-                            }
-                        ]
-                }
-            },
+            //{
+            //    rowAction: {
+            //        items:
+            //            [
+            //                {
+            //                    text: l('Edit'),
+            //                    visible: abp.auth.isGranted('IncubationCentre.Events.Edit'),
+            //                    action: function (data) {
+            //                        editModal.open({ id: data.record.id });
+            //                    }
+            //                },
+            //                {
+            //                    text: l('Delete'),
+            //                    visible: abp.auth.isGranted('IncubationCentre.Events.Delete'),
+            //                    confirmMessage: function (data) {
+            //                        return l('EventDeletionConfirmationMessage', data.record.id);
+            //                    },
+            //                    action: function (data) {
+            //                        service.delete(data.record.id)
+            //                            .then(function () {
+            //                                abp.notify.info(l('SuccessfullyDeleted'));
+            //                                dataEventsTable.ajax.reload();
+            //                            });
+            //                    }
+            //                }
+            //            ]
+            //    }
+            //},
             {
                 title: l('Title'),
                 data: "title"
             },
             {
                 title: l('Date'),
-                data: "eventDate"
+                data: "eventDate",
+                render: function (data) {
+                    if (data == null) return "-";
+                    try {
+                        var date = new Date(data).toLocaleDateString();
+                        return date != "Invalid Date" ? date : "-";
+                    } catch {
+                        return "-";
+                    }
+                }
             },
             {
                 title: l('Description'),

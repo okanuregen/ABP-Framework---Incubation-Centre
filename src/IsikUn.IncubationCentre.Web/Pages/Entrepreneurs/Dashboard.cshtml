@@ -263,58 +263,18 @@
                     </abp-card-body>
                 </abp-card>
             </abp-column>
-            <abp-column size="_12" class="ourTable">
-                <abp-card>
-                    <abp-card-header>
-                        <abp-card-title>
-                            @L["Tasks"].Value
-                        </abp-card-title>
-                    </abp-card-header>
-                    <abp-card-body>
-                        <div>
-                            @if (Model.Tasks != null && Model.Tasks.Count() > 0)
-                            {
-                                <table style="width:100%">
-                                    <tbody class="pe-2">
-                                        <tr>
-                                            <th style="width:77%">@L["Title"].Value</th>
-                                            <th style="width:17%">@L["Deadline"].Value</th>
-                                            <th style="width:15%">@L["Status"].Value</th>
-                                        </tr>
-                                        @for (var i = 0; i < Model.Tasks.Count(); i++)
-                                        {
-                                            <tr>
-                                                <td class="py-2" data-long-name="true" data-long-name-size="18">@(!string.IsNullOrEmpty(Model.Tasks[i].Title) ? Model.Tasks[i].Title : "-")</td>
-                                                <td class="py-2">@(Model.Tasks[i].CreationTime.ToString("dd/MM/yyyy HH:MM"))</td>
-                                                <td class="py-2"><i class='fa fa-@(Model.Tasks[i].isDone ? "check" : "times" ) text-@(Model.Tasks[i].isDone ? "success" : "danger" )'></i></td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            }
-                            else
-                            {
-                                <div class="text-center my-5">
-                                    <span class="alert alert-info">@L["NoFoundTask"]</span>
-                                </div>
-                            }
-                        </div>
-                    </abp-card-body>
-                </abp-card>
-            </abp-column>
-
             <abp-column size="_12">
                 <abp-card>
                     <abp-card-header>
                         <abp-card-title>
                             @L["Events"].Value
-
+@*
                             <abp-button id="NewEventButton"
                                     text="@L["NewEvent"].Value"
                                     icon="plus",
                                     class="float-end"
                                     button-type="Primary" />
-                           
+                           *@
                         </abp-card-title>
                     </abp-card-header>
                     <abp-card-body>
@@ -322,8 +282,6 @@
                     </abp-card-body>
                 </abp-card>
             </abp-column>
-
         </abp-row>
     </abp-column>
-
 </abp-row>

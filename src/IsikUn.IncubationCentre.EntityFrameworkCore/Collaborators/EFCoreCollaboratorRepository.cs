@@ -105,6 +105,7 @@ namespace IsikUn.IncubationCentre.Collaborators
                 .Include(c => c.CollaboratoringProjects).ThenInclude(b => b.Mentors)
                 .Include(c => c.CollaboratoringProjects).ThenInclude(b => b.Entrepreneurs)
                 .Include(c => c.CollaboratoringProjects).ThenInclude(b => b.Investors)
+                .Include(c => c.CollaboratoringProjects).ThenInclude(b => b.Collaborators)
                 .Include(a => a.IdentityUser);
             var rs = await dbSet.Where(a => a.Id == id).FirstOrDefaultAsync(cancellationToken);
             return rs;
