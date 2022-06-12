@@ -48,8 +48,10 @@ namespace IsikUn.IncubationCentre.Web.Pages.Mentors
         {
             var person = await _personRepo.GetWithDetailByIdentityUserIdAsync(_currentUser.GetId());
             CurrentUser = await _mentorRepo.GetWithDetailAsync(person.Id);
-            SentRequests = person.SentRequests;
-            ReceivedRequests = person.ReceivedRequests;
+
+            SentRequests = person.SentRequests != null && person.SentRequests.Any() ? person.SentRequests.OrderByDescending(a => a.CreationTime).ToList() : person.SentRequests;
+            ReceivedRequests = person.ReceivedRequests != null && person.ReceivedRequests.Any() ? person.ReceivedRequests.OrderByDescending(a => a.CreationTime).ToList() : person.ReceivedRequests;
+            
             Tasks = person.Tasks;
             Projects = CurrentUser.MentoringProjects != null && CurrentUser.MentoringProjects.Any() ? CurrentUser.MentoringProjects.ToList() : null;
             
