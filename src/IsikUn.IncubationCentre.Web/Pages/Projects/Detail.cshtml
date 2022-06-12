@@ -123,7 +123,7 @@
 
     <abp-column size="_12">
         <abp-row>
-            <abp-column class='@(Model.IsAllowedEdit ? "" : "d-none")' size='@(Model.IsAllowedEdit ? ColumnSize._5 : ColumnSize.Undefined)'>
+            <abp-column class='@(Model.IsAllowedSeeInvestment ? "" : "d-none")' size='@(Model.IsAllowedSeeInvestment ? ColumnSize._5 : ColumnSize.Undefined)'>
                 <abp-card style="height:343px;">
                     <abp-card-header>
                         <abp-card-title>
@@ -137,11 +137,15 @@
                     </abp-card-body>
                 </abp-card>
             </abp-column>
-            <abp-column size='@(Model.IsAllowedEdit ? ColumnSize._7 : ColumnSize._12)'>
+            <abp-column size='@(Model.IsAllowedSeeInvestment ? ColumnSize._7 : ColumnSize._12)'>
                 <abp-card style="height:343px;">
                     <abp-card-header>
                         <abp-card-title>
                             @L["ListOfAssociatedPeople"].Value
+                            @if (Model.IsInvestor)
+                            {
+                                <button class="btn btn-info float-end px-4" id="investButton">@L["Invest"]</button>
+                            }
                         </abp-card-title>
                     </abp-card-header>
                     <abp-card-body>
@@ -227,26 +231,6 @@
                                         }
                                     </div>
                                 </div>
-                                <div class="project-buttons" style="position:absolute;bottom: 15px;right: 15px;">
-                                    @if (Model.IsAllowedEdit)
-                                    {
-                                        <div class="form-check form-switch d-inline-block">
-                                            <label> </label>
-                                            <input style="height:18px;width:39px;" data-toggle="tooltip" title="@L["IsOpenForInvesment"]" class="form-check-input" type="checkbox" role="switch" id="IsOpenForInvesmentButton" checked />
-                                        </div>
-                                        <div class="d-inline-block">
-                                            <button class="btn btn-info" id="addCollaboratorButton">@L["AddCollaborator"]</button>
-                                        </div>
-                                    }
-                                    @if (Model.IsInvestor)
-                                    {
-                                        <button class="btn btn-info" id="investButton">@L["Invest"]</button>
-                                    }
-                                    @if (Model.CanMentoring)
-                                    {
-                                        <button class="btn btn-info" id="toBeMentorButton">@L["RequestToBeMentor"]</button>
-                                    }
-                                </div>
                             </abp-column>
                         </abp-row>
                     </abp-card-body>
@@ -280,130 +264,162 @@
 
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-            var l = l || abp.localization.getResource('IncubationCentre');
+        document.addEventListener("DOMContentLoaded", function() {
+                var l = l || abp.localization.getResource('IncubationCentre');
 
-            // Pie chart for Invesmtents
-            var InvesmentChartLabels = @Json.Serialize(Model.InvestorNames);
-            var InvesmentChartData = @Json.Serialize(Model.InvestorShares);
+                // Pie chart for Invesmtents
+                var InvesmentChartLabels = @Json.Serialize(Model.InvestorNames);
+                var InvesmentChartData = @Json.Serialize(Model.InvestorShares);
 
-            new Chart(document.getElementById("chartjs-pie-invesments"), {
-                type: "pie",
-                data: {
-                    labels: InvesmentChartLabels,
-                    datasets: [{
-                        data: InvesmentChartData,
-                        backgroundColor: [
-                            window.theme.primary,
-                            window.theme.warning,
-                            window.theme.danger,
-                            "#dee2e6"
-                        ],
-                        borderColor: "transparent"
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    legend: {
-                        display: false
+                new Chart(document.getElementById("chartjs-pie-invesments"), {
+                    type: "pie",
+                    data: {
+                        labels: InvesmentChartLabels,
+                        datasets: [{
+                            data: InvesmentChartData,
+                            backgroundColor: [
+                                window.theme.primary,
+                                window.theme.warning,
+                                window.theme.danger,
+                                "#dee2e6"
+                            ],
+                            borderColor: "transparent"
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        legend: {
+                            display: false
+                        }
                     }
-                }
-            });
+                });
 
-            var milestoneEditModal = new abp.ModalManager(abp.appPath + 'Milestones/EditModal');
-             var dataTableMilestone = $('#MilestonesTable').DataTable(
-                abp.libs.datatables.normalizeConfiguration({
-                    serverSide: false,
-                    paging: true,
-                    scrollY: '302px',
-                    order: [[1, "asc"]],
-                    searching: true,
-                    scrollX: true,
-                    ajax: abp.libs.datatables.createAjax(
-                        isikUn.incubationCentre.milestones.milestone.getList, { projectId: '@Model.Id', sorting: 'endDate'}),
-                    columnDefs: [
-                        {
-                            title: l('Actions'),
-                            rowAction: {
-                                items:
-                                    [
-                                        {
-                                            text: l('Edit'),
-                                            visible:
-                                                abp.auth.isGranted('IncubationCentre.Milestones.Edit'),
-                                            action: function (data) {
-                                                milestoneEditModal.open({ id: data.record.id });
-                                            }
-                                        },
-                                        {
-                                            text: l('Delete'),
-                                            visible:
-                                                abp.auth.isGranted('IncubationCentre.Milestones.Delete'),
-                                            confirmMessage: function (data) {
-                                                return l(
-                                                    'EntityDeletionConfirmationMessage',
-                                                    data.record.name
-                                                );
+                var milestoneEditModal = new abp.ModalManager(abp.appPath + 'Milestones/EditModal');
+                 var dataTableMilestone = $('#MilestonesTable').DataTable(
+                    abp.libs.datatables.normalizeConfiguration({
+                        serverSide: false,
+                        paging: true,
+                        scrollY: '302px',
+                        order: [[1, "asc"]],
+                        searching: true,
+                        scrollX: true,
+                        ajax: abp.libs.datatables.createAjax(
+                            isikUn.incubationCentre.milestones.milestone.getList, { projectId: '@Model.Id', sorting: 'endDate'}),
+                        columnDefs: [
+                            {
+                                title: l('Actions'),
+                                rowAction: {
+                                    items:
+                                        [
+                                            {
+                                                text: l('Edit'),
+                                                visible:
+                                                    abp.auth.isGranted('IncubationCentre.Milestones.Edit'),
+                                                action: function (data) {
+                                                    milestoneEditModal.open({ id: data.record.id });
+                                                }
                                             },
-                                            action: function (data) {
-                                                isikUn.incubationCentre.projects.project
-                                                    .delete(data.record.id)
-                                                    .then(function () {
-                                                        abp.notify.info(
-                                                            l('SuccessfullyDeleted')
-                                                        );
-                                                        dataTableMilestone.ajax.reload();
-                                                    });
+                                            {
+                                                text: l('Delete'),
+                                                visible:
+                                                    abp.auth.isGranted('IncubationCentre.Milestones.Delete'),
+                                                confirmMessage: function (data) {
+                                                    return l(
+                                                        'EntityDeletionConfirmationMessage',
+                                                        data.record.name
+                                                    );
+                                                },
+                                                action: function (data) {
+                                                    isikUn.incubationCentre.projects.project
+                                                        .delete(data.record.id)
+                                                        .then(function () {
+                                                            abp.notify.info(
+                                                                l('SuccessfullyDeleted')
+                                                            );
+                                                            location.reload();
+                                                        });
+                                                }
                                             }
-                                        }
-                                    ]
-                            }
-                        },
-                        {
-                            title: l('Title'),
-                            data: "title"
-                        },
-                        {
-                            title: l('StartDate'),
-                            data: "startDate",
-                            render: function (data) {
-                                try{
-                                    var date = new Date(data).toLocaleDateString();
-                                    return date != "Invalid Date" ? date : "-";
-                                } catch {
-                                    return "-";
+                                        ]
+                                }
+                            },
+                            {
+                                title: l('Title'),
+                                data: "title"
+                            },
+                            {
+                                title: l('StartDate'),
+                                data: "startDate",
+                                render: function (data) {
+                                    try{
+                                        var date = new Date(data).toLocaleDateString();
+                                        return date != "Invalid Date" ? date : "-";
+                                    } catch {
+                                        return "-";
+                                    }
+                                }
+                            },
+                            {
+                                title: l('EndDate'),
+                                data: "endDate",
+                                render: function (data) {
+                                    try{
+                                        var date = new Date(data).toLocaleDateString();
+                                        return date != "Invalid Date" ? date : "-";
+                                    } catch {
+                                        return "-";
+                                    }
+                                }
+                            },
+                            {
+                                title: l('isCompleted'),
+                                data: "isCompleted",
+                                render: function (data) {
+                                    return data ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-times text-danger'></i>";
                                 }
                             }
-                        },
-                        {
-                            title: l('EndDate'),
-                            data: "endDate",
-                            render: function (data) {
-                                try{
-                                    var date = new Date(data).toLocaleDateString();
-                                    return date != "Invalid Date" ? date : "-";
-                                } catch {
-                                    return "-";
-                                }
-                            }
-                        },
-                        {
-                            title: l('isCompleted'),
-                            data: "isCompleted",
-                            render: function (data) {
-                                return data ? "<i class='fa fa-check text-success'></i>" : "<i class='fa fa-times text-danger'></i>";
+                        ]
+                    }));
+
+                var milestoneCreateModal = new abp.ModalManager(abp.appPath + 'Milestones/CreateModal');
+                $("#NewMilestoneButton").click(function(){
+                      milestoneCreateModal.open({ projectId: '@Model.Project.Id' });
+                });
+
+                var EditProjectModal = new abp.ModalManager(abp.appPath + 'Projects/EditModal');
+                $("#editMyInfo").click(function(){
+                      EditProjectModal.open({ id: '@Model.Project.Id' });
+                });
+
+                milestoneCreateModal.onResult(function () {
+                    location.reload();
+                });
+
+                milestoneEditModal.onResult(function () {
+                    location.reload();
+                });
+
+                EditProjectModal.onResult(function () {
+                    location.reload();
+                });
+
+                $("#investButton").click(function(){
+                    abp.message.confirm(
+                        "You Are Investing for @(Html.Raw(Model.Project.SharePerInvest)) % of This Project. @(Html.Raw(Model.Project.TotalValuation * Model.Project.SharePerInvest / 100)) @(Html.Raw(Model.Project.TotalValuationCurrencySymbol))",
+                        'Are you sure?',
+                        function (isConfirmed) {
+                            if (isConfirmed) {
+                                isikUn.incubationCentre.projects.project.invest('@Model.Project.Id').then(function(){
+                                    abp.message.success('@(Html.Raw(Model.Project.Name)) Adlı Projeye @((Html.Raw(Model.Project.TotalValuation * Model.Project.SharePerInvest / 100))) @((Html.Raw(Model.Project.TotalValuationCurrencySymbol))) Değerinde Yatırım Yaparak + @(Html.Raw(Model.Project.SharePerInvest)) % Hak Sahibi Oldunuz.')
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 2500);
+                                });
+
                             }
                         }
-                    ]
-                }));
+                    );
 
-            var milestoneCreateModal = new abp.ModalManager(abp.appPath + 'Milestones/CreateModal');
-            $("#NewMilestoneButton").click(function(){
-                  milestoneCreateModal.open({ projectId: '@Model.Project.Id' });
+                })
             });
-
-             milestoneCreateModal.onResult(function () {
-                dataTableMilestone.ajax.reload();
-            });
-        });
 </script>

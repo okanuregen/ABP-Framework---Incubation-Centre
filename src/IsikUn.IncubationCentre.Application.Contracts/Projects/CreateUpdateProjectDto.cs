@@ -16,15 +16,18 @@ namespace IsikUn.IncubationCentre.Projects
         public string Tags { get; set; }
         [Range(0,100)]
         public double SharePerInvest { get; set; }
+
         [Range(0,Double.MaxValue,ErrorMessage = "This field cannot be negative")]
         public int TotalValuation { get; set; }
         public virtual string TotalValuationCurrencySymbol { get; set; }
-
         public Guid? EntreprenurId { get; set; }
 
         [DisplayName("Collaborators")]
         public string[] CollaboratorIds { get; set; }
         public ProjectStatus Status { get; set; }
+        public bool OpenForInvesment { get; set; }
+        public bool InvesmentReady { get; set; }
+
 
     }
 }

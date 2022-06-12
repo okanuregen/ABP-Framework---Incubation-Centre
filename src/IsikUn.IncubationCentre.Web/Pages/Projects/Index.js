@@ -131,6 +131,7 @@ $(function () {
 
     editModal.onResult(function () {
         dataTable.ajax.reload();
+        abp.notify.success(l("SuccesfullyUpdated"));
     });
 
     $('#NewProjectButton').click(function (e) {

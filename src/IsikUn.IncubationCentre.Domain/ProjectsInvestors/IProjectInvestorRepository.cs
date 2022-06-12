@@ -19,8 +19,8 @@ namespace IsikUn.IncubationCentre.ProjectsInvestors
     public interface IProjectInvestorRepository : IRepository<ProjectInvestor, Guid>
     {
         Task<List<ProjectInvestor>> GetListAsync(
-             Guid[] InvestorIds = null,
-             Guid[] ProjectIds = null,
+             Guid? InvestorId = null,
+             Guid? ProjectId = null,
              int skipCount = 0,
              int maxResultCount = int.MaxValue,
              string sorting = null,
@@ -28,8 +28,8 @@ namespace IsikUn.IncubationCentre.ProjectsInvestors
          );
 
         Task<long> GetCountAsync(
-             Guid[] InvestorIds = null,
-             Guid[] ProjectIds = null,
+             Guid? InvestorId = null,
+             Guid? ProjectId = null,
              CancellationToken cancelationToken = default
             );
 

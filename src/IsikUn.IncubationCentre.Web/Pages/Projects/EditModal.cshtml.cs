@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 using Volo.Abp.Identity;
 using IsikUn.IncubationCentre.Currencies;
+using IsikUn.IncubationCentre.Collaborators;
 
 namespace IsikUn.IncubationCentre.Web.Pages.Projects
 {
@@ -25,13 +26,16 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
         [BindProperty]
         public CreateUpdateProjectDto Project { get; set; }
         public List<SelectListItem> Currencies { get; set; }
+        public List<SelectListItem> Collaborators { get; set; }
 
 
         private readonly ICurrencyRepository _currencyRepo;
         private readonly IProjectAppService _service;
+        private readonly ICollaboratorRepository _collaboratorRepo;
 
-        public EditModalModel(IProjectAppService service, ICurrencyRepository currencyRepo)
+        public EditModalModel(IProjectAppService service, ICurrencyRepository currencyRepo, ICollaboratorRepository collaboratorRepo)
         {
+            this._collaboratorRepo = collaboratorRepo;
             _service = service;
             _currencyRepo = currencyRepo;
         }
@@ -61,6 +65,14 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
                         Text = (a.Title + " - " + a.Symbol)
                     }).ToList();
             }
+
+            var collabs = await _collaboratorRepo.GetListAsync();
+            Collaborators = collabs.Select(a =>
+                new SelectListItem(
+                    string.Format("{0} {1} ({2})", a.IdentityUser.Name, a.IdentityUser.Surname, a.IdentityUser.UserName),
+                    a.Id.ToString(),
+                    dto.Collaborators.Select(x => x.Id).Contains(a.Id)
+                )).ToList();
         }
 
         public virtual async Task<IActionResult> OnPostAsync()

@@ -15,7 +15,7 @@
             <abp-input asp-for="ReceiverName" />
             <abp-input asp-for="Title" />
             <div class="mb-3">
-                <label class="form-label" for="Explanation">@L["Explanation"].Value</label><textarea disabled readonly type="text" rows="6" id="Explanation" name="Explanation" value="@Model.Explanation" class="form-control "></textarea><span class="text-danger field-validation-valid" data-valmsg-for="Explanation" data-valmsg-replace="true"></span>
+                <label class="form-label" for="Explanation">@L["Explanation"].Value</label><textarea placeholder="@Model.Explanation" disabled readonly type="text" rows="6" id="Explanation" name="Explanation" value="@Model.Explanation" class="form-control "></textarea><span class="text-danger field-validation-valid" data-valmsg-for="Explanation" data-valmsg-replace="true"></span>
             </div>
         </abp-modal-body>
         <abp-modal-footer buttons="@(AbpModalButtons.Close)"></abp-modal-footer>

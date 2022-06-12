@@ -14,12 +14,16 @@ using IsikUn.IncubationCentre.ProjectsCollaborators;
 using IsikUn.IncubationCentre.ProjectsFounders;
 using IsikUn.IncubationCentre.ProjectsEntrepreneurs;
 using IsikUn.IncubationCentre.Mentors;
+using IsikUn.IncubationCentre.Investors;
+using IsikUn.IncubationCentre.People;
 
 namespace IsikUn.IncubationCentre.Projects
 {
     public class ProjectAppService : ApplicationService, IProjectAppService
     {
         private readonly IProjectRepository _projectRepository;
+        private readonly IInvestorRepository _investorRepository;
+        private readonly IPersonRepository _personRepository;
         private readonly IProjectMentorRepository _projectMentorRepository;
         private readonly IProjectEntrepreneurRepository _projectEntreprenurRepository;
         private readonly IProjectInvestorRepository _projectInvestorRepository;
@@ -30,6 +34,8 @@ namespace IsikUn.IncubationCentre.Projects
 
         public ProjectAppService(
             IProjectRepository projectRepository,
+            IInvestorRepository investorRepository,
+            IPersonRepository personRepository,
             IProjectMentorRepository projectMentorRepository,
             IProjectEntrepreneurRepository projectEntreprenurRepository,
             IProjectInvestorRepository projectInvestorRepository,
@@ -39,6 +45,7 @@ namespace IsikUn.IncubationCentre.Projects
             )
         {
             this._projectRepository = projectRepository;
+            this._investorRepository = investorRepository;
             this._projectMentorRepository = projectMentorRepository;
             this._projectEntreprenurRepository = projectEntreprenurRepository;
             this._projectInvestorRepository = projectInvestorRepository;
@@ -66,16 +73,16 @@ namespace IsikUn.IncubationCentre.Projects
                 {
                     ProjectId = project.Id,
                     EntrepreneurId = input.EntreprenurId.Value
-                },true);
+                }, true);
             }
-            if(input.CollaboratorIds != null && input.CollaboratorIds.Any())
+            if (input.CollaboratorIds != null && input.CollaboratorIds.Any())
             {
                 var projectCollabs = input.CollaboratorIds.Select(a => new ProjectCollaborator
                 {
                     ProjectId = project.Id,
                     CollaboratorId = Guid.Parse(a)
                 });
-                await _projectCollaboratorRepository.InsertManyAsync(projectCollabs,autoSave: true);
+                await _projectCollaboratorRepository.InsertManyAsync(projectCollabs, autoSave: true);
             }
             return ObjectMapper.Map<Project, ProjectDto>(project);
         }
@@ -117,7 +124,7 @@ namespace IsikUn.IncubationCentre.Projects
             {
                 throw new UserFriendlyException(L["NoProjectFound"]);
             }
-            if(project.Mentors != null && project.Mentors.Count(a => a.Id == mentorId) > 0)
+            if (project.Mentors != null && project.Mentors.Count(a => a.Id == mentorId) > 0)
             {
                 throw new UserFriendlyException(L["MentorAlreadyAssingThisProject"]);
             }
@@ -162,6 +169,37 @@ namespace IsikUn.IncubationCentre.Projects
             return ObjectMapper.Map<Project, ProjectDto>(project);
         }
 
+        public async Task Invest(Guid projectId)
+        {
+            var project = await _projectRepository.GetAsync(projectId);
+            if(!(project.InvesmentReady && project.OpenForInvesment))
+            {
+                throw new UserFriendlyException(L["ProjectIsNotSuitableForInvesment"]);
+            }
+            var investor = await _investorRepository.GetAsync(a => a.IdentityUserId == CurrentUser.Id.Value);
+
+            var projectShareHoldersTotal = await _projectInvestorRepository.GetListAsync(ProjectId: projectId);
+            if (projectShareHoldersTotal.Select(x => x.Share).Sum() + project.SharePerInvest > 100)
+            {
+                throw new UserFriendlyException(L["SharedProjectIsOvering100Percantage"]);
+            }
+            var lastInvest = await _projectInvestorRepository.FindAsync(a => a.ProjectId == projectId && a.InvestorId == investor.Id);
+            if (lastInvest == null)
+            {
+                await _projectInvestorRepository.InsertAsync(new ProjectInvestor
+                {
+                    ProjectId = projectId,
+                    InvestorId = investor.Id,
+                    Share = project.SharePerInvest
+                });
+            }
+            else
+            {
+                lastInvest.Share += project.SharePerInvest;
+                await _projectInvestorRepository.UpdateAsync(lastInvest);
+            }
+        }
+
 
         [Authorize(IncubationCentrePermissions.Projects.Default)]
         public async Task<ProjectDto> GetWithDetailAsync(Guid id)
@@ -175,7 +213,7 @@ namespace IsikUn.IncubationCentre.Projects
         public async Task<PagedResultDto<ProjectDto>> GetListAsync(GetProjectsInput input)
         {
             var totalCount = await _projectRepository.GetCountAsync(
-                input.Status, 
+                input.Status,
                 input.FiterByStatus,
                 input.Filter,
                 input.Name,
@@ -184,7 +222,7 @@ namespace IsikUn.IncubationCentre.Projects
                 input.InvesmentReady,
                 input.FilterOpenForInvesment,
                 input.OpenForInvesment,
-                input.Founders != null ? input.Founders.Select(a => a.Id).ToList():null,
+                input.Founders != null ? input.Founders.Select(a => a.Id).ToList() : null,
                 input.Investors != null ? input.Investors.Select(a => a.Id).ToList() : null,
                 input.Mentors != null ? input.Mentors.Select(a => a.Id).ToList() : null,
                 input.Collaborators != null ? input.Collaborators.Select(a => a.Id).ToList() : null,
@@ -227,18 +265,21 @@ namespace IsikUn.IncubationCentre.Projects
             }
 
             var project = await _projectRepository.GetWithDetailAsync(id);
+            input.OpenForInvesment = input.InvesmentReady == false ? false : input.OpenForInvesment;
 
-            if(input.Status == ProjectStatus.OnGoing)//check any of the co founders (collabs and entre if has ongoing project)
+            if (input.Status == ProjectStatus.OnGoing)//check any of the co founders (collabs and entre if has ongoing project)
             {
-                if(project.Collaborators.Count(a => a.CollaboratoringProjects.Count(b => b.Status == ProjectStatus.OnGoing && b.Id != id) > 0) > 0)
+                if (project.Collaborators.Count(a => a.CollaboratoringProjects.Count(b => b.Status == ProjectStatus.OnGoing && b.Id != id) > 0) > 0)
                 {
                     throw new UserFriendlyException(L["CoFounderOfProjectsAlreadyHasOngoingProject"]);
                 }
-                if(project.Entrepreneurs.Count(a => a.MyProjects.Count(b=> b.Status == ProjectStatus.OnGoing && b.Id != id) > 0) > 0)
+                if (project.Entrepreneurs.Count(a => a.MyProjects.Count(b => b.Status == ProjectStatus.OnGoing && b.Id != id) > 0) > 0)
                 {
                     throw new UserFriendlyException(L["CoFounderOfProjectsAlreadyHasOngoingProject"]);
                 }
             }
+
+
             ObjectMapper.Map(input, project);
             project = await _projectRepository.UpdateAsync(project, autoSave: true);
 
@@ -251,6 +292,18 @@ namespace IsikUn.IncubationCentre.Projects
                     EntrepreneurId = input.EntreprenurId.Value
                 }, true);
             }
+
+            await _projectCollaboratorRepository.DeleteAsync(a => a.ProjectId == id);
+            if (input.CollaboratorIds != null && input.CollaboratorIds.Any())
+            {
+                var projectCollabs = input.CollaboratorIds.Select(a => new ProjectCollaborator
+                {
+                    ProjectId = project.Id,
+                    CollaboratorId = Guid.Parse(a)
+                });
+                await _projectCollaboratorRepository.InsertManyAsync(projectCollabs, autoSave: true);
+            }
+
             return ObjectMapper.Map<Project, ProjectDto>(project);
         }
     }

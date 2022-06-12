@@ -1,6 +1,7 @@
 $(function () {
     var l = abp.localization.getResource('IncubationCentre');
 
+    var createRequestModal = new abp.ModalManager(abp.appPath + 'Requests/CreateModal');
 
     var dataTable = $('#AllProjectsTable').DataTable(
         abp.libs.datatables.normalizeConfiguration({
@@ -10,8 +11,8 @@ $(function () {
             searching: true,
             scrollX: true,
             ajax: abp.libs.datatables.createAjax(isikUn.incubationCentre.projects.project.getList, {
-                FilterByInvesmentReady = true,
-                InvesmentReady = true
+                filterByInvesmentReady : true,
+                invesmentReady : true
             }),
             columnDefs: [
                 { // TODO this the part that needs to be changed
@@ -112,14 +113,6 @@ $(function () {
         })
     );
 
-    //$('#MyMentoringProjectsTable')
-    //    .on('init.dt', function () {
-    //        $('#MyMentoringProjectsTable').DataTable().draw();
-
-    //    })
-    //    .dataTable();
-
-
     var dataTable1 = $('#EventsTable').DataTable(abp.libs.datatables.normalizeConfiguration({
         processing: true,
         serverSide: true,
@@ -171,12 +164,15 @@ $(function () {
         ]
     }));
 
-    createModal.onResult(function () {
-        dataTable.ajax.reload();
+
+    createRequestModal.onResult(function () {
+        location.reload();
     });
 
-    editModal.onResult(function () {
-        dataTable.ajax.reload();
+    $('#NewRequestButton').click(function (e) {
+        e.preventDefault();
+        createRequestModal.open();
+
     });
 
     $('#NewEventButton').click(function (e) {

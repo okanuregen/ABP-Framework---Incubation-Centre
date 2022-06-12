@@ -20,24 +20,24 @@ namespace IsikUn.IncubationCentre.ProjectsInvestors
         {
         }
 
-        public async Task<long> GetCountAsync(Guid[] InvestorIds = null, Guid[] ProjectIds = null, CancellationToken cancelationToken = default)
+        public async Task<long> GetCountAsync(Guid? InvestorId = null, Guid? ProjectId = null, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
                         (await GetQueryableAsync())
                         ,
-                        InvestorIds,
-                        ProjectIds
+                        InvestorId,
+                        ProjectId
                         );
             return await query.LongCountAsync(GetCancellationToken(cancelationToken));
         }
 
-        public async Task<List<ProjectInvestor>> GetListAsync(Guid[] InvestorIds = null, Guid[] ProjectIds = null, int skipCount = 0, int maxResultCount = int.MaxValue, string sorting = null, CancellationToken cancelationToken = default)
+        public async Task<List<ProjectInvestor>> GetListAsync(Guid? InvestorId = null, Guid? ProjectId = null, int skipCount = 0, int maxResultCount = int.MaxValue, string sorting = null, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
-                                    (await WithDetailsAsync(c => c.Investor, d => d.Project))
+                                    (await GetQueryableAsync()).Include(a => a.Project).Include(a => a.Investor).ThenInclude(b => b.IdentityUser)
                                     ,
-                                    InvestorIds,
-                                    ProjectIds
+                                    InvestorId,
+                                    ProjectId
                                     );
             query = string.IsNullOrWhiteSpace(sorting) ? query : query.OrderBy(sorting);
             return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancelationToken);
@@ -45,13 +45,13 @@ namespace IsikUn.IncubationCentre.ProjectsInvestors
 
         protected virtual IQueryable<ProjectInvestor> ApplyFilter(
              IQueryable<ProjectInvestor> query,
-             Guid[] InvestorIds = null,
-             Guid[] ProjectIds = null
+             Guid? InvestorId = null,
+             Guid? ProjectId = null
         )
         {
             return query
-                    .WhereIf(InvestorIds != null && InvestorIds.Any(), e => InvestorIds.Contains(e.InvestorId))
-                    .WhereIf(ProjectIds != null && ProjectIds.Any(), e => ProjectIds.Contains(e.ProjectId));
+                    .WhereIf(InvestorId.HasValue, e => InvestorId.Value == e.InvestorId)
+                    .WhereIf(ProjectId.HasValue, e => ProjectId.Value == e.ProjectId);
         }
 
         public async Task<List<ProjectInvestor>> GetAllWithDetailAsync()

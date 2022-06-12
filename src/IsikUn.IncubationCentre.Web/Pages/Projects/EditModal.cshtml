@@ -28,7 +28,10 @@
                     <abp-select asp-for="Project.TotalValuationCurrencySymbol" asp-items="Model.Currencies"/>
                 </abp-column>
             </abp-row>
+            <abp-select asp-for="Project.CollaboratorIds" asp-items="Model.Collaborators"/>
             <abp-select asp-for="@Model.Project.Status"/>
+            <abp-input asp-for="Project.OpenForInvesment" />
+            <abp-input asp-for="Project.InvesmentReady" />
         </abp-modal-body>
         <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
     </abp-modal>
@@ -36,6 +39,9 @@
 
 <script>
         $(function(){
+            if(!abp.currentUser.roles.includes("System Manager")){
+                $("#Project_InvesmentReady").parent("div").hide();
+            }
             var status = $("#Project_Status").val();
             if(status == "InReview" || status == "Declined"){
                 $("#Project_Status").attr("readonly","readonly");

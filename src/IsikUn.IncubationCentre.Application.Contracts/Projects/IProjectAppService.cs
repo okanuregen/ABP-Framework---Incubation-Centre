@@ -22,6 +22,8 @@ namespace IsikUn.IncubationCentre.Projects
         
         Task<ProjectDto> GetWithDetailAsync(Guid id);
 
+        Task Invest(Guid projectId);
+
         Task<ProjectDto> AssignMentorAsync(Guid id, Guid mentorId);
     }
 }
