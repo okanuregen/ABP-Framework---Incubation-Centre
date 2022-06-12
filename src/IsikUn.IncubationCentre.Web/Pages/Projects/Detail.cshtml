@@ -142,7 +142,7 @@
                     <abp-card-header>
                         <abp-card-title>
                             @L["ListOfAssociatedPeople"].Value
-                            @if (Model.IsInvestor)
+                            @if (Model.IsInvestor  && Model.Project.Status != IsikUn.IncubationCentre.Projects.ProjectStatus.Declined)
                             {
                                     <button class="btn btn-info float-end px-4" id="investButton">@L["Invest"]</button>
                             }
@@ -246,7 +246,7 @@
                     <abp-card-title>@L["Milestones"]</abp-card-title>
                 </abp-column>
                 <abp-column size-md="_6" class="float-end text-end">
-                    @if (Model.IsAllowedEdit)
+                    @if (Model.IsAllowedEdit  && Model.Project.Status != IsikUn.IncubationCentre.Projects.ProjectStatus.Declined)
                     {
                             <abp-button id="NewMilestoneButton"
                                 text="@L["NewMilestone"].Value"
@@ -268,7 +268,7 @@
                     <abp-card-title>@L["Events"]</abp-card-title>
                 </abp-column>
                 <abp-column size-md="_6" class="float-end text-end">
-                    @if (Model.isUserInProject)
+                    @if (Model.isUserInProject && Model.Project.Status != IsikUn.IncubationCentre.Projects.ProjectStatus.Declined)
                     {
                             <abp-button id="NewEventButton"
                                 text="@L["NewEvent"].Value"
@@ -283,7 +283,6 @@
         </abp-card>
     </abp-column>
 </abp-row>
-
 
 <script>
         document.addEventListener("DOMContentLoaded", function() {

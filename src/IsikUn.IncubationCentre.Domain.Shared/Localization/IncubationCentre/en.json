@@ -306,8 +306,8 @@
     "ProjectInvestorAssgn": "We are happy to inform you that you have an investor assigned to your project! Please check your project on the system.",
     "Q1": "How do I become a member / How do I create an account?",
     "A1": "On the main page of our website, click on join us button, and fill in the fields with your information. Make sure you choose the appropriate account type for you",
-    "Q2": "What account type should I choose? / What are the different user roles on this website?",
-    "A2": "If you have an idea for a start-up/Project, and you need help during the whole process then Entrepreneur account is for you. If you have Skills and are willing to aid and help others with their projects to gain experience working with other or want to join your already existing team, then sign up as a Collaborator. If you are looking for new investment opportunities, or just want to finance a promising project, then Investor Account is the one for you. If you are a knowledgeable or an expert on a subject and want to be able to guide and help Entrepreneurs throughout the development of their project, then Mentor is the right account type for you.",
+    "Q14": "What account type should I choose? / What are the different user roles on this website?",
+    "A14": "If you have an idea for a start-up/Project, and you need help during the whole process then Entrepreneur account is for you. If you have Skills and are willing to aid and help others with their projects to gain experience working with other or want to join your already existing team, then sign up as a Collaborator. If you are looking for new investment opportunities, or just want to finance a promising project, then Investor Account is the one for you. If you are a knowledgeable or an expert on a subject and want to be able to guide and help Entrepreneurs throughout the development of their project, then Mentor is the right account type for you.",
     "Q3": "What is an application? / What is the application process?",
     "A3": "An application is how an account is created, the user applies for the correct account type and then the system managers can approve or decline the application depending on the info given by the user during the application process.",
     "Q4": "How many Projects can I have as an entrepreneur?",
@@ -319,7 +319,7 @@
     "Q7": "What are the steps between opening and ending a project?",
     "A7": "A project starts by sending an application to the system managers, after approval it can start, and become an ongoing project. For any reason or the other a project might get suspended or cancelled by the system managers as well. If all goes well and according to the rules. The project can finish all of its milestones and be able to be finished.",
     "Q8": "How do I get Investors for my project?",
-    "A8": "depending on the project type, an investor can buy a share or more of the project, given that the project is investment ready (fulfilled all the requirements specified by the system managers), and is open for investment (the entrepreneur is willing to sell shares of the project to investors). Investors will have to fulfil their financial obligations after the project they invested in is finished.",
+    "A8": "Depending on the project type, an investor can buy a share or more of the project, given that the project is investment ready (fulfilled all the requirements specified by the system managers), and is open for investment (the entrepreneur is willing to sell shares of the project to investors). Investors will have to fulfil their financial obligations after the project they invested in is finished.",
     "Q9": "How many Investors Can one project have?",
     "A9": "As many as the entrepreneur wants, given that the total shares sold are not exceeding 100%.",
     "Q10": "How many Collaborators can work on one project?",
@@ -330,9 +330,9 @@
     "A12": "One person can register as an entrepreneur, the rest can register as collaborators, and then join the project after it has been approved.",
     "Q13": "How Do I use the system UI? Where is everything?",
     "A13": "Dashboard has everything you need to check from events to request, Profile has personal information. Everything else can be accessed from the side bar.",
-    "Q14": "I want to join a project as a collaborator, what should I do?",
-    "A14": "Send a request to join the project you are interested in, the wait for the entrepreneur to approve or reject your request.",
-    "Q15": ": How do I submit the requested documents?",
+    "Q2": "I want to join a project as a collaborator, what should I do?",
+    "A2": "Send a request to join the project you are interested in, the wait for the entrepreneur to approve or reject your request.",
+    "Q15": "How do I submit the requested documents?",
     "A15": "The system managers will specify documents to be sent depending on the situation, to comply you will have to send the specified documents to the email address they requested using your own email address."
   }
 }

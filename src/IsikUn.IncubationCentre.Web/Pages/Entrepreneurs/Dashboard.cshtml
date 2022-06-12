@@ -282,7 +282,7 @@
 
 <script type="text/javascript">
     $(function () {
-        var myProjects =  @(Json.Serialize(Model.CurrentUser.ProjectsEntrepreneurs.Select(a => a.Id)));
+        var myProjects =  @(Json.Serialize(Model.CurrentUser.ProjectsEntrepreneurs != null ? Model.CurrentUser.ProjectsEntrepreneurs.Select(a => a.Id) : new string[] {" "}));
         var dataEventsTable = $('#EventsTable').DataTable(abp.libs.datatables.normalizeConfiguration({
             processing: true,
             serverSide: true,
