@@ -168,11 +168,17 @@ namespace IsikUn.IncubationCentre.Applications
             }
 
             //Send Inform Mail To User
-            await _emailSender.SendAsync(
-                identityUser.Email,
-                @L["ApprovedUser"],
-                @L["AccountActivation",identityUser.UserName,identityUser.Password]);
-
+            try
+            {
+                await _emailSender.SendAsync(
+                    identityUser.Email,
+                    @L["ApprovedUser"],
+                    @L["AccountActivation", identityUser.UserName, identityUser.Password]);
+            }
+            catch
+            {
+                
+            }
             return person;
         }
 
@@ -195,7 +201,7 @@ namespace IsikUn.IncubationCentre.Applications
                     @L["RejectionMail"]
                     );
             }
-            catch (Exception ex)
+            catch 
             {
 
             }

@@ -107,19 +107,33 @@ namespace IsikUn.IncubationCentre.Projects
             //Send Inform Mail To User
             foreach (var mail in project.Collaborators.Select(a => a.IdentityUser.Email))
             {
-                await _emailSender.SendAsync(
-                    mail,
-                    @L["ProjectApplication"],
-                    @L["ProjectApprovedMail"]
-                    );
+                try
+                {
+                    await _emailSender.SendAsync(
+                        mail,
+                        @L["ProjectApplication"],
+                        @L["ProjectApprovedMail"]
+                        );
+                }
+                catch
+                {
+
+                }
             }
             foreach (var mail in project.Entrepreneurs.Select(a => a.IdentityUser.Email))
             {
-                await _emailSender.SendAsync(
-                    mail,
-                    @L["ProjectApplication"],
-                    @L["ProjectApprovedMail"]
-                    );
+                try
+                {
+                    await _emailSender.SendAsync(
+                        mail,
+                        @L["ProjectApplication"],
+                        @L["ProjectApprovedMail"]
+                        );
+                }
+                catch
+                {
+
+                }
             }
             return ObjectMapper.Map<Project, ProjectDto>(project);
         }
@@ -139,19 +153,33 @@ namespace IsikUn.IncubationCentre.Projects
             //Send Inform Mail To User
             foreach (var mail in project.Collaborators.Select(a => a.IdentityUser.Email))
             {
-                await _emailSender.SendAsync(
-                    mail,
-                    @L["ProjectApplication"],
-                    @L["ProjectRejectedMail"]
-                    );
+                try
+                {
+                    await _emailSender.SendAsync(
+                        mail,
+                        @L["ProjectApplication"],
+                        @L["ProjectRejectedMail"]
+                        );
+                }
+                catch
+                {
+
+                }
             }
             foreach (var mail in project.Entrepreneurs.Select(a => a.IdentityUser.Email))
             {
-                await _emailSender.SendAsync(
-                    mail,
-                    @L["ProjectApplication"],
-                    @L["ProjectRejectedMail"]
-                    );
+                try
+                {
+                    await _emailSender.SendAsync(
+                        mail,
+                        @L["ProjectApplication"],
+                        @L["ProjectRejectedMail"]
+                        );
+                }
+                catch
+                {
+
+                }
             }
             return ObjectMapper.Map<Project, ProjectDto>(project);
         }
@@ -182,21 +210,36 @@ namespace IsikUn.IncubationCentre.Projects
                 Mentor = mentor
             });
             //Information mail to project crew
+            
             foreach (var mail in project.Collaborators.Select(a => a.IdentityUser.Email))
             {
-                await _emailSender.SendAsync(
-                    mail,
-                    @L["ProjectMentorAssgn"],
-                    @L["ProjectMentorAssgnMail"]
-                    );
+                try
+                {
+                    await _emailSender.SendAsync(
+                        mail,
+                        @L["ProjectMentorAssgn"],
+                        @L["ProjectMentorAssgnMail"]
+                        );
+                }
+                catch
+                {
+
+                }
             }
             foreach (var mail in project.Entrepreneurs.Select(a => a.IdentityUser.Email))
             {
-                await _emailSender.SendAsync(
-                    mail,
-                    @L["ProjectApplication"],
-                    @L["ProjectMentorAssgnMail"]
-                    );
+                try
+                {
+                    await _emailSender.SendAsync(
+                        mail,
+                        @L["ProjectApplication"],
+                        @L["ProjectMentorAssgnMail"]
+                        );
+                }
+                catch
+                {
+
+                }
             }
 
             project.Mentors.AddIfNotContains(mentor);
@@ -260,19 +303,33 @@ namespace IsikUn.IncubationCentre.Projects
             //Information mail to user
             foreach (var mail in project.Collaborators.Select(a => a.IdentityUser.Email))
             {
-                await _emailSender.SendAsync(
-                    mail,
-                    @L["ProjectInvestorAbout"],
-                    @L["ProjectInvestorAssgn"]
-                    );
+                try
+                {
+                    await _emailSender.SendAsync(
+                        mail,
+                        @L["ProjectInvestorAbout"],
+                        @L["ProjectInvestorAssgn"]
+                        );
+                }
+                catch
+                {
+
+                }
             }
             foreach (var mail in project.Entrepreneurs.Select(a => a.IdentityUser.Email))
             {
-                await _emailSender.SendAsync(
-                    mail,
-                    @L["ProjectInvestorAbout"],
-                    @L["ProjectInvestorAssgn"]
-                    );
+                try
+                {
+                    await _emailSender.SendAsync(
+                        mail,
+                        @L["ProjectInvestorAbout"],
+                        @L["ProjectInvestorAssgn"]
+                        );
+                }
+                catch
+                {
+
+                }
             }
 
         }

@@ -42,7 +42,14 @@ namespace IsikUn.IncubationCentre.Requests
             var receiverMail = receiver.IdentityUser.Email;
             if (receiverMail != null)
             {
-                await _emailSender.SendAsync(receiverMail, @L["NewRequestMail"], @L["NewRequestBodyMail"]);
+                try
+                {
+                    await _emailSender.SendAsync(receiverMail, @L["NewRequestMail"], @L["NewRequestBodyMail"]);
+                }
+                catch
+                {
+
+                }
             }
             return ObjectMapper.Map<Request, RequestDto>(Request);
         }
