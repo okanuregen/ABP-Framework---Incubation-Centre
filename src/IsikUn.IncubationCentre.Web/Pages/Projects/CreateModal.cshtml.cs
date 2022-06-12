@@ -52,7 +52,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
                 Project.EntreprenurId = person.Id;
             }
             var currencies = await _currencyRepo.GetListAsync();
-            if(currencies == null || currencies.Count() > 0)
+            if(currencies == null || currencies.Count() == 0)
             {
                 Currencies = new List<SelectListItem>();
                 Currencies.Add(new SelectListItem

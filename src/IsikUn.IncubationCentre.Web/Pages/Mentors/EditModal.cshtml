@@ -21,6 +21,7 @@
             <abp-select asp-for="Mentor.SkillIds" asp-items="Model.Skills" />
             <abp-input asp-for="Mentor.Experience" />
             <abp-input asp-for="Mentor.isActivated" type="hidden" />
+            <abp-input asp-for="Mentor.CreationTime" type="hidden" />
         </abp-modal-body>
         <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
     </abp-modal>
