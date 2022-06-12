@@ -268,13 +268,6 @@
                     <abp-card-header>
                         <abp-card-title>
                             @L["Events"].Value
-@*
-                            <abp-button id="NewEventButton"
-                                    text="@L["NewEvent"].Value"
-                                    icon="plus",
-                                    class="float-end"
-                                    button-type="Primary" />
-                           *@
                         </abp-card-title>
                     </abp-card-header>
                     <abp-card-body>
@@ -285,3 +278,58 @@
         </abp-row>
     </abp-column>
 </abp-row>
+
+
+<script type="text/javascript">
+    $(function () {
+        var myProjects =  @(Json.Serialize(Model.CurrentUser.ProjectsEntrepreneurs.Select(a => a.Id)));
+        var dataEventsTable = $('#EventsTable').DataTable(abp.libs.datatables.normalizeConfiguration({
+            processing: true,
+            serverSide: true,
+            paging: true,
+            searching: true,
+            autoWidth: false,
+            scrollCollapse: true,
+            order: [[0, "asc"]],
+            ajax: abp.libs.datatables.createAjax(isikUn.incubationCentre.events.event.getList, {projectIds :  myProjects}),
+            columnDefs: [
+                {
+                    title: l('Title'),
+                    data: "title"
+                },
+                {
+                    title: l('Date'),
+                    data: "eventDate",
+                    render: function (data) {
+                        if (data == null) return "-";
+                        try {
+                            var date = new Date(data).toLocaleDateString();
+                            return date != "Invalid Date" ? date : "-";
+                        } catch {
+                            return "-";
+                        }
+                    }
+                },
+                {
+                    title: l('Description'),
+                    data: "description"
+                },
+                {
+                    title: l('Project'),
+                    data: "project",
+                    render: function (data) {
+                        if (data == null) return "-";
+                        if (data.name == null) return "-";
+                        return data.name;
+                    }
+                },
+            ]
+        }));
+
+
+        $('#NewEventButton').click(function (e) {
+            e.preventDefault();
+            createEventModal.open();
+        });
+    });
+</script>

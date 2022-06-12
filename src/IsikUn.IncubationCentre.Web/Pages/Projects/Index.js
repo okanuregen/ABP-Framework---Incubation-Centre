@@ -25,14 +25,6 @@ $(function () {
                         items:
                             [
                                 {
-                                    text: l('Edit'),
-                                    visible:
-                                        abp.auth.isGranted('IncubationCentre.Projects.Edit'),
-                                    action: function (data) {
-                                        editModal.open({ id: data.record.id });
-                                    }
-                                },
-                                {
                                     text: l('Detail'),
                                     visible:
                                         abp.auth.isGranted('IncubationCentre.Projects'),
@@ -40,27 +32,6 @@ $(function () {
                                         location.href = "/Projects/Detail?id=" + data.record.id;
                                     }
                                 },
-                                {
-                                    text: l('Delete'),
-                                    visible:
-                                        abp.auth.isGranted('IncubationCentre.Projects.Delete'),
-                                    confirmMessage: function (data) {
-                                        return l(
-                                            'EntityDeletionConfirmationMessage',
-                                            data.record.name
-                                        );
-                                    },
-                                    action: function (data) {
-                                        isikUn.incubationCentre.projects.project
-                                            .delete(data.record.id)
-                                            .then(function () {
-                                                abp.notify.info(
-                                                    l('SuccessfullyDeleted')
-                                                );
-                                                dataTable.ajax.reload();
-                                            });
-                                    }
-                                }
                             ]
                     }
                 },

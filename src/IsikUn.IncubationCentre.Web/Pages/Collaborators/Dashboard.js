@@ -13,7 +13,7 @@ $(function () {
         autoWidth: false,
         scrollCollapse: true,
         order: [[0, "asc"]],
-        ajax: abp.libs.datatables.createAjax(isikUn.incubationCentre.events.event.getList),
+        ajax: abp.libs.datatables.createAjax(isikUn.incubationCentre.events.event.getList, {projectIds : []}),
         columnDefs: [
             //{
             //    rowAction: {

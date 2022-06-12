@@ -35,5 +35,14 @@
         $('[type="date"]').each(function(i,e){
             $(e).val($(e).attr("value").split("T")[0])
         });
+
+        if(location.href.includes("/Projects/Detail?id")){
+            var projectId = location.search.replace("?id=","");
+            $("#Event_ProjectId option").each(function(i,e){
+                if($(e).val() != projectId) {
+                    $(e).remove();
+                }
+            });
+        }
     });
 </script>

@@ -19,23 +19,23 @@ namespace IsikUn.IncubationCentre.Events
         {
         }
 
-        public async Task<long> GetCountAsync(string filter = null, string title = null, string description = null, string projectName = null, string creatorUserName = null, CancellationToken cancelationToken = default)
+        public async Task<long> GetCountAsync(string filter = null, string title = null, string description = null, string projectName = null, string creatorUserName = null, Guid[] projectIds = null, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
                                 (await GetQueryableAsync())
                                     .Include(a => a.CreatorPerson)
                                     .Include(b => b.Project)
-                                ,filter,title,description,projectName,creatorUserName);
+                                ,filter,title,description,projectName,creatorUserName,projectIds);
             return await query.LongCountAsync(GetCancellationToken(cancelationToken));
         }
 
-        public async Task<List<Event>> GetListAsync(string filter = null, string title = null, string description = null, string projectName = null, string creatorUserName = null, int skipCount = 0, int maxResultCount = int.MaxValue, string sorting = null, CancellationToken cancelationToken = default)
+        public async Task<List<Event>> GetListAsync(string filter = null, string title = null, string description = null, string projectName = null, string creatorUserName = null, Guid[] projectIds = null, int skipCount = 0, int maxResultCount = int.MaxValue, string sorting = null, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
                             (await GetQueryableAsync())
                                 .Include(a => a.CreatorPerson)
                                 .Include(b => b.Project)
-                            , filter, title, description, projectName, creatorUserName);
+                            , filter, title, description, projectName, creatorUserName,projectIds);
             query = query.OrderBy(string.IsNullOrWhiteSpace(sorting) ? "Title asc" : sorting);
             return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancelationToken);
         }
@@ -46,7 +46,8 @@ namespace IsikUn.IncubationCentre.Events
              string title = null,
              string description = null,
              string projectName = null,
-             string creatorUserName = null
+             string creatorUserName = null,
+             Guid[] projectsIds = null 
             )
         {
             return query
@@ -58,6 +59,7 @@ namespace IsikUn.IncubationCentre.Events
                         )
                     .WhereIf(!string.IsNullOrWhiteSpace(title), e => e.Title.Contains(title))
                     .WhereIf(!string.IsNullOrWhiteSpace(description), e => e.Description.Contains(description))
+                    .WhereIf(projectsIds != null, e => projectsIds.Contains(e.ProjectId))
                     .WhereIf(!string.IsNullOrWhiteSpace(projectName), e => e.Project != null && e.Project.Name != null ? e.Project.Name == projectName : false)
                     .WhereIf(!string.IsNullOrWhiteSpace(creatorUserName), e => e.CreatorPerson != null && e.CreatorPerson.IdentityUser != null && e.CreatorPerson.IdentityUser.UserName != null ? e.CreatorPerson.IdentityUser.UserName.Contains(creatorUserName) : false);
         }

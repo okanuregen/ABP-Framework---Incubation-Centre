@@ -14,6 +14,7 @@ namespace IsikUn.IncubationCentre.Events
              string description = null,
              string projectName = null,
              string creatorUserName = null,
+             Guid[] projectIds = null,
              int skipCount = 0,
              int maxResultCount = int.MaxValue,
              string sorting = null,
@@ -26,6 +27,7 @@ namespace IsikUn.IncubationCentre.Events
              string description = null,
              string projectName = null,
              string creatorUserName = null,
+             Guid[] projectIds = null,
              CancellationToken cancelationToken = default
             );
 

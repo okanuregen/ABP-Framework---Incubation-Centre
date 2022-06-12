@@ -1,5 +1,8 @@
 ﻿var l = null;
 $(function () {
+    if (abp.currentUser.roles.includes("System Manager")) {
+        $("#MenuItem_AccountDetail").remove();
+    }
     l = abp.localization.getResource('IncubationCentre');
 
     $('#MenuItem_AccountDetail [data-text="MyProfile"]').text(l("MyProfile"));

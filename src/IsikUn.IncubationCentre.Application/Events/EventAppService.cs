@@ -68,8 +68,8 @@ namespace IsikUn.IncubationCentre.Events
         [Authorize(IncubationCentrePermissions.Events.Default)]
         public async Task<PagedResultDto<EventDto>> GetListAsync(GetEventsInput input)
         {
-            var totalCount = await _eventRepository.GetCountAsync(input.filter,input.Title,input.Description,input.ProjectName,input.CreatorUserName);
-            var items = await _eventRepository.GetListAsync(input.filter, input.Title, input.Description, input.ProjectName, input.CreatorUserName, input.SkipCount, input.MaxResultCount, input.Sorting);
+            var totalCount = await _eventRepository.GetCountAsync(input.filter,input.Title,input.Description,input.ProjectName,input.CreatorUserName, input.projectIds);
+            var items = await _eventRepository.GetListAsync(input.filter, input.Title, input.Description, input.ProjectName, input.CreatorUserName, input.projectIds, input.SkipCount, input.MaxResultCount, input.Sorting);
 
             return new PagedResultDto<EventDto>
             {
