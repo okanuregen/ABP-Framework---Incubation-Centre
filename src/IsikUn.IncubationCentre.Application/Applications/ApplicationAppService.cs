@@ -36,6 +36,7 @@ namespace IsikUn.IncubationCentre.Applications
         private readonly ITaskRepository _taskRepository;
         private readonly IPersonRepository _personRepository;
         private readonly ICurrentUser _currentUser;
+        private readonly IEmailSender _emailSender;
 
         public ApplicationAppService(
             IInvestorAppService investorAppService,
@@ -48,7 +49,8 @@ namespace IsikUn.IncubationCentre.Applications
             ISystemManagerRepository systemManagerRepository,
             IPersonRepository personRepository,
             ICurrentUser currentUser,
-            ITaskRepository taskRepository
+            ITaskRepository taskRepository,
+            IEmailSender emailSender
             )
         {
             this._identityUserRepo = identityUserRepo;
@@ -62,6 +64,8 @@ namespace IsikUn.IncubationCentre.Applications
             this._currentUser = currentUser;
             this._personRepository = personRepository;
             this._taskRepository = taskRepository;
+            this._emailSender=emailSender;
+
             LocalizationResource = typeof(IncubationCentreResource);
         }
 
@@ -164,6 +168,11 @@ namespace IsikUn.IncubationCentre.Applications
             }
 
             //Send Inform Mail To User
+            await _emailSender.SendAsync(
+                identityUser.Email,
+                @L["ApprovedUser"],
+                @L["AccountActivation",identityUser.UserName,identityUser.Password]);
+
             return person;
         }
 
@@ -178,6 +187,12 @@ namespace IsikUn.IncubationCentre.Applications
 
             application.ApplicationStatus = ApplicationStatus.Declined;
             //Send Inform Mail To User
+            await _emailSender.SendAsync(
+                application.SenderMail,
+                @L["ApprovedUser"],
+                @L["RejectionMail"]
+                );
+
             application = await _applicationRepository.UpdateAsync(application, autoSave: true);
             return ObjectMapper.Map<Application, ApplicationDto>(application);
         }

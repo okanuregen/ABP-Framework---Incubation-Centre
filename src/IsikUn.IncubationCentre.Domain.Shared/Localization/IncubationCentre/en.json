@@ -292,5 +292,18 @@
     "TotalProjectValue": "Total Project Value",
     "ProjectTags": "Tags of The Project",
     "DateCannotBePast": "You cannot choose a date in the past!"
+    "ProjectTags": "Tags of The Project",
+    "NewRequestMail": "New Request!",
+    "NewRequestBodyMail": "You have a new request! Please check it as soon as possible.",
+    "ApprovedUser": "About Account Activation",
+    "AccountActivation": "Your account has been approved. Welcome to our creative world! Enjoy! You can find your credentials here. Your username: {0}, and your password: {1}",
+    "RejectionMail": "We are sorry to inform you that your registration application is rejected due to administrative. We wish you a nice day.",
+    "ProjectApplication": "About Project Application",
+    "ProjectApprovedMail": "We would like to inform you that, your project is APPROVED! Congratulations! We wish you a nice day.",
+    "ProjectRejectedMail": "We are sorry to inform you that, your project is rejected. Lack of information, necessity of the project, field of the project or completeness of the project information can be the possible reasons. Please contact with a manager for detailed information. We wish you a nice day.",
+    "ProjectMentorAssgn": "About Project Mentoring",
+    "ProjectMentorAssgnMail": "We are happy to inform you that you have a mentor assigned to your project! Please check your project on the system.",
+    "ProjectInvestorAbout": "About Project Investment",
+    "ProjectInvestorAssgn": "We are happy to inform you that you have an investor assigned to your project! Please check your project on the system."
   }
 }

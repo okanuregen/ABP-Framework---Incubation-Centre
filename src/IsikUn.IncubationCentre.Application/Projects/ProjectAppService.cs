@@ -16,6 +16,7 @@ using IsikUn.IncubationCentre.ProjectsEntrepreneurs;
 using IsikUn.IncubationCentre.Mentors;
 using IsikUn.IncubationCentre.Investors;
 using IsikUn.IncubationCentre.People;
+using Volo.Abp.Emailing;
 
 namespace IsikUn.IncubationCentre.Projects
 {
@@ -29,6 +30,7 @@ namespace IsikUn.IncubationCentre.Projects
         private readonly IProjectInvestorRepository _projectInvestorRepository;
         private readonly IProjectCollaboratorRepository _projectCollaboratorRepository;
         private readonly IProjectFounderRepository _projectFounderRepository;
+        private readonly IEmailSender _emailSender;
 
         private readonly IMentorRepository _mentorRepository;
 
@@ -41,7 +43,8 @@ namespace IsikUn.IncubationCentre.Projects
             IProjectInvestorRepository projectInvestorRepository,
             IProjectCollaboratorRepository projectCollaboratorRepository,
             IProjectFounderRepository projectFounderRepository,
-            IMentorRepository mentorRepository
+            IMentorRepository mentorRepository,
+            IEmailSender emailSender
             )
         {
             this._projectRepository = projectRepository;
@@ -52,6 +55,7 @@ namespace IsikUn.IncubationCentre.Projects
             this._projectCollaboratorRepository = projectCollaboratorRepository;
             this._projectFounderRepository = projectFounderRepository;
             this._mentorRepository = mentorRepository;
+            this._emailSender=emailSender;
             LocalizationResource = typeof(IncubationCentreResource);
         }
 
@@ -90,29 +94,65 @@ namespace IsikUn.IncubationCentre.Projects
         [Authorize(IncubationCentrePermissions.SystemManagers.Default)]
         public async Task<ProjectDto> ApproveProjectAsync(Guid id)
         {
-            var project = await _projectRepository.GetAsync(id);
+            var project = await _projectRepository.GetWithDetailAsync(id);
             if (project == null)
             {
                 throw new UserFriendlyException(L["NoProjectFound"]);
             }
             project.Status = ProjectStatus.Approved;
 
-            //Send Inform Mail To User
+            
+
             project = await _projectRepository.UpdateAsync(project, autoSave: true);
+            //Send Inform Mail To User
+            foreach (var mail in project.Collaborators.Select(a => a.IdentityUser.Email))
+            {
+                await _emailSender.SendAsync(
+                    mail,
+                    @L["ProjectApplication"],
+                    @L["ProjectApprovedMail"]
+                    );
+            }
+            foreach (var mail in project.Entrepreneurs.Select(a => a.IdentityUser.Email))
+            {
+                await _emailSender.SendAsync(
+                    mail,
+                    @L["ProjectApplication"],
+                    @L["ProjectApprovedMail"]
+                    );
+            }
             return ObjectMapper.Map<Project, ProjectDto>(project);
         }
 
         [Authorize(IncubationCentrePermissions.SystemManagers.Default)]
         public async Task<ProjectDto> RejectProjectAsync(Guid id)
         {
-            var project = await _projectRepository.GetAsync(id);
+            var project = await _projectRepository.GetWithDetailAsync(id);
             if (project == null)
             {
                 throw new UserFriendlyException(L["NoProjectFound"]);
             }
             project.Status = ProjectStatus.Declined;
-            //Send Inform Mail To User
+           
+
             project = await _projectRepository.UpdateAsync(project, autoSave: true);
+            //Send Inform Mail To User
+            foreach (var mail in project.Collaborators.Select(a => a.IdentityUser.Email))
+            {
+                await _emailSender.SendAsync(
+                    mail,
+                    @L["ProjectApplication"],
+                    @L["ProjectRejectedMail"]
+                    );
+            }
+            foreach (var mail in project.Entrepreneurs.Select(a => a.IdentityUser.Email))
+            {
+                await _emailSender.SendAsync(
+                    mail,
+                    @L["ProjectApplication"],
+                    @L["ProjectRejectedMail"]
+                    );
+            }
             return ObjectMapper.Map<Project, ProjectDto>(project);
         }
 
@@ -141,6 +181,24 @@ namespace IsikUn.IncubationCentre.Projects
                 MentorId = mentorId,
                 Mentor = mentor
             });
+            //Information mail to project crew
+            foreach (var mail in project.Collaborators.Select(a => a.IdentityUser.Email))
+            {
+                await _emailSender.SendAsync(
+                    mail,
+                    @L["ProjectMentorAssgn"],
+                    @L["ProjectMentorAssgnMail"]
+                    );
+            }
+            foreach (var mail in project.Entrepreneurs.Select(a => a.IdentityUser.Email))
+            {
+                await _emailSender.SendAsync(
+                    mail,
+                    @L["ProjectApplication"],
+                    @L["ProjectMentorAssgnMail"]
+                    );
+            }
+
             project.Mentors.AddIfNotContains(mentor);
             return ObjectMapper.Map<Project, ProjectDto>(project);
         }
@@ -195,9 +253,28 @@ namespace IsikUn.IncubationCentre.Projects
             }
             else
             {
+                
                 lastInvest.Share += project.SharePerInvest;
                 await _projectInvestorRepository.UpdateAsync(lastInvest);
             }
+            //Information mail to user
+            foreach (var mail in project.Collaborators.Select(a => a.IdentityUser.Email))
+            {
+                await _emailSender.SendAsync(
+                    mail,
+                    @L["ProjectInvestorAbout"],
+                    @L["ProjectInvestorAssgn"]
+                    );
+            }
+            foreach (var mail in project.Entrepreneurs.Select(a => a.IdentityUser.Email))
+            {
+                await _emailSender.SendAsync(
+                    mail,
+                    @L["ProjectInvestorAbout"],
+                    @L["ProjectInvestorAssgn"]
+                    );
+            }
+
         }
 
 

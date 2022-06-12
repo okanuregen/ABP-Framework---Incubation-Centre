@@ -291,6 +291,20 @@
     "ListOfAssociatedPeople": "İlişkili Kişilerin Listesi",
     "TotalProjectValue": "Toplam Proje Değeri",
     "ProjectTags": "Projenin Etiketleri",
-    "DateCannotBePast": "Tarih Bugünden Önce Olamaz"
+    "DateCannotBePast": "Tarih Bugünden Önce Olamaz",
+    "ProjectTags": "Projenin Etiketleri",
+    "NewRequestMail": "Yeni Bildirim!",
+    "NewRequestBodyMail": "Yeni bir bilidirim aldınız! Lütfen en kısa zamanda kontrol ediniz.",
+    "ApprovedUser": "Hesap Aktivasyonu Hakkında",
+    "AccountActivation": "Hesabın aktive edildi. Yaratıcı dünyamıza hoş geldin! Tadını çıkart! Sisteme giriş bilgilerini burada bulabilirsin;",
+    "RejectionMail": "Kayıt başvurunuzun yönetim kararı ile reddedildiğini üzülerek bildiririz. İyi günler dileriz.",
+    "ProjectApplication": "Proje Başvurusu Hakkında",
+    "ProjectApprovedMail": "Projenizin onaylandığını size bildirmek isteriz! TEBRİKLER! İyi günler dileriz.",
+    "ProjectRejectedMail": "Projenizin reddedildiğini size üzülerek bildiriyoruz. Bilgi eksikliği, projenin gerekliliği, proje alanı veya proje bilgilerinin eksik olması olası nedenler olabilir. Ayrıntılı bilgi için lütfen bir yönetici ile iletişime geçin. İyi günler dileriz.",
+    "ProjectMentorAssgn": "Proje Danışmanı Hakkında",
+    "ProjectMentorAssgnMail": "Projenize danışman atandığını bildirmekten mutluluk duyuyoruz! Lütfen sistemden projenizi kotrol ediniz.",
+    "ProjectInvestorAbout": "Proje Yatırımı Hakkında",
+    "ProjectInvestorAssgn": "Projenize yatırımcı atandığını bildirmekten mutluluk duyuyoruz! Lütfen sistemden projenizi kotrol ediniz."
+    
   }
 }

@@ -21,14 +21,16 @@ namespace IsikUn.IncubationCentre.Requests
         private readonly IProjectRepository _projectRepository;
         private readonly IPersonRepository _personRepository;
         private readonly ICurrentUser _currentUser;
+        private readonly IEmailSender _emailSender;
 
-        public RequestAppService(IRequestRepository requestRepository, IProjectRepository projectRepository, ICurrentUser currentUser, IPersonRepository personRepository)
+        public RequestAppService(IRequestRepository requestRepository, IProjectRepository projectRepository, ICurrentUser currentUser, IPersonRepository personRepository, IEmailSender emailSender)
         {
             this._requestRepository = requestRepository;
             this._projectRepository = projectRepository;
             this._personRepository = personRepository;
             this._currentUser = currentUser;
             LocalizationResource = typeof(IncubationCentreResource);
+            this._emailSender = emailSender;
         }
 
         [Authorize(IncubationCentrePermissions.Requests.Create)]
@@ -36,6 +38,12 @@ namespace IsikUn.IncubationCentre.Requests
         {
             var Request = ObjectMapper.Map<CreateUpdateRequestDto, Request>(input);
             Request = await _requestRepository.InsertAsync(Request, autoSave: true);
+            var receiver = await _personRepository.GetWithDetailByIdAsync(input.ReceiverId.Value);
+            var receiverMail = receiver.IdentityUser.Email;
+            if (receiverMail != null)
+            {
+                await _emailSender.SendAsync(receiverMail, @L["NewRequestMail"], @L["NewRequestBodyMail"]);
+            }
             return ObjectMapper.Map<Request, RequestDto>(Request);
         }
 

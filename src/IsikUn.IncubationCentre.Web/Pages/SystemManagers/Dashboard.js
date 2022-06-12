@@ -193,7 +193,7 @@ $(function () {
                                     text: l('Decline'),
                                     visible: abp.auth.isGranted('IncubationCentre.SystemManagers'),
                                     confirmMessage: function (data) {
-                                        return l('YouAreRejectingAProject', (record.name));
+                                        return l('YouAreRejectingAProject', (data.record.name));
                                     },
                                     action: function (data) {
                                         page.projectStatus.isApprove = false;
