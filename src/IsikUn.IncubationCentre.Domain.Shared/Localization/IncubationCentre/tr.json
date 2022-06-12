@@ -295,7 +295,7 @@
     "NewRequestMail": "Yeni Bildirim!",
     "NewRequestBodyMail": "Yeni bir bilidirim aldınız! Lütfen en kısa zamanda kontrol ediniz.",
     "ApprovedUser": "Hesap Aktivasyonu Hakkında",
-    "AccountActivation": "Hesabın aktive edildi. Yaratıcı dünyamıza hoş geldin! Tadını çıkart! Sisteme giriş bilgilerini burada bulabilirsin;",
+    "AccountActivation": "Hesabın aktive edildi. Yaratıcı dünyamıza hoş geldin! Tadını çıkart! Sisteme giriş bilgilerini burada bulabilirsin; Kullanıcı Adın: {0} - Şifren: {1}",
     "RejectionMail": "Kayıt başvurunuzun yönetim kararı ile reddedildiğini üzülerek bildiririz. İyi günler dileriz.",
     "ProjectApplication": "Proje Başvurusu Hakkında",
     "ProjectApprovedMail": "Projenizin onaylandığını size bildirmek isteriz! TEBRİKLER! İyi günler dileriz.",

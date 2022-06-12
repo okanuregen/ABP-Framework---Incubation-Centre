@@ -1,22 +1,23 @@
 ﻿var l = null;
 $(function () {
-    if (abp.currentUser.roles.includes("System Manager")) {
-        $("#MenuItem_AccountDetail").remove();
-    }
     l = abp.localization.getResource('IncubationCentre');
 
-    $('#MenuItem_AccountDetail [data-text="MyProfile"]').text(l("MyProfile"));
-    var myProfileLink = $('#MenuItem_AccountDetail').attr("href").split("/");
-    if (myProfileLink.length == 3) {
-        var role = myProfileLink[1][0].toLowerCase() + myProfileLink[1].substring(1);
-        var identityUserId = $('#MenuItem_AccountDetail').attr("data-currentUser");
-        isikUn.incubationCentre[role][role.slice(0, -1)].getList({ identityUserId: identityUserId }).then(function (user) {
-            if (user.items.length > 0) {
-                $('#MenuItem_AccountDetail').attr("href", $('#MenuItem_AccountDetail').attr("href") + "?id=" + user.items[0].id)
-            } else {
-                $('#MenuItem_AccountDetail').attr("href", "/");
-            }
-        })
+    if (abp.currentUser.roles.includes("System Manager")) {
+        $("#MenuItem_AccountDetail").remove();
+    } else {
+        $('#MenuItem_AccountDetail [data-text="MyProfile"]').text(l("MyProfile"));
+        var myProfileLink = $('#MenuItem_AccountDetail').attr("href").split("/");
+        if (myProfileLink.length == 3) {
+            var role = myProfileLink[1][0].toLowerCase() + myProfileLink[1].substring(1);
+            var identityUserId = $('#MenuItem_AccountDetail').attr("data-currentUser");
+            isikUn.incubationCentre[role][role.slice(0, -1)].getList({ identityUserId: identityUserId }).then(function (user) {
+                if (user.items.length > 0) {
+                    $('#MenuItem_AccountDetail').attr("href", $('#MenuItem_AccountDetail').attr("href") + "?id=" + user.items[0].id)
+                } else {
+                    $('#MenuItem_AccountDetail').attr("href", "/");
+                }
+            })
+        }
     }
 
     $('[data-long-name="true"]').each(function (i, e) {
@@ -28,7 +29,7 @@ $(function () {
 
         var shortText = text;
         if (shortText.length > stSize) {
-            shortText = shortText.slice(0,stSize);
+            shortText = shortText.slice(0, stSize);
             $(e).text(shortText + "...");
         }
         $(e).attr("data-toggle", "tooltip");
@@ -41,13 +42,13 @@ $(function () {
     if (window.location.pathname == '/Account/Manage') {
         debugger;
         if (window.location.search.includes('redirectType=ForceChangePassword')) {
-                var l = l || abp.localization.getResource("IncubationCentre");
-                abp.message.warn(l("MustChangePassword"));
+            var l = l || abp.localization.getResource("IncubationCentre");
+            abp.message.warn(l("MustChangePassword"));
         }
     }
 
     //REUEST DETAIL MODAL 
-    
+
     $('[data-target="open-reuquest-detail"]').click(function () {
         var detailRequestModal = new abp.ModalManager(abp.appPath + 'Requests/DetailModal');
         var id = $(this).data("id");

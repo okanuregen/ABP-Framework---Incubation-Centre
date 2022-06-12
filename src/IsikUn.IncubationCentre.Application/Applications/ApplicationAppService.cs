@@ -187,12 +187,18 @@ namespace IsikUn.IncubationCentre.Applications
 
             application.ApplicationStatus = ApplicationStatus.Declined;
             //Send Inform Mail To User
-            await _emailSender.SendAsync(
-                application.SenderMail,
-                @L["ApprovedUser"],
-                @L["RejectionMail"]
-                );
+            try
+            {
+                await _emailSender.SendAsync(
+                    application.SenderMail,
+                    @L["ApprovedUser"],
+                    @L["RejectionMail"]
+                    );
+            }
+            catch (Exception ex)
+            {
 
+            }
             application = await _applicationRepository.UpdateAsync(application, autoSave: true);
             return ObjectMapper.Map<Application, ApplicationDto>(application);
         }
