@@ -103,6 +103,10 @@ namespace IsikUn.IncubationCentre.Entrepreneurs
                 .Where(a => a.Id == id)
                 .Include(c => c.Skills)
                 .Include(c => c.MyProjects).ThenInclude(b => b.Milestones)
+                .Include(c => c.MyProjects).ThenInclude(b => b.Entrepreneurs)
+                .Include(c => c.MyProjects).ThenInclude(b => b.Collaborators)
+                .Include(c => c.MyProjects).ThenInclude(b => b.Mentors)
+                .Include(c => c.MyProjects).ThenInclude(b => b.Investors)
                 .Include(a => a.IdentityUser);
             var rs = await dbSet.FirstOrDefaultAsync(cancellationToken);
             return rs;
