@@ -200,3 +200,100 @@
     </abp-column>
 </abp-row>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        debugger;
+        var l = abp.localization.getResource('IncubationCentre');
+        var dataTable = $('#MentoringProjects').DataTable(
+            abp.libs.datatables.normalizeConfiguration({
+                serverSide: true,
+                paging: true,
+                order: [[1, "asc"]],
+                searching: true,
+                scrollX: true,
+                ajax: abp.libs.datatables.createAjax(
+                    isikUn.incubationCentre.projects.project.getListByMentor,
+                    function() {
+                        return {
+                            "id" : "@Model.CurrentUser.Id"
+                        }
+                    }
+                ),
+                columnDefs: [
+                    { // TODO this the part that needs to be changed
+                        title: l('Actions'),
+                        rowAction: {
+                            items:
+                                [
+                                    {
+                                        text: l('Detail'),
+                                        visible:
+                                            abp.auth.isGranted('IncubationCentre.Projects'),
+                                        action: function (data) {
+                                            location.href = "/Projects/Detail?id="+data.record.id;
+                                        }
+                                    }
+                                ]
+                        }
+                    },
+                    {
+                        title: l('Name'),
+                        data: "name"
+                    },
+                    {
+                        title: l('Status'),
+                        data: "status",
+                        render: function (data) {
+                            return l("Enum:ProjectStatus_" + data);
+                        }
+                    },
+                    {
+                        title: l('CompletionDate'),
+                        data: "completionDate",
+                        render: function (data) {
+                            if (data == null) return "-";
+                            try {
+                                var date = new Date(data).toLocaleDateString();
+                                return date != "Invalid Date" ? date : "-";
+                            } catch {
+                                return "-";
+                            }
+                        }
+                    },
+                    {
+                        title: l('Tags'),
+                        data: "tags",
+                        render: function (data) {
+                            if (data == null) return "-";
+                            var text = "";
+                            data.split(",").forEach(function (tag) {
+                                text += `<span class="badge badge-info me-2">${tag}</span>`
+                            });
+                            return text == "" ? "-" : text;
+                        }
+                    },
+                    {
+                        title: l('SharePerInvest'),
+                        data: "sharePerInvest",
+                        render: function (data) {
+                            return data + " %";
+                        }
+                    },
+                    {
+                        title: l('InvesmentReady'),
+                        data: "invesmentReady",
+                        render: function (data) {
+                            return data ? `<span class="badge badge-success p-2">${l('Yes')}</span>` : `<span class="badge badge-danger p-2">${l('No')}</span>`
+                        }
+                    },
+                    {
+                        title: l('OpenForInvesment'),
+                        data: "openForInvesment",
+                        render: function (data) {
+                            return data ? `<span class="badge badge-success p-2">${l('Yes')}</span>` : `<span class="badge badge-danger p-2">${l('No')}</span>`
+                        }
+                    }
+                ]
+        }));
+    });
+</script>

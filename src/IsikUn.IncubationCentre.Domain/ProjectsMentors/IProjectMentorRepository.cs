@@ -20,8 +20,8 @@ namespace IsikUn.IncubationCentre.ProjectsMentors
     public interface IProjectMentorRepository : IRepository<ProjectMentor, Guid>
     {
         Task<List<ProjectMentor>> GetListAsync(
-             Guid[] MentorIds = null,
-             Guid[] ProjectIds = null,
+             Guid? MentorId = null,
+             Guid? ProjectId = null,
              int skipCount = 0,
              int maxResultCount = int.MaxValue,
              string sorting = null,
@@ -29,8 +29,8 @@ namespace IsikUn.IncubationCentre.ProjectsMentors
          );
 
         Task<long> GetCountAsync(
-             Guid[] MentorIds = null,
-             Guid[] ProjectIds = null,
+             Guid? MentorId = null,
+             Guid? ProjectId = null,
              CancellationToken cancelationToken = default
             );
     }

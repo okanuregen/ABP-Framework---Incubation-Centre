@@ -43,8 +43,16 @@ namespace IsikUn.IncubationCentre.DbMigrator
                     Symbol = "₺",
                     IsDefault = true,
                 };
+                var currency2 = new Currency
+                {
+                    Country = "ABD",
+                    Title = "American Dollar",
+                    Symbol = "$",
+                    IsDefault = false,
+                };
 
                 await _currencyRepository.InsertAsync(currency);
+                await _currencyRepository.InsertAsync(currency2);
             }
         }
     }

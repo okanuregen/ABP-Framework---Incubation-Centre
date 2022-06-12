@@ -409,5 +409,27 @@ namespace IsikUn.IncubationCentre.Projects
           
         }
 
+        [Authorize(IncubationCentrePermissions.Projects.Default)]
+        public async Task<PagedResultDto<ProjectDto>> GetListByMentorAsync(GetMentorsInput mentor, string sorting = null, int skipCount = 0, int maxResultCount = int.MaxValue)
+        {
+            var mentoringProject = await _projectMentorRepository.GetListAsync(MentorId: mentor.id);
+            if (mentoringProject == null || !mentoringProject.Any())
+            {
+                return new PagedResultDto<ProjectDto>
+                {
+                    TotalCount = 0,
+                    Items = null
+                };
+            }
+
+            return await GetListAsync(new GetProjectsInput
+            {
+                projectIds = mentoringProject.Select(a => a.ProjectId).ToArray(),
+                Sorting = sorting,
+                SkipCount = skipCount,
+                MaxResultCount = maxResultCount
+            });
+        }
+
     }
 }

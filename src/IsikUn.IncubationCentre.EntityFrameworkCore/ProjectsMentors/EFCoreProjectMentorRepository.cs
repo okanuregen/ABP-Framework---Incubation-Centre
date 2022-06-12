@@ -20,24 +20,24 @@ namespace IsikUn.IncubationCentre.ProjectsMentors
         {
         }
 
-        public async Task<long> GetCountAsync(Guid[] MentorIds = null, Guid[] ProjectIds = null, CancellationToken cancelationToken = default)
+        public async Task<long> GetCountAsync(Guid? MentorId = null, Guid? ProjectId = null, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
                         (await GetQueryableAsync())
                         ,
-                        MentorIds,
-                        ProjectIds
+                        MentorId,
+                        ProjectId
                         );
             return await query.LongCountAsync(GetCancellationToken(cancelationToken));
         }
 
-        public async Task<List<ProjectMentor>> GetListAsync(Guid[] MentorIds = null, Guid[] ProjectIds = null, int skipCount = 0, int maxResultCount = int.MaxValue, string sorting = null, CancellationToken cancelationToken = default)
+        public async Task<List<ProjectMentor>> GetListAsync(Guid? MentorId = null, Guid? ProjectId = null, int skipCount = 0, int maxResultCount = int.MaxValue, string sorting = null, CancellationToken cancelationToken = default)
         {
             var query = ApplyFilter(
-                                    (await WithDetailsAsync(c => c.Mentor, d => d.Project))
+                                    (await GetQueryableAsync()).Include(a => a.Project).Include(a => a.Mentor).ThenInclude(b => b.IdentityUser)
                                     ,
-                                    MentorIds,
-                                    ProjectIds
+                                    MentorId,
+                                    ProjectId
                                     );
             query = string.IsNullOrWhiteSpace(sorting) ? query : query.OrderBy(sorting);
             return await query.PageBy(skipCount, maxResultCount).ToListAsync(cancelationToken);
@@ -45,13 +45,20 @@ namespace IsikUn.IncubationCentre.ProjectsMentors
 
         protected virtual IQueryable<ProjectMentor> ApplyFilter(
              IQueryable<ProjectMentor> query,
-             Guid[] MentorIds = null,
-             Guid[] ProjectIds = null
+             Guid? MentorId = null,
+             Guid? ProjectId = null
         )
         {
             return query
-                    .WhereIf(MentorIds != null && MentorIds.Any(), e => MentorIds.Contains(e.MentorId))
-                    .WhereIf(ProjectIds != null && ProjectIds.Any(), e => ProjectIds.Contains(e.ProjectId));
+                    .WhereIf(MentorId.HasValue, e => MentorId.Value == e.MentorId)
+                    .WhereIf(ProjectId.HasValue, e => ProjectId.Value == e.ProjectId);
+        }
+
+        public async Task<List<ProjectMentor>> GetAllWithDetailAsync()
+        {
+            return (await GetDbSetAsync())
+              .Include(c => c.Mentor).ThenInclude(a => a.IdentityUser)
+              .Include(c => c.Project).ToList();
         }
     }
 }
