@@ -97,13 +97,6 @@ public class IncubationCentreMenuContributor : IMenuContributor
             requiredPermissionName: IncubationCentrePermissions.Projects.Default
         ));
         systemDescriptions.AddItem(new ApplicationMenuItem(
-            IncubationCentreMenus.Documents,
-            l["Menu:Documents"],
-            url: "/Documents",
-            icon: "fa fa-file",
-            requiredPermissionName: IncubationCentrePermissions.Documents.Default
-        ));
-        systemDescriptions.AddItem(new ApplicationMenuItem(
             IncubationCentreMenus.SkillManagement,
             l["Menu:SkillDescriptions"],
             url: "/Skills",
