@@ -291,8 +291,7 @@
     "ListOfAssociatedPeople": "List of Associated People",
     "TotalProjectValue": "Total Project Value",
     "ProjectTags": "Tags of The Project",
-    "DateCannotBePast": "You cannot choose a date in the past!"
-    "ProjectTags": "Tags of The Project",
+    "DateCannotBePast": "You cannot choose a date in the past!",
     "NewRequestMail": "New Request!",
     "NewRequestBodyMail": "You have a new request! Please check it as soon as possible.",
     "ApprovedUser": "About Account Activation",
