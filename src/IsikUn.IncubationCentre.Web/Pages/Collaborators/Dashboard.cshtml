@@ -286,10 +286,9 @@
 
 
 <script type="text/javascript">
-    $(function () {
+document.addEventListener("DOMContentLoaded", function() {
     var l = abp.localization.getResource('IncubationCentre');
-    debugger;
-    var collabingProjectIds = @(Json.Serialize(Model.CurrentUser.CollaboratoringProjects.Select(a => a.Id)));
+    var collabingProjectIds = @(Json.Serialize(Model.CurrentUser.CollaboratoringProjects != null ? Model.CurrentUser.CollaboratoringProjects.Select(a => a.Id) : new string[] {"00000000-0000-0000-0000-000000000000"}));
     var createProjectModal = new abp.ModalManager(abp.appPath + 'Projects/CreateModal');
     var createRequestModal = new abp.ModalManager(abp.appPath + 'Requests/CreateModal');
     var createEventModal = new abp.ModalManager(abp.appPath + 'Events/CreateModal');

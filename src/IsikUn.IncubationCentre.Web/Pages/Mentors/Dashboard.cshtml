@@ -295,7 +295,7 @@
                 ]
         }));
 
-        var mentoringProjectIds = @(Json.Serialize(Model.CurrentUser.MentoringProjects.Select(a => a.Id)));
+        var mentoringProjectIds = @(Json.Serialize(Model.CurrentUser.MentoringProjects != null ? Model.CurrentUser.MentoringProjects.Select(a => a.Id) : new string[] {"00000000-0000-0000-0000-000000000000"}));
 
         var createEventModal = new abp.ModalManager(abp.appPath + 'Events/CreateModal');
         var editEventModal = new abp.ModalManager(abp.appPath + 'Events/EditModal');

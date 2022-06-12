@@ -300,7 +300,8 @@
         var createEventModal = new abp.ModalManager(abp.appPath + 'Events/CreateModal');
         var editEventModal = new abp.ModalManager(abp.appPath + 'Events/EditModal');
 
-        var investedProjects = @(Json.Serialize(Model.CurrentUser.InvestedProjects.Select(a => a.Id)));
+        var investedProjects = @(Json.Serialize(Model.CurrentUser.InvestedProjects != null ? Model.CurrentUser.InvestedProjects.Select(a => a.Id) : new string[] {"00000000-0000-0000-0000-000000000000"}));
+
         var eventsTable = $('#EventsTable').DataTable(abp.libs.datatables.normalizeConfiguration({
             processing: true,
             serverSide: true,
