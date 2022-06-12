@@ -316,7 +316,7 @@
                 });
 
                 var milestoneEditModal = new abp.ModalManager(abp.appPath + 'Milestones/EditModal');
-                 var dataTableMilestone = $('#MilestonesTable').DataTable(
+                var dataTableMilestone = $('#MilestonesTable').DataTable(
                     abp.libs.datatables.normalizeConfiguration({
                         serverSide: false,
                         paging: true,
@@ -334,16 +334,19 @@
                                         [
                                             {
                                                 text: l('Edit'),
-                                                visible:
-                                                    abp.auth.isGranted('IncubationCentre.Milestones.Edit'),
+                                                visible: function (data) {
+                                                    return data.creatorId == abp.currentUser.id
+                                                },
                                                 action: function (data) {
                                                     milestoneEditModal.open({ id: data.record.id });
                                                 }
                                             },
                                             {
                                                 text: l('Delete'),
-                                                visible:
-                                                    abp.auth.isGranted('IncubationCentre.Milestones.Delete'),
+                                                visible: function (data) {
+                                                    debugger;
+                                                    return data.creatorId == abp.currentUser.id
+                                                },
                                                 confirmMessage: function (data) {
                                                     return l(
                                                         'EntityDeletionConfirmationMessage',
@@ -351,7 +354,7 @@
                                                     );
                                                 },
                                                 action: function (data) {
-                                                    isikUn.incubationCentre.projects.project
+                                                    isikUn.incubationCentre.milestones.milestone
                                                         .delete(data.record.id)
                                                         .then(function () {
                                                             abp.notify.info(
@@ -400,14 +403,16 @@
                                 }
                             }
                         ]
-                    }));
+                }));
 
                 var milestoneCreateModal = new abp.ModalManager(abp.appPath + 'Milestones/CreateModal');
+                
                 $("#NewMilestoneButton").click(function(){
                       milestoneCreateModal.open({ projectId: '@Model.Project.Id' });
                 });
 
                 var EditProjectModal = new abp.ModalManager(abp.appPath + 'Projects/EditModal');
+                
                 $("#editMyInfo").click(function(){
                       EditProjectModal.open({ id: '@Model.Project.Id' });
                 });
@@ -466,7 +471,6 @@
                                         {
                                             text: l('Edit'),
                                             visible: function (data) {
-                                                debugger;
                                                 return data.creatorPerson.identityUserId == abp.currentUser.id
                                             },
                                             action: function (data) {
