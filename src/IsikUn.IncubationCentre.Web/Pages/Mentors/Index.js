@@ -26,14 +26,6 @@ $(function () {
                                     }
                                 },
                                 {
-                                    text: l('Edit'),
-                                    visible:
-                                        abp.auth.isGranted('IncubationCentre.Mentors.Edit'),
-                                    action: function (data) {
-                                        editModal.open({ id: data.record.id });
-                                    }
-                                },
-                                {
                                     text: l('Delete'),
                                     visible:
                                         abp.auth.isGranted('IncubationCentre.Mentors.Delete'),

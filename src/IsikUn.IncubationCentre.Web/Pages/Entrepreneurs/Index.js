@@ -26,14 +26,6 @@ $(function () {
                                     }
                                 },
                                 {
-                                    text: l('Edit'),
-                                    visible:
-                                        abp.auth.isGranted('IncubationCentre.Entrepreneurs') && abp.auth.isGranted('IncubationCentre.SystemManagers'),
-                                    action: function (data) {
-                                        editModal.open({ id: data.record.id });
-                                    }
-                                },
-                                {
                                     text: l('Delete'),
                                     visible:
                                         abp.auth.isGranted('IncubationCentre.Entrepreneurs.Delete') && abp.auth.isGranted('IncubationCentre.SystemManagers'),

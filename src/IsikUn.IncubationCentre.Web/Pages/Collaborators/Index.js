@@ -18,11 +18,11 @@ $(function () {
                         items:
                             [
                                 {
-                                    text: l('Edit'),
+                                    text: l('Detail'),
                                     visible:
-                                        abp.auth.isGranted('IncubationCentre.Collaborators.Edit'),
+                                        abp.auth.isGranted('IncubationCentre.Collaborators'),
                                     action: function (data) {
-                                        editModal.open({ id: data.record.id });
+                                        location.href = "/Collaborators/Detail?id=" + data.record.id;
                                     }
                                 },
                                 {
