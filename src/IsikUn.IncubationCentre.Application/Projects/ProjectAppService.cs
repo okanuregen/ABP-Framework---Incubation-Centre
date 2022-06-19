@@ -55,7 +55,7 @@ namespace IsikUn.IncubationCentre.Projects
             this._projectCollaboratorRepository = projectCollaboratorRepository;
             this._projectFounderRepository = projectFounderRepository;
             this._mentorRepository = mentorRepository;
-            this._emailSender=emailSender;
+            this._emailSender = emailSender;
             LocalizationResource = typeof(IncubationCentreResource);
         }
 
@@ -101,7 +101,7 @@ namespace IsikUn.IncubationCentre.Projects
             }
             project.Status = ProjectStatus.Approved;
 
-            
+
 
             project = await _projectRepository.UpdateAsync(project, autoSave: true);
             //Send Inform Mail To User
@@ -147,7 +147,7 @@ namespace IsikUn.IncubationCentre.Projects
                 throw new UserFriendlyException(L["NoProjectFound"]);
             }
             project.Status = ProjectStatus.Declined;
-           
+
 
             project = await _projectRepository.UpdateAsync(project, autoSave: true);
             //Send Inform Mail To User
@@ -210,7 +210,7 @@ namespace IsikUn.IncubationCentre.Projects
                 Mentor = mentor
             });
             //Information mail to project crew
-            
+
             foreach (var mail in project.Collaborators.Select(a => a.IdentityUser.Email))
             {
                 try
@@ -272,8 +272,8 @@ namespace IsikUn.IncubationCentre.Projects
 
         public async Task Invest(Guid projectId)
         {
-            var project = await _projectRepository.GetAsync(projectId);
-            if(!(project.InvesmentReady && project.OpenForInvesment))
+            var project = await _projectRepository.GetWithDetailAsync(projectId);
+            if (!(project.InvesmentReady && project.OpenForInvesment))
             {
                 throw new UserFriendlyException(L["ProjectIsNotSuitableForInvesment"]);
             }
@@ -296,42 +296,49 @@ namespace IsikUn.IncubationCentre.Projects
             }
             else
             {
-                
+
                 lastInvest.Share += project.SharePerInvest;
                 await _projectInvestorRepository.UpdateAsync(lastInvest);
             }
             //Information mail to user
-            foreach (var mail in project.Collaborators.Select(a => a.IdentityUser.Email))
+            if (project.Collaborators != null)
             {
-                try
-                {
-                    await _emailSender.SendAsync(
-                        mail,
-                        @L["ProjectInvestorAbout"],
-                        @L["ProjectInvestorAssgn"]
-                        );
-                }
-                catch
-                {
 
+                foreach (var mail in project.Collaborators.Select(a => a.IdentityUser.Email))
+                {
+                    try
+                    {
+                        await _emailSender.SendAsync(
+                            mail,
+                            @L["ProjectInvestorAbout"],
+                            @L["ProjectInvestorAssgn"]
+                            );
+                    }
+                    catch
+                    {
+
+                    }
                 }
             }
-            foreach (var mail in project.Entrepreneurs.Select(a => a.IdentityUser.Email))
+            if (project.Entrepreneurs != null)
             {
-                try
+                foreach (var mail in project.Entrepreneurs.Select(a => a.IdentityUser.Email))
                 {
-                    await _emailSender.SendAsync(
-                        mail,
-                        @L["ProjectInvestorAbout"],
-                        @L["ProjectInvestorAssgn"]
-                        );
-                }
-                catch
-                {
+                    try
+                    {
+                        await _emailSender.SendAsync(
+                            mail,
+                            @L["ProjectInvestorAbout"],
+                            @L["ProjectInvestorAssgn"]
+                            );
+                    }
+                    catch
+                    {
 
+                    }
                 }
+
             }
-
         }
 
 
@@ -444,10 +451,10 @@ namespace IsikUn.IncubationCentre.Projects
         }
 
         [Authorize(IncubationCentrePermissions.Projects.Default)]
-        public async Task<PagedResultDto<ProjectDto>> GetListByInvestorAsync(GetInvestorsInput investor, string sorting = null, int skipCount =0, int maxResultCount = int.MaxValue) 
+        public async Task<PagedResultDto<ProjectDto>> GetListByInvestorAsync(GetInvestorsInput investor, string sorting = null, int skipCount = 0, int maxResultCount = int.MaxValue)
         {
             var investProject = await _projectInvestorRepository.GetListAsync(InvestorId: investor.id);
-            if(investProject == null || !investProject.Any())
+            if (investProject == null || !investProject.Any())
             {
                 return new PagedResultDto<ProjectDto>
                 {
@@ -461,9 +468,9 @@ namespace IsikUn.IncubationCentre.Projects
                 projectIds = investProject.Select(a => a.ProjectId).ToArray(),
                 Sorting = sorting,
                 SkipCount = skipCount,
-                MaxResultCount=maxResultCount
+                MaxResultCount = maxResultCount
             });
-          
+
         }
 
         [Authorize(IncubationCentrePermissions.Projects.Default)]

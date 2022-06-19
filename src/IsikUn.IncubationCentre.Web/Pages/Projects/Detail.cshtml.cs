@@ -58,6 +58,7 @@ namespace IsikUn.IncubationCentre.Web.Pages.Projects
             Project = await _projectRepo.GetWithDetailAsync(Id);
             IsAllowedEdit = Project.Entrepreneurs != null ? Project.Entrepreneurs.Any(a => a.IdentityUserId == _currentUser.Id) : false;
             IsAllowedEdit |= Project.Collaborators != null ? Project.Collaborators.Any(a => a.IdentityUserId == _currentUser.Id) : false;
+            IsAllowedEdit |= _currentUser.IsInRole("System Manager");
             IsInvestor = _currentUser.IsInRole("Investor");
             try
             {
