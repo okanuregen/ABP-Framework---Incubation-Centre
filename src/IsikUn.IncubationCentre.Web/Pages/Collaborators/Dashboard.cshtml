@@ -96,8 +96,8 @@
                     {
                         <div>
                             <abp-row class="border-bottom">
-                                <abp-column size="_6"><b>@L["Name"].Value:</b></abp-column>
-                                <abp-column size="_6" class="text-end">
+                                <abp-column size="_3"><b>@L["Name"].Value:</b></abp-column>
+                                <abp-column size="_9" class="text-end">
                                     <span data-long-name="true" data-long-name-size="18">
                                         @(!string.IsNullOrEmpty(Model.CurrentProject.Name) ? Model.CurrentProject.Name : "-")
                                     </span>
@@ -128,7 +128,15 @@
                                 <abp-column size="_6"><b>@L["Milestones"].Value:</b></abp-column>
                                 <abp-column size="_6" class="text-end">@(Model.CurrentProject.Milestones != null ? (Model.CurrentProject.Milestones.Count(a => a.isCompleted) + " / " + Model.CurrentProject.Milestones.Count()) : "0/0")</abp-column>
                             </abp-row>
-
+                            <abp-row class="border-bottom">
+                                <abp-column size="_6"><b>Projec Entreprenur Detail</b></abp-column>
+                                <abp-column size="_6" class="text-end">@(Model.CurrentProject.Entrepreneurs != null ? (Model.CurrentProject.Entrepreneurs.First().IdentityUser.Name) :  "-")</abp-column>
+                            </abp-row>
+                            <div class="row">
+                                <div class="col">
+                                    <button class="btn btn-primary" id="newButton">Click Me</button>
+                                </div>
+                            </div>
                         </div>
                     }
                     else
@@ -284,6 +292,17 @@
 
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function() {
+
+
+    $("#newButton").click(function(){
+
+        if($("#newButton").hasClass("d-none")){
+            $("#newButton").removeClass("d-none");
+        }else{
+            $("#newButton").removeClass("d-none");
+        }
+    });
+
     var l = abp.localization.getResource('IncubationCentre');
     var collabingProjectIds = @(Json.Serialize(Model.CurrentUser.CollaboratoringProjects != null ? Model.CurrentUser.CollaboratoringProjects.Select(a => a.Id) : new string[] {"00000000-0000-0000-0000-000000000000"}));
     collabingProjectIds = collabingProjectIds.length == 0 ? ["00000000-0000-0000-0000-000000000000"] : collabingProjectIds;

@@ -333,6 +333,9 @@
     "Q2": "I want to join a project as a collaborator, what should I do?",
     "A2": "Send a request to join the project you are interested in, the wait for the entrepreneur to approve or reject your request.",
     "Q15": "How do I submit the requested documents?",
-    "A15": "The system managers will specify documents to be sent depending on the situation, to comply you will have to send the specified documents to the email address they requested using your own email address."
+    "A15": "The system managers will specify documents to be sent depending on the situation, to comply you will have to send the specified documents to the email address they requested using your own email address.",
+    "InvestedProjectNum": "Num Of Investeds",
+    "MentoredProjectsNum": "Num Of Mentoreds",
+    "MyMentoringProjects": "Projects Mentored by Me"
   }
 }

@@ -9,7 +9,7 @@ $(function () {
     var NewApplicationdataTable = $('#ApplicationTable').DataTable(abp.libs.datatables.normalizeConfiguration({
         serverSide: false,
         paging: true,
-        scrollY: '210px',
+        scrollY: '440px',
         order: [[1, "asc"]],
         searching: true,
         scrollX: false,

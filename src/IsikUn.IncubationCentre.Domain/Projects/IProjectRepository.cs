@@ -63,5 +63,6 @@ namespace IsikUn.IncubationCentre.Projects
             );
 
         Task<Project> GetWithDetailAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<List<Project>> GetAllWithDetailAsync();
     }
 }

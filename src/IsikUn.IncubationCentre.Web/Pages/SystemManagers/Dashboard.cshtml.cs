@@ -28,6 +28,8 @@ namespace IsikUn.IncubationCentre.Web.Pages.SystemManagers
         public long NumOfInvestors { get; set; }
         public long NumOfSystemManagers { get; set; }
         public long NumOfProjects { get; set; }
+        public long NumOfInvestedProjects { get; set; }
+        public long NumOfMentoredProjects { get; set; }
         public long NumOfProjectsInReview { get; set; }
         public long NumOfProjectsApproved { get; set; }
         public long NumOfProjectsDeclined { get; set; }
@@ -84,6 +86,10 @@ namespace IsikUn.IncubationCentre.Web.Pages.SystemManagers
             NumOfProjects = await _projectRepo.GetCountAsync();
             NumOfEvents = await _eventRepo.GetCountAsync();
             NumOfMembers = await _personRepo.GetCountAsync();
+
+            var allProjects = await _projectRepo.GetAllWithDetailAsync();
+            NumOfInvestedProjects = allProjects.Count(a => a.Investors != null && a.Investors.Count() > 0);
+            NumOfMentoredProjects = allProjects.Count(a => a.Mentors != null && a.Mentors.Count() > 0);
 
             NumOfProjectsApproved = await _projectRepo.GetCountAsync(ProjectStatus.Approved,filterByStatus:true);
             NumOfProjectsDeclined = await _projectRepo.GetCountAsync(ProjectStatus.Declined,filterByStatus:true);

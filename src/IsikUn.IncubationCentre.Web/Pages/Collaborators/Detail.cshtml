@@ -296,8 +296,8 @@
                                         <abp-column size="_6" class="text-end" data-long-name="true" data-long-name-size="24">@L["Collaborator"].Value</abp-column>
                                     </abp-row>
                                      <abp-row class="border-bottom">
-                                        <abp-column size="_6"><b>@L["Email"].Value:</b></abp-column>
-                                        <abp-column size="_6" class="text-end">
+                                        <abp-column size="_4"><b>@L["Email"].Value:</b></abp-column>
+                                        <abp-column size="_8" class="text-end">
                                             <span data-long-name="true" data-long-name-size="24" style="text-transform:none;">
                                                 @(!string.IsNullOrEmpty(Model.Collaborator.IdentityUser.Email) ? Model.Collaborator.IdentityUser.Email : "-")
                                             </span>

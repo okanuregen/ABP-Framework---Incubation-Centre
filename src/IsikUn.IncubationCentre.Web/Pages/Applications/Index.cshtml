@@ -25,17 +25,8 @@
 <abp-card>
     <abp-card-header>
         <abp-row>
-            <abp-column size-md="_6">
+            <abp-column size-md="_12">
                 <abp-card-title>@L["Application"]</abp-card-title>
-            </abp-column>
-            <abp-column size-md="_6" class="text-end">
-			    @if (await Authorization.IsGrantedAsync(IncubationCentrePermissions.Applications.Create))
-                {
-                <abp-button id="NewApplicationButton"
-                            text="@L["CreateApplication"].Value"
-                            icon="plus"
-                            button-type="Primary" />
-                }
             </abp-column>
         </abp-row>
     </abp-card-header>
