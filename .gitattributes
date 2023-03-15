@@ -1,1 +1,4 @@
 **/wwwroot/libs/** linguist-vendored
+*.html linguist-detectable=false
+*.htm inguist-detectable=false
+*.js linguist-detectable=false
